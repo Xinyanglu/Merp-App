@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:padding="30dp">
+
+    <Button
+        android:id="@+id/btnEarnings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit Earnings"
+        app:layout_constraintTop_toBottomOf="@id/mainDate"
+        app:layout_constraintBottom_toTopOf="@id/btnExpenses"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textSize="25sp" />
+
+    <Button
+        android:id="@+id/btnExpenses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit Expenses"
+        app:layout_constraintTop_toBottomOf="@id/btnEarnings"
+        app:layout_constraintBottom_toTopOf="@id/btnReports"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textSize="25sp" />
+
+    <Button
+        android:id="@+id/btnReports"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Reports"
+        app:layout_constraintTop_toBottomOf="@id/btnExpenses"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/textMerp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Merp"
+        android:textSize="50sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/mainDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="April 20, 1969"
+        app:layout_constraintTop_toBottomOf="@id/textMerp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:textSize="30sp"
+        android:layout_marginTop="25dp"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
