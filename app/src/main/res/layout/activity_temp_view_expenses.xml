@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:textSize="30sp"
-        android:textStyle="italic"/>
+        android:textStyle="italic" />
 
 <!--    try Palette>Container>ScrollView for creating the scrollable list of earnings?-->
 </androidx.constraintlayout.widget.ConstraintLayout>
