@@ -2,11 +2,13 @@ package com.merp.android
 
 import java.math.*
 
-class Earning constructor(amount: BigDecimal, date: String, adi: String){
+class Earning constructor(date: String, source: String, amount: BigDecimal, adi: String){
     private var a = amount
     private var d = date
     private var i = adi
+    private var s = source
 
+    //Getters
     fun getAmount(): BigDecimal{
         return a
     }
@@ -19,5 +21,24 @@ class Earning constructor(amount: BigDecimal, date: String, adi: String){
         return i
     }
 
+    fun getSource(): String{
+        return s
+    }
 
+    //Setters
+    fun setAmount(amount: BigDecimal){
+        a = amount
+    }
+
+    fun setDate(date: String){
+        d = date
+    }
+
+    fun setAddInfo(adi: String){
+        i = adi
+    }
+
+    fun setSource(source: String){
+        s = source
+    }
 }
