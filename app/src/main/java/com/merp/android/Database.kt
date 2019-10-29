@@ -1,7 +1,5 @@
 package com.merp.android
 
-import com.merp.android.Expense
-import com.merp.android.Earning
 import java.math.BigDecimal
 
 class Database {
