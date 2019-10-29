@@ -1,8 +1,9 @@
 package com.merp.android
 
 import java.math.*
+import java.text.SimpleDateFormat
 
-class Earning constructor(date: String, source: String, amount: BigDecimal, adi: String){
+class Earning constructor(date: Date, source: String, amount: BigDecimal, adi: String){
     private var a = amount
     private var d = date
     private var i = adi
@@ -13,7 +14,7 @@ class Earning constructor(date: String, source: String, amount: BigDecimal, adi:
         return a
     }
 
-    fun getDate(): String{
+    fun getDate(): Date{
         return d
     }
 
@@ -30,7 +31,7 @@ class Earning constructor(date: String, source: String, amount: BigDecimal, adi:
         a = amount
     }
 
-    fun setDate(date: String){
+    fun setDate(date: Date){
         d = date
     }
 

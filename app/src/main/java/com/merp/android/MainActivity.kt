@@ -25,5 +25,5 @@ class MainActivity : AppCompatActivity() {
     }
 
     //Gets current date in format: October 15, 2019
-    fun getDate(): SimpleDateFormat = SimpleDateFormat("MMMM dd, yyyy", Locale.CANADA)
+    fun getDate(): SimpleDateFormat = SimpleDateFormat("yyyy, MMMM dd", Locale.CANADA)
 }

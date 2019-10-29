@@ -1,8 +1,9 @@
 package com.merp.android
 
+import com.merp.android.Date
 import java.math.*
 
-class Expense constructor( date: String, category: String, price: BigDecimal, description: String, adi: String){
+class Expense constructor( date: Date, category: String, price: BigDecimal, description: String, adi: String){
     private var p = price
     private var c = category
     private var d = date
@@ -18,7 +19,7 @@ class Expense constructor( date: String, category: String, price: BigDecimal, de
         return c
     }
 
-    fun getDate(): String{
+    fun getDate(): Date{
         return d
     }
 
@@ -39,7 +40,7 @@ class Expense constructor( date: String, category: String, price: BigDecimal, de
         c = category
     }
 
-    fun setDate(date: String){
+    fun setDate(date: Date){
         d = date
     }
 
