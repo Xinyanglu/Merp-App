@@ -1,9 +1,8 @@
 package com.merp.android
 
 import java.math.BigDecimal
-import java.text.SimpleDateFormat
 
-class Database {
+object Database {
     val expense = ArrayList<Expense>()
     val earning = ArrayList<Earning>()
 
@@ -14,7 +13,4 @@ class Database {
     fun addEarning(date: Date, source: String, amount: BigDecimal, adi: String){
         earning.add(Earning(date,source,amount,adi))
     }
-
-
-
 }
