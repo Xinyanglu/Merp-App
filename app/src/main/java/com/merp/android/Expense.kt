@@ -1,6 +1,5 @@
 package com.merp.android
 
-import com.merp.android.Date
 import java.math.*
 
 class Expense constructor( date: Date, category: String, price: BigDecimal, description: String, adi: String){
