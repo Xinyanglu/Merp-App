@@ -30,7 +30,4 @@ class Date constructor(month: Int, day: Int, year: Int){
     fun getYear(): Int{
         return(date.year)
     }
-
-
-
 }

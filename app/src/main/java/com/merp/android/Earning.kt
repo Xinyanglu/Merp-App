@@ -1,7 +1,6 @@
 package com.merp.android
 
 import java.math.*
-import java.text.SimpleDateFormat
 
 class Earning constructor(date: Date, source: String, amount: BigDecimal, adi: String){
     private var a = amount
