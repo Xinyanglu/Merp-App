@@ -3,19 +3,19 @@ package com.merp.android
 import java.time.*
 
 class Date constructor(month: Int, day: Int, year: Int){
-    var m = if (month<10){
+    private var m = if (month<10){
         "0${month}"
     }else {
         month.toString()
     }
 
-    var d = if (day<10){
+    private var d = if (day<10){
         "0${day}"
     }else{
         day.toString()
     }
 
-    var y = year.toString()
+    private var y = year.toString()
 
     private var date = LocalDate.parse("${y}-${m}-${d}")
 
@@ -31,6 +31,7 @@ class Date constructor(month: Int, day: Int, year: Int){
         return(date.year)
     }
 
-
-
+    fun getFullDate(): String{
+        return date.toString()
+    }
 }

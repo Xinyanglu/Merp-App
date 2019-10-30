@@ -6,12 +6,12 @@ import org.junit.jupiter.api.Assertions
 
 class DatabaseTest {
 
-    //why does adding an earning require declaring a variable am I retarded
+    //why does adding an earning require declaring a member declaration?
     val test = Database.addEarning(Date(3,23,2019), "Job", BigDecimal(5), "I hate my job")
 
     @Test
     fun testGetDate(){
-        Assertions.assertEquals("October", Database.earning[0].getDate())
+        Assertions.assertEquals("2019-03-23", Database.earning[0].getDate().getFullDate())
     }
 
     @Test
