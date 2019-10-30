@@ -4,23 +4,23 @@ import java.time.*
 
 class Date constructor(month: Int, day: Int, year: Int){
     var m = if (month<10){
-        "0${month.toString()}"
-    }else{
+        "0${month}"
+    }else {
         month.toString()
     }
 
-    var y = year.toString()
-
     var d = if (day<10){
-        "0${day.toString()}"
+        "0${day}"
     }else{
         day.toString()
     }
 
-    private var date = LocalDate.parse((y) + "-" + (m) + "-" + (d))
+    var y = year.toString()
 
-    fun getMonth(): Month{
-        return(date.month)
+    private var date = LocalDate.parse("${y}-${m}-${d}")
+
+    fun getMonth(): Int{
+        return(date.monthValue)
     }
 
     fun getDay(): Int{
