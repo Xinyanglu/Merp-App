@@ -2,7 +2,6 @@ package com.merp.android
 
 import org.junit.jupiter.api.*
 import java.math.BigDecimal
-import org.junit.jupiter.api.Assertions
 
 class DatabaseTest {
 
