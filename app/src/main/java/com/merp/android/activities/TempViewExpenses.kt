@@ -1,7 +1,8 @@
-package com.merp.android
+package com.merp.android.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.merp.android.R
 
 class TempViewExpenses : AppCompatActivity() {
 
