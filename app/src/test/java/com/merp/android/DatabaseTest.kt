@@ -5,7 +5,7 @@ import java.math.BigDecimal
 
 class DatabaseTest {
 
-    //why does adding an earning require declaring a member declaration?
+    //why does adding an earning require a member declaration?
     val test = Database.addEarning(Date(3,23,2019), "Job", BigDecimal(5), "I hate my job")
 
     @Test
