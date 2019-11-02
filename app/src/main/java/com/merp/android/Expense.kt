@@ -18,8 +18,8 @@ class Expense constructor( date: Date, category: String, price: BigDecimal, desc
         return c
     }
 
-    fun getDate(): Date{
-        return d
+    fun getDate(): String{
+        return d.toString()
     }
 
     fun getAddInfo(): String{
