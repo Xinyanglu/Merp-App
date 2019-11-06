@@ -32,14 +32,27 @@ class EditEarningActivity : AppCompatActivity() {
         val sources = arrayListOf<String>("", "Job", "Human trafficking", "Lottery")
         val adapter: ArrayAdapter<String> = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sources)
         dropdownSources.adapter = adapter
+
         //floating action button (save earning button)
         fab.setOnClickListener {
             var hasErrors = false //TODO(): expand if statements to set hasErrors to true
+
             //check if required fields are filled
-            if(enterDate.text.isEmpty()) enterDate.error = "Date required"
-            if(spinnerSource.selectedItemId.toInt() == 0) textSource.error = "Source required" //TODO(): find a way to actually display the error message (currently does not properly display)
+            if(enterDate.text.isEmpty()){
+                enterDate.error = "Date required"
+                hasErrors = true
+            }
+
+            if(spinnerSource.selectedItemId.toInt() == 0){
+                textSource.error = "Source required"
+                hasErrors = true
+            } //TODO(): find a way to actually display the error message (currently does not properly display)
             else textSource.error = null //required as this will not be done automatically
-            if(enterAmount.text.isEmpty()) enterAmount.error = "Amount required"
+
+            if(enterAmount.text.isEmpty()){
+                enterAmount.error = "Amount required"
+                hasErrors = true
+            }
 
             if(!hasErrors){
                 val year = enterDate.text.substring(0, 4).toInt()
@@ -51,7 +64,7 @@ class EditEarningActivity : AppCompatActivity() {
             //DEBUGGING - check all information related to the first Earning object in the array
             //error checking (hasErrors variable) not implemented; will likely accept empty values ("" or null?)
             val firstEarning = Database.earning[0]
-            val debug = "Date: ${firstEarning.getDate()}, Source: ${firstEarning.getSource()}, Amount: \$${firstEarning.getAmount()}, Additional Info: ${firstEarning.getAddInfo()}"
+            val debug = "Date: ${firstEarning.getDate().getFullDate()}, Source: ${firstEarning.getSource()}, Amount: \$${firstEarning.getAmount()}, Additional Info: ${firstEarning.getAddInfo()}"
             Log.d("EditEarningActivity", debug)
         }
     }

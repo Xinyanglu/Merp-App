@@ -3,10 +3,10 @@ package com.merp.android
 import org.junit.jupiter.api.*
 import java.math.BigDecimal
 
-class DatabaseTest {
+class EarningTest {
 
     //why does adding an earning require a member declaration?
-    val test = Database.addEarning(Date(3,23,2019), "Job", BigDecimal(5), "I hate my job")
+    val test = Database.addEarning(Date(2019,3,23), "Job", BigDecimal(5), "I hate my job")
 
     @Test
     fun testGetDate(){

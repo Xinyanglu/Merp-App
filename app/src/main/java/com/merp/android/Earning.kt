@@ -13,8 +13,8 @@ class Earning constructor(date: Date, source: String, amount: BigDecimal, adi: S
         return a
     }
 
-    fun getDate(): String{
-        return d.getFullDate()
+    fun getDate(): Date{
+        return d
     }
 
     fun getAddInfo(): String{
