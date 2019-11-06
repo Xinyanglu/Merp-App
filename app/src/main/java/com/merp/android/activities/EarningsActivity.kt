@@ -7,6 +7,7 @@ import com.merp.android.R
 import android.content.Intent
 
 import kotlinx.android.synthetic.main.activity_earnings.*
+import kotlinx.android.synthetic.main.content_earnings.*
 
 class EarningsActivity : AppCompatActivity() {
 
@@ -16,7 +17,7 @@ class EarningsActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener {
-            startActivity(Intent(this, TODO()))
+            startActivity(Intent(this, EditEarningActivity::class.java))
         }
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
