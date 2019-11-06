@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
         mainDate.text = getDate().format(Date())
         btnEarnings.setOnClickListener {
-            startActivity(Intent(this, TempViewExpenses::class.java))
+            startActivity(Intent(this, EarningsActivity::class.java))
         }
 
         btnExpenses.setOnClickListener {
