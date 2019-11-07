@@ -2,52 +2,51 @@ package com.merp.android
 
 import java.math.*
 
-class Expense constructor( date: Date, category: String, price: BigDecimal, description: String, adi: String){
-    private var p = price
-    private var c = category
-    private var d = date
-    private var i = adi
-    private var n = description
+class Expense(private var date: Date,
+              private var category: String,
+              private var price: BigDecimal,
+              private var description: String,
+              private var addInfo: String){
 
     //Getters
     fun getPrice(): BigDecimal{
-        return p
+        return price
     }
 
     fun getCategory(): String{
-        return c
+        return category
     }
 
-    fun getDate(): String{
-        return d.toString()
+    fun getDate(): Date{
+        return date
     }
 
     fun getAddInfo(): String{
-        return i
+        return addInfo
     }
 
     fun getDescription(): String{
-        return n
+        return description
     }
 
     //Setters
-    fun setPrice(price: BigDecimal){
-        p = price
+    fun setPrice(p: BigDecimal){
+        price = p
     }
 
-    fun setCategory(category: String){
-        c = category
+    fun setCategory(c: String){
+        category = c
     }
 
-    fun setDate(date: Date){
-        d = date
+    fun setDate(d: Date){
+        date = d
     }
 
     fun setAddInfo(adi: String){
-        i = adi
+        addInfo = adi
     }
 
-    fun setDescription(description: String){
-        n = description
+    fun setDescription(desc: String){
+        description = desc
     }
 }
