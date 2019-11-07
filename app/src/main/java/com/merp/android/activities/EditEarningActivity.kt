@@ -64,7 +64,7 @@ class EditEarningActivity : AppCompatActivity() {
             //DEBUGGING - check all information related to the first Earning object in the array
             //error checking (hasErrors variable) not implemented; will likely accept empty values ("" or null?)
             val firstEarning = Database.earning[0]
-            val debug = "Date: ${firstEarning.getDate().getFullDate()}, Source: ${firstEarning.getSource()}, Amount: \$${firstEarning.getAmount()}, Additional Info: ${firstEarning.getAddInfo()}"
+            val debug = "Date: ${firstEarning.getDate().getFullDate()}, Source: ${firstEarning.getCategory()}, Amount: \$${firstEarning.getAmount()}, Additional Info: ${firstEarning.getAddInfo()}"
             Log.d("EditEarningActivity", debug)
         }
     }

@@ -1,10 +1,9 @@
 package com.merp.android
 
 import java.math.*
-import com.merp.android.Date as Date
 
 class Earning(private var date: Date,
-              private var source: String,
+              private var category: String,
               private var amount: BigDecimal,
               private var addInfo: String) {
 
@@ -21,8 +20,8 @@ class Earning(private var date: Date,
         return addInfo
     }
 
-    fun getSource(): String{
-        return source
+    fun getCategory(): String{
+        return category
     }
 
     //Setters
@@ -38,7 +37,7 @@ class Earning(private var date: Date,
         addInfo = adi
     }
 
-    fun setSource(s: String){
-        source = s
+    fun setCategory(c: String){
+        category = c
     }
 }

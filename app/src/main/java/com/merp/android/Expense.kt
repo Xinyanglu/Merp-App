@@ -4,13 +4,12 @@ import java.math.*
 
 class Expense(private var date: Date,
               private var category: String,
-              private var price: BigDecimal,
-              private var description: String,
+              private var amount: BigDecimal,
               private var addInfo: String){
 
     //Getters
-    fun getPrice(): BigDecimal{
-        return price
+    fun getAmount(): BigDecimal{
+        return amount
     }
 
     fun getCategory(): String{
@@ -25,13 +24,9 @@ class Expense(private var date: Date,
         return addInfo
     }
 
-    fun getDescription(): String{
-        return description
-    }
-
     //Setters
-    fun setPrice(p: BigDecimal){
-        price = p
+    fun setAmount(a: BigDecimal){
+        amount = a
     }
 
     fun setCategory(c: String){
@@ -44,9 +39,5 @@ class Expense(private var date: Date,
 
     fun setAddInfo(adi: String){
         addInfo = adi
-    }
-
-    fun setDescription(desc: String){
-        description = desc
     }
 }
