@@ -35,7 +35,7 @@ class EditEarningActivity : AppCompatActivity() {
 
         //floating action button (save earning button)
         fab.setOnClickListener {
-            var hasErrors = false //TODO(): expand if statements to set hasErrors to true
+            var hasErrors = false
 
             //check if required fields are filled
             if(enterDate.text.isEmpty()){

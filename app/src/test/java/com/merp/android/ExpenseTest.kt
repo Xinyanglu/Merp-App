@@ -18,7 +18,7 @@ class ExpenseTest {
     }
 
     @Test
-    fun testGetPrice(){
+    fun testGetAmount(){
         val instance = Expense(Date(2015, 9, 23), "Food", BigDecimal("300"), "This is not a description")
         Assertions.assertEquals(BigDecimal("300"), instance.getAmount())
     }
@@ -27,5 +27,33 @@ class ExpenseTest {
     fun testGetAddInfo(){
         val instance = Expense(Date(2015, 9, 23), "Food", BigDecimal("300"), "This is not a description")
         Assertions.assertEquals("This is not a description", instance.getAddInfo())
+    }
+
+    @Test
+    fun testSetDate(){
+        val instance = Expense(Date(2015, 9, 23), "Food", BigDecimal("300"), "This is not a description")
+        instance.setDate(Date(2009, 2, 7))
+        Assertions.assertEquals("2009-02-07", instance.getDate().getFullDate())
+    }
+
+    @Test
+    fun testSetCategory(){
+        val instance = Expense(Date(2015, 9, 23), "Food", BigDecimal("300"), "This is not a description")
+        instance.setCategory("Entertainment")
+        Assertions.assertEquals("Entertainment", instance.getCategory())
+    }
+
+    @Test
+    fun testSetAmount(){
+        val instance = Expense(Date(2015, 9, 23), "Food", BigDecimal("300"), "This is not a description")
+        instance.setAmount(BigDecimal("420"))
+        Assertions.assertEquals(BigDecimal("420"), instance.getAmount())
+    }
+
+    @Test
+    fun testSetAddInfo(){
+        val instance = Expense(Date(2015, 9, 23), "Food", BigDecimal("300"), "This is not a description")
+        instance.setAddInfo("Information that is additional")
+        Assertions.assertEquals("Information that is additional", instance.getAddInfo())
     }
 }
