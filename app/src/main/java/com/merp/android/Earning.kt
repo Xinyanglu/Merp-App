@@ -1,6 +1,7 @@
 package com.merp.android
 
 import java.math.*
+import com.merp.android.Date as Date
 
 class Earning constructor(date: Date, source: String, amount: BigDecimal, adi: String){
     private var a = amount
@@ -13,8 +14,8 @@ class Earning constructor(date: Date, source: String, amount: BigDecimal, adi: S
         return a
     }
 
-    fun getDate(): String{
-        return d.getFullDate()
+    fun getDate(): Date{
+        return d
     }
 
     fun getAddInfo(): String{
