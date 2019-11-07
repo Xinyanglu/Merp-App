@@ -5,26 +5,55 @@ import java.math.BigDecimal
 
 class EarningTest {
 
-    //why does adding an earning require a member declaration?
-    val test = Database.addEarning(Date(2019,3,23), "Job", BigDecimal(5), "I hate my job")
-
     @Test
     fun testGetDate(){
-        Assertions.assertEquals("2019-03-23", Database.earning[0].getDate().getFullDate())
+        val instance = Earning(Date(2019,3,23), "Job", BigDecimal("5"), "I hate my job")
+        Assertions.assertEquals("2019-03-23", instance.getDate().getFullDate())
     }
 
     @Test
     fun testGetSource(){
-        Assertions.assertEquals("Job", Database.earning[0].getSource())
+        val instance = Earning(Date(2019,3,23), "Job", BigDecimal("5"), "I hate my job")
+        Assertions.assertEquals("Job", instance.getSource())
     }
 
     @Test
     fun testGetAmount(){
-        Assertions.assertEquals(BigDecimal(5), Database.earning[0].getAmount())
+        val instance = Earning(Date(2019,3,23), "Job", BigDecimal("5"), "I hate my job")
+        Assertions.assertEquals(BigDecimal("5"), instance.getAmount())
     }
 
     @Test
     fun testGetAddInfo(){
-        Assertions.assertEquals("I hate my job", Database.earning[0].getAddInfo())
+        val instance = Earning(Date(2019,3,23), "Job", BigDecimal("5"), "I hate my job")
+        Assertions.assertEquals("I hate my job", instance.getAddInfo())
+    }
+
+    @Test
+    fun testSetDate(){
+        val instance = Earning(Date(2019,3,23), "Job", BigDecimal("5"), "I hate my job")
+        instance.setDate(Date(2003,12,19))
+        Assertions.assertEquals("2003-12-19", instance.getDate().getFullDate())
+    }
+
+    @Test
+    fun testSetSource(){
+        val instance = Earning(Date(2019,3,23), "Job", BigDecimal("5"), "I hate my job")
+        instance.setSource("Gambling")
+        Assertions.assertEquals("Gambling", instance.getSource())
+    }
+
+    @Test
+    fun testSetAmount(){
+        val instance = Earning(Date(2019,3,23), "Job", BigDecimal("5"), "I hate my job")
+        instance.setAmount(BigDecimal("2000.35"))
+        Assertions.assertEquals(BigDecimal("2000.35"), instance.getAmount())
+    }
+
+    @Test
+    fun testSetAddInfo(){
+        val instance = Earning(Date(2019,3,23), "Job", BigDecimal("5"), "I hate my job")
+        instance.setAddInfo("Bless RNGesus")
+        Assertions.assertEquals("Bless RNGesus", instance.getAddInfo())
     }
 }
