@@ -5,15 +5,17 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import com.merp.android.R
-import kotlinx.android.synthetic.main.activity_edit_earning.*
-import android.widget.Spinner
-import android.widget.ArrayAdapter
+import androidx.core.text.isDigitsOnly
 import com.merp.android.Database
 import com.merp.android.Date
+import com.merp.android.R
+import kotlinx.android.synthetic.main.activity_edit_earning.*
 import kotlinx.android.synthetic.main.content_edit_earning.*
+import kotlinx.android.synthetic.main.fragment_entry.*
 import java.math.BigDecimal
 
 
@@ -25,22 +27,41 @@ class EditEarningActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        //spinnerSources (dropdown menu for sources)
-        val dropdownSources: Spinner = findViewById(R.id.spinnerSource)
-        dropdownSources.onItemSelectedListener
-        //TODO(): replace values, create a way to get sources from Database (create an ArrayList of sources in Database?)
-        val sources = arrayListOf<String>("", "Job", "Human trafficking", "Lottery")
-        val adapter: ArrayAdapter<String> = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sources)
-        dropdownSources.adapter = adapter
-
         //floating action button (save earning button)
         fab.setOnClickListener {
             var hasErrors = false
 
+
+            /**
+             * TODO(): add date selection widget (calendar)
+             * perhaps prevent user from entering a date via text box
+             * if so, enterDate error checking can be removed
+             *
+             * otherwise, add error checking for months and days:
+             * January - 31 days
+             * February - 28 days in a common year and 29 days in leap years
+             * March - 31 days
+             * April - 30 days
+             * May - 31 days
+             * June - 30 days
+             * July - 31 days
+             * August - 31 days
+             * September - 30 days
+             * October - 31 days
+             * November - 30 days
+             * December - 31 days
+             */
             //check if required fields are filled
-            if(enterDate.text.isEmpty()){
+            if(enterDate.text.isEmpty()){ //TODO(): add date selection widget (calendar)
                 enterDate.error = "Date required"
                 hasErrors = true
+            }else if(enterDate.text.length != 10 ||
+                    !enterDate.text.substring(0, 4).isDigitsOnly() ||
+                    !enterDate.text.substring(5, 7).isDigitsOnly() ||
+                    !enterDate.text.substring(8, 10).isDigitsOnly() ||
+                    enterDate.text[4] != '-' ||
+                    enterDate.text[7] != '-'){
+                enterDate.error = "YYYY-MM-DD format required"
             }
 
             if(spinnerSource.selectedItemId.toInt() == 0){
@@ -63,11 +84,24 @@ class EditEarningActivity : AppCompatActivity() {
 
             //DEBUGGING - check all information related to the first Earning object in the array
             //error checking (hasErrors variable) not implemented; will likely accept empty values ("" or null?)
-            val firstEarning = Database.earning[0]
+            /*val firstEarning = Database.earning[0]
             val debug = "Date: ${firstEarning.getDate().getFullDate()}, Source: ${firstEarning.getCategory()}, Amount: \$${firstEarning.getAmount()}, Additional Info: ${firstEarning.getAddInfo()}"
-            Log.d("EditEarningActivity", debug)
+            Log.d("EditEarningActivity", debug)*/
         }
+
+        val dropdownSources: Spinner = findViewById(R.id.spinnerSource)
+        dropdownSources.onItemSelectedListener
+        //TODO(): replace values, create a way to get sources from Database (create an ArrayList of sources in Database?)
+        val sources = arrayListOf<String>("", "Job", "Human trafficking", "Lottery")
+        val adapter: ArrayAdapter<String> = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sources)
+        dropdownSources.adapter = adapter
     }
+
+    /*override fun onStart() {
+        super.onStart()
+
+
+    }*/
 
     //hides the keyboard
     private fun hideSoftKeyboard(activity: Activity){
