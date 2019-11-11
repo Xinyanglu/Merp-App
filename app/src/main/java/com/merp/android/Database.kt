@@ -10,16 +10,29 @@ object Database {
     var expense = ArrayList<Expense>()
     var earning =  ArrayList<Earning>()
 
-    fun initLists(){
+    init{
+        //uses regex to split up every line into date, source, amount, and additional info
         File("earnings.txt").forEachLine {
-            var text = it
+            val text = it
+            val pattern = "[^@]+".toRegex()
+            var found = pattern.findAll(text).toList()
+            var date = Date(found[0].value)
+            var source = found[1].value
+            var amount = BigDecimal(found[2].value)
+            var addInfo = found[3].value
+            earning.add(Earning(date,source,amount,addInfo))
+        }
+
+        //initalizes expenses arraylist
+        File("expenses.txt").forEachLine{
+            val text = it
             val pattern = "[^@]+".toRegex()
             val found = pattern.findAll(text).toList()
             val date = Date(found[0].value)
             val source = found[1].value
-            val amount = BigDecimal(found[2].value.toString())
+            val amount = BigDecimal(found[2].value)
             val addInfo = found[3].value
-            earning.add(Earning(date,source,amount,addInfo))
+            expense.add(Expense(date,source,amount,addInfo))
         }
     }
 
@@ -27,7 +40,8 @@ object Database {
         expense.add(Expense(date, category, price, adi))
     }
 
-    fun addEarning(date: Date, source: String, amount: BigDecimal, adi: String) {
+    fun addEarning(date: Date, source: String, amount: BigDecimal, adi: String){
+
         earning.add(Earning(date, source, amount, adi))
     }
 
