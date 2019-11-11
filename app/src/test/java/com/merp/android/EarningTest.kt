@@ -12,9 +12,9 @@ class EarningTest {
     }
 
     @Test
-    fun testGetSource(){
+    fun testGetCategory(){
         val instance = Earning(Date(2019,3,23), "Job", BigDecimal("5"), "I hate my job")
-        Assertions.assertEquals("Job", instance.getSource())
+        Assertions.assertEquals("Job", instance.getCategory())
     }
 
     @Test
@@ -37,10 +37,10 @@ class EarningTest {
     }
 
     @Test
-    fun testSetSource(){
+    fun testSetCategory(){
         val instance = Earning(Date(2019,3,23), "Job", BigDecimal("5"), "I hate my job")
-        instance.setSource("Gambling")
-        Assertions.assertEquals("Gambling", instance.getSource())
+        instance.setCategory("Gambling")
+        Assertions.assertEquals("Gambling", instance.getCategory())
     }
 
     @Test
