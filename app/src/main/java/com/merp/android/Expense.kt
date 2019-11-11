@@ -40,4 +40,8 @@ class Expense(private var date: Date,
     fun setAddInfo(adi: String){
         addInfo = adi
     }
+
+    override fun toString(): String{
+        return (getDate().getFullDate() + getCategory() + getAmount() + getAddInfo())
+    }
 }

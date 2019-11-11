@@ -40,4 +40,8 @@ class Earning(private var date: Date,
     fun setCategory(c: String){
         category = c
     }
+
+    override fun toString(): String{
+        return (getDate().getFullDate() + getCategory() + getAmount() + getAddInfo())
+    }
 }
