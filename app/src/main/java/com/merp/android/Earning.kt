@@ -41,4 +41,8 @@ class Earning(private var date: Date,
     fun setSource(s: String){
         source = s
     }
+
+    override fun toString(): String{
+        return (this.getDate().getFullDate() + getSource() + getAmount() + getAddInfo())
+    }
 }

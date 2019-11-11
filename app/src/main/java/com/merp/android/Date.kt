@@ -2,7 +2,11 @@ package com.merp.android
 
 import java.time.*
 
-class Date constructor(year: Int, month: Int, day: Int) : Comparable<Date>{
+class Date : Comparable<Date>{
+    private var m = ""
+    private var y = ""
+    private var d = ""
+    private var date : LocalDate
 
     //Compares the dates and returns 1 which means larger, -1 means less, 0 means equal
     override fun compareTo(other: Date): Int{
@@ -15,27 +19,30 @@ class Date constructor(year: Int, month: Int, day: Int) : Comparable<Date>{
         return 0
     }
 
-    //If month is less than 10, add a 0 in front of the string of it
+    constructor(year: Int, month: Int, day: Int){
+        //If month is less than 10, add a 0 in front of the string of it
+        m = if (month<10){
+            "0${month}"
+        }else {
+            month.toString()
+        }
 
-    private var m = if (month<10){
-        "0${month}"
-    }else {
-        month.toString()
+        //If day is less than 10, add 0 in front of the string
+        d = if (day<10){
+            "0${day}"
+        }else{
+            day.toString()
+        }
+
+        //stores the year as a string
+        y = year.toString()
+
+        date = LocalDate.parse("${y}-${m}-${d}")
     }
 
-    //add 0 in front of day if less than 10
-    private var d = if (day<10){
-        "0${day}"
-    }else{
-        day.toString()
+    constructor(dateString: String){
+        date = LocalDate.parse(dateString)
     }
-
-    //stores the year string
-    private var y = year.toString()
-
-    //stores the date string
-
-    private var date = LocalDate.parse("${y}-${m}-${d}")
 
     //returns the value of the month (Ex. January returns 1)
     fun getMonth(): Int{

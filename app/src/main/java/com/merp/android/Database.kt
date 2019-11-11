@@ -7,8 +7,21 @@ import com.merp.android.Earning as Earning
 import com.merp.android.Expense as Expense
 
 object Database {
-    val expense = ArrayList<Expense>()
-    val earning = ArrayList<Earning>()
+    var expense = ArrayList<Expense>()
+    var earning =  ArrayList<Earning>()
+
+    fun initLists(){
+        File("earnings.txt").forEachLine {
+            var text = it
+            val pattern = "[^@]+".toRegex()
+            val found = pattern.findAll(text).toList()
+            val date = Date(found[0].value)
+            val source = found[1].value
+            val amount = BigDecimal(found[2].value.toString())
+            val addInfo = found[3].value
+            earning.add(Earning(date,source,amount,addInfo))
+        }
+    }
 
     fun addExpense(date: Date, category: String, price: BigDecimal, description: String, adi: String){
         expense.add(Expense(date,category,price,description,adi))
@@ -38,6 +51,4 @@ object Database {
     fun searchDateRange(start: Date, end: Date, list: ArrayList<Earning>): MutableList<Earning>{
         return list.subList(search(start,list,0,list.size-1),search(end,list,0,list.size-1)+1)
     }
-
-
 }
