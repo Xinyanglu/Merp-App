@@ -5,23 +5,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="30dp"
-    tools:context=".activities.EntryFragment">
+    tools:context=".activities.EditEntryFragment">
 
-    <TextView
-        android:id="@+id/textDate"
+    <DatePicker
+        android:id="@+id/datePicker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Date" />
-
-    <EditText
-        android:id="@+id/enterDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
-        android:ems="10"
-        android:hint="YYYY-MM-DD"
-        android:inputType="date"
-        android:textSize="20sp" />
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner" />
 
     <TextView
         android:id="@+id/textSource"

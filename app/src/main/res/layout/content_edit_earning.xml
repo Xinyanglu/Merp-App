@@ -4,17 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
+    android:onClick="hideKeyboard"
     android:orientation="vertical"
-    android:padding="30dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activities.EditEarningActivity"
-    tools:showIn="@layout/activity_edit_earning"
-    android:clickable="true"
-    android:onClick="backgroundClicked">
+    tools:showIn="@layout/activity_edit_earning">
 
     <fragment
-        android:id="@+id/entryFragment"
-        android:name="com.merp.android.activities.EntryFragment"
+        android:id="@+id/editEntryFragment"
+        android:name="com.merp.android.activities.EditEntryFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout="@layout/fragment_entry" />

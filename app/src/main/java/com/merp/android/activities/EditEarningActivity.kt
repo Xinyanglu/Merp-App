@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
+import android.widget.DatePicker
 import android.widget.Spinner
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
@@ -27,42 +28,18 @@ class EditEarningActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        val dp: DatePicker = findViewById(R.id.datePicker)
+
+        val dropdownSources: Spinner = findViewById(R.id.spinnerSource)
+        dropdownSources.onItemSelectedListener
+        //TODO(): replace values, create a way to get sources from Database (create an ArrayList of sources in Database?)
+        val sources = arrayListOf("", "Job", "Misusing donation funds", "Lottery")
+        val adapter: ArrayAdapter<String> = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sources)
+        dropdownSources.adapter = adapter
+
         //floating action button (save earning button)
         fab.setOnClickListener {
             var hasErrors = false
-
-
-            /**
-             * TODO(): add date selection widget (calendar)
-             * perhaps prevent user from entering a date via text box
-             * if so, enterDate error checking can be removed
-             *
-             * otherwise, add error checking for months and days:
-             * January - 31 days
-             * February - 28 days in a common year and 29 days in leap years
-             * March - 31 days
-             * April - 30 days
-             * May - 31 days
-             * June - 30 days
-             * July - 31 days
-             * August - 31 days
-             * September - 30 days
-             * October - 31 days
-             * November - 30 days
-             * December - 31 days
-             */
-            //check if required fields are filled
-            if(enterDate.text.isEmpty()){ //TODO(): add date selection widget (calendar)
-                enterDate.error = "Date required"
-                hasErrors = true
-            }else if(enterDate.text.length != 10 ||
-                    !enterDate.text.substring(0, 4).isDigitsOnly() ||
-                    !enterDate.text.substring(5, 7).isDigitsOnly() ||
-                    !enterDate.text.substring(8, 10).isDigitsOnly() ||
-                    enterDate.text[4] != '-' ||
-                    enterDate.text[7] != '-'){
-                enterDate.error = "YYYY-MM-DD format required"
-            }
 
             if(spinnerSource.selectedItemId.toInt() == 0){
                 textSource.error = "Source required"
@@ -75,42 +52,23 @@ class EditEarningActivity : AppCompatActivity() {
                 hasErrors = true
             }
 
+            //DatePicker indexes months starting at 0 (January), therefore +1
             if(!hasErrors){
-                val year = enterDate.text.substring(0, 4).toInt()
-                val month = enterDate.text.substring(5, 7).toInt()
-                val day = enterDate.text.substring(8, 10).toInt()
-                Database.addEarning(Date(year, month, day), spinnerSource.selectedItem.toString(), BigDecimal(enterAmount.text.toString()), enterAddInfo.text.toString())
+                Database.addEarning(Date(dp.year, dp.month+1, dp.dayOfMonth), spinnerSource.selectedItem.toString(), BigDecimal(enterAmount.text.toString()), enterAddInfo.text.toString())
             }
 
             //DEBUGGING - check all information related to the first Earning object in the array
             //error checking (hasErrors variable) not implemented; will likely accept empty values ("" or null?)
-            /*val firstEarning = Database.earning[0]
+            val firstEarning = Database.earning[0]
             val debug = "Date: ${firstEarning.getDate().getFullDate()}, Source: ${firstEarning.getCategory()}, Amount: \$${firstEarning.getAmount()}, Additional Info: ${firstEarning.getAddInfo()}"
-            Log.d("EditEarningActivity", debug)*/
+            Log.d("EditEarningActivity", debug)
         }
-
-        val dropdownSources: Spinner = findViewById(R.id.spinnerSource)
-        dropdownSources.onItemSelectedListener
-        //TODO(): replace values, create a way to get sources from Database (create an ArrayList of sources in Database?)
-        val sources = arrayListOf<String>("", "Job", "Human trafficking", "Lottery")
-        val adapter: ArrayAdapter<String> = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sources)
-        dropdownSources.adapter = adapter
     }
 
-    /*override fun onStart() {
-        super.onStart()
-
-
-    }*/
-
-    //hides the keyboard
-    private fun hideSoftKeyboard(activity: Activity){
-        val imm: InputMethodManager = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(activity.currentFocus?.windowToken, 0)
-    }
-
-    //when the background is clicked, call a method to hide the keyboard
-    fun backgroundClicked(v: View){
-        hideSoftKeyboard(this)
+    //when the background is clicked hides the keyboard
+    //onClick methods (called from xml file) must have one and only one parameter of View type
+    fun hideKeyboard(v: View){
+        val imm: InputMethodManager = this.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(this.currentFocus?.windowToken, 0)
     }
 }

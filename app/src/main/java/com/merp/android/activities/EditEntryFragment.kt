@@ -5,9 +5,10 @@ import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
 import com.merp.android.R
 
-class EntryFragment : Fragment() {
+class EditEntryFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
