@@ -42,6 +42,6 @@ class Earning(private var date: Date,
     }
 
     override fun toString(): String{
-        return (this.getDate().getFullDate() + getSource() + getAmount() + getAddInfo())
+        return (getDate().getFullDate() + getCategory() + getAmount() + getAddInfo())
     }
 }
