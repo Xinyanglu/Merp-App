@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true"
-    android:onClick="hideKeyboard"
+    android:onClick="onClick"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activities.EditEarningActivity"
@@ -16,5 +16,5 @@
         android:name="com.merp.android.activities.EditEntryFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout="@layout/fragment_entry" />
+        tools:layout="@layout/fragment_edit_entry" />
 </LinearLayout>
