@@ -5,22 +5,25 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.DatePicker
+import android.widget.Spinner
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import com.merp.android.Database
 import com.merp.android.Date
 import com.merp.android.R
-import kotlinx.android.synthetic.main.activity_edit_earning.*
+
+import kotlinx.android.synthetic.main.activity_edit_expense.*
 import kotlinx.android.synthetic.main.fragment_edit_entry.*
 import java.math.BigDecimal
 
-
-class EditEarningActivity : AppCompatActivity() {
+class EditExpenseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_edit_earning)
+        setContentView(R.layout.activity_edit_expense)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -30,7 +33,6 @@ class EditEarningActivity : AppCompatActivity() {
         //TODO(): change button icon to be a pencil (or something more "edit"-like) in the xml file?
         btnEditSources.setOnClickListener{
             layoutAddSource.visibility = View.VISIBLE
-            Log.d("EditEarningActivity", "btnEditSources clicked")
         }
 
         btnAddSource.setOnClickListener {
@@ -40,11 +42,10 @@ class EditEarningActivity : AppCompatActivity() {
                 //TODO(): add <enterNewSource.text.toString()> to ArrayList of sources
 
                 setSources()
-                Log.d("EditEarningActivity", enterNewSource.text.toString())
+                Log.d("EditExpenseActivity", enterNewSource.text.toString())
             }
         }
 
-        //floating action button (save earning button)
         fab.setOnClickListener {
             var hasErrors = false
 
@@ -62,12 +63,12 @@ class EditEarningActivity : AppCompatActivity() {
 
             //DatePicker indexes months starting at 0 (January), therefore +1
             if(!hasErrors){
-                Database.addEarning(Date(dp.year, dp.month+1, dp.dayOfMonth), spinnerSource.selectedItem.toString(), BigDecimal(enterAmount.text.toString()), enterAddInfo.text.toString())
+                Database.addExpense(Date(dp.year, dp.month+1, dp.dayOfMonth), spinnerSource.selectedItem.toString(), BigDecimal(enterAmount.text.toString()), enterAddInfo.text.toString())
 
-                //DEBUGGING - check if all the information of every stored earning is actually stored and retrievable
+                //DEBUGGING - check if all the information of every stored expense is actually stored and retrievable
                 //INFORMATION IS PROPERLY STORED (Nov. 12 ~10:40 p.m.)
-                for(i in Database.earning){
-                    Log.d("Entered Earnings", i.toString())
+                for(i in Database.expense){
+                    Log.d("Entered Expenses", i.toString())
                 }
             }
         }
@@ -102,7 +103,7 @@ class EditEarningActivity : AppCompatActivity() {
         }
 
         //TODO(): replace values, create a way to get sources from Database (create an ArrayList of sources in Database?)
-        val sources = arrayListOf("CHOOSE SOURCE", "Job", "Misusing donation funds", "Lottery")
+        val sources = arrayListOf("CHOOSE SOURCE", "Food", "Utilities", "Entertainment")
         val adapter: ArrayAdapter<String> = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sources)
         dropdownSources.adapter = adapter
     }

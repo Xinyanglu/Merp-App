@@ -5,4 +5,6 @@
     <string name="title_activity_earnings">Earnings</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_edit_earning">Edit Earning</string>
+    <string name="title_activity_expenses">Expenses</string>
+    <string name="title_activity_edit_expense">Edit Expense</string>
 </resources>
