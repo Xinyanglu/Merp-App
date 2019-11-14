@@ -30,7 +30,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Source"
+                android:text="@string/text_source"
                 android:focusable="true"
                 android:focusableInTouchMode="true" />
 
@@ -39,7 +39,7 @@
                 android:layout_width="48dp"
                 android:layout_height="40dp"
                 android:background="#00FFFFFF"
-                android:text="+" />
+                android:text="@string/btn_edit_sources" />
         </LinearLayout>
 
         <Spinner
@@ -53,7 +53,7 @@
             android:id="@+id/textAmountEarned"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Amount Earned" />
+            android:text="@string/text_amount_earned" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -65,7 +65,7 @@
                 android:id="@+id/textDollarSign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="$"
+                android:text="@string/text_dollar_sign"
                 android:textSize="20sp" />
 
             <EditText
@@ -73,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="0.00"
+                android:hint="@string/hint_enter_amount"
                 android:inputType="numberDecimal"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -82,7 +82,7 @@
             android:id="@+id/textAddInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Additional Information" />
+            android:text="@string/text_additional_info" />
 
         <EditText
             android:id="@+id/enterAddInfo"
@@ -115,7 +115,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Enter new source"
+            android:hint="@string/hint_enter_new_source"
             android:inputType="textPersonName" />
 
         <Button
@@ -123,7 +123,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Add" />
+            android:text="@string/btn_add_source" />
     </LinearLayout>
 
     <TextView

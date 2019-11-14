@@ -7,4 +7,19 @@
     <string name="title_activity_edit_earning">Edit Earning</string>
     <string name="title_activity_expenses">Expenses</string>
     <string name="title_activity_edit_expense">Edit Expense</string>
+
+    <!-- activity_main -->
+    <string name="text_edit_earnings">Edit Earnings</string>
+    <string name="text_edit_expenses">Edit Expenses</string>
+    <string name="text_view_reports">View Reports</string>
+
+    <!-- fragment_edit_entry -->
+    <string name="text_source">Source</string>
+    <string name="btn_edit_sources">+</string>
+    <string name="text_amount_earned">Amount Earned</string>
+    <string name="text_dollar_sign">$</string>
+    <string name="hint_enter_amount">0.00</string>
+    <string name="text_additional_info">Additional Information</string>
+    <string name="hint_enter_new_source">Enter new source</string>
+    <string name="btn_add_source">Add</string>
 </resources>
