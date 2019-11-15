@@ -7,7 +7,6 @@ import com.merp.android.R
 import android.content.Intent
 
 import kotlinx.android.synthetic.main.activity_earnings.*
-import kotlinx.android.synthetic.main.content_earnings.*
 
 class EarningsActivity : AppCompatActivity() {
 

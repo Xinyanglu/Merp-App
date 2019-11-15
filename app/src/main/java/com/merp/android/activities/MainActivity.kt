@@ -14,13 +14,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        mainDate.text = getDate().format(Date())
+        setDate()
+
         btnEarnings.setOnClickListener {
             startActivity(Intent(this, EarningsActivity::class.java))
         }
 
         btnExpenses.setOnClickListener {
-            TODO()
+            startActivity(Intent(this, ExpensesActivity::class.java))
         }
 
         btnReports.setOnClickListener {
@@ -30,9 +31,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        mainDate.text = getDate().format(Date())
+        setDate()
     }
 
-    //Gets current date in format: October 15, 2019
-    private fun getDate(): SimpleDateFormat = SimpleDateFormat("yyyy, MMMM dd", Locale.CANADA)
+    private fun setDate(){
+        val sdf = SimpleDateFormat("yyyy, MMMM dd", Locale.getDefault())
+        mainDate.text = sdf.format(Date())
+    }
 }
