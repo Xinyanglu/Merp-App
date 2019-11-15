@@ -1,6 +1,6 @@
 package com.merp.android
 
-import java.io.File
+import java.io.*
 import java.math.BigDecimal
 import com.merp.android.Date as Date
 import com.merp.android.Earning as Earning
@@ -12,41 +12,27 @@ object Database {
 
     init{
         //uses regex to split up every line into date, source, amount, and additional info
-        File("earnings.txt").forEachLine {
-            val text = it
-            val pattern = "[^@]+".toRegex()
-            var found = pattern.findAll(text).toList()
-            var date = Date(found[0].value)
-            var source = found[1].value
-            var amount = BigDecimal(found[2].value)
-            var addInfo = found[3].value
-            earning.add(Earning(date,source,amount,addInfo))
-        }
+        initEarning()
 
-        //initalizes expenses arraylist
-        File("expenses.txt").forEachLine{
-            val text = it
-            val pattern = "[^@]+".toRegex()
-            val found = pattern.findAll(text).toList()
-            val date = Date(found[0].value)
-            val source = found[1].value
-            val amount = BigDecimal(found[2].value)
-            val addInfo = found[3].value
-            expense.add(Expense(date,source,amount,addInfo))
-        }
+        //initializes expenses array list
+        initExpense()
+    }
+
+    fun writeExpense(line: Int, e: Expense){
+
     }
 
     fun addExpense(date: Date, category: String, price: BigDecimal, adi: String){
-        expense.add(Expense(date, category, price, adi))
+        expense.add(searchExpense(date,expense,0,expense.size-1), Expense(date, category, price, adi))
+
     }
 
     fun addEarning(date: Date, source: String, amount: BigDecimal, adi: String){
-
-        earning.add(Earning(date, source, amount, adi))
+        earning.add(searchEarning(date, earning,0,earning.size-1), Earning(date, source, amount, adi))
     }
 
     //returns the index value of the array to include in the range
-    fun search(date: Date, list: ArrayList<Earning>, min: Int, max: Int): Int{
+    fun searchEarning(date: Date, list: ArrayList<Earning>, min: Int, max: Int): Int{
         var i = (max+min)/2
         var d = list[i].getDate()
         if (max-min==1) {
@@ -55,14 +41,63 @@ object Database {
         }
 
         return when (d.compareTo(date)) {
-            1 ->  search(date, list, i, max)
-            -1 ->  search(date, list, min, i)
+            1 ->  searchEarning(date, list, i, max)
+            -1 ->  searchEarning(date, list, min, i)
+            else -> i
+        }
+    }
+
+    fun searchExpense(date: Date, list: ArrayList<Expense>, min: Int, max: Int): Int{
+        var i = (max+min)/2
+        var d = list[i].getDate()
+        if (max-min==1) {
+            return if (d.compareTo(date) == 1) i + 1
+            else i
+        }
+
+        return when (d.compareTo(date)) {
+            1 ->  searchExpense(date, list, i, max)
+            -1 ->  searchExpense(date, list, min, i)
             else -> i
         }
     }
 
     //returns a list of all the dates that are between the start and end date
-    fun searchDateRange(start: Date, end: Date, list: ArrayList<Earning>): MutableList<Earning>{
-        return list.subList(search(start,list,0,list.size-1),search(end,list,0,list.size-1)+1)
+    fun searchRangeEarning(start: Date, end: Date, list: ArrayList<Earning>): MutableList<Earning>{
+        return list.subList(searchEarning(start,list,0,list.size-1),searchEarning(end,list,0,list.size-1)+1)
+    }
+
+    fun searchRangeExpense(start: Date, end: Date, list: ArrayList<Expense>): MutableList<Expense>{
+        return list.subList(searchExpense(start,list,0,list.size-1), searchExpense(end,list,0,list.size-1)+1)
+    }
+
+    //Open expenses text file to read each line and add each line of information to the expense array list
+    fun initExpense(){
+        val f = File("expenses.txt").bufferedReader()
+        f.forEachLine {
+            val text = it
+            val pattern = "[^@]+".toRegex() // regex pattern where the character is not the '@' symbol which is what we use to separate info
+            val found = pattern.findAll(text).toList()
+            val date = Date(found[0].value)
+            val source = found[1].value
+            val amount = BigDecimal(found[2].value)
+            val addInfo = found[3].value
+            expense.add(Expense(date, source, amount, addInfo))
+        }
+    }
+
+    //Open earnings text file to read each line and add the information to the earning array list
+    fun initEarning(){
+        val f = File("earnings.txt").bufferedReader()
+        f.forEachLine {
+            val text = it
+            val pattern = "[^@]+".toRegex()
+            val found = pattern.findAll(text).toList()
+            val date = Date(found[0].value)
+            val source = found[1].value
+            val amount = BigDecimal(found[2].value)
+            val addInfo = found[3].value
+            earning.add(Earning(date,source,amount,addInfo))
+        }
     }
 }
