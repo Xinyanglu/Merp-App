@@ -18,8 +18,23 @@ object Database {
         initExpense()
     }
 
-    fun writeExpense(line: Int, e: Expense){
+    fun writeExpense(){
+        val w = File("expenses.txt").bufferedWriter()
+        w.use{ out->
+            for (i in expense){
+                out.write(i.toString() + "\n")
+            }
+        }
+    }
 
+    fun writeEarning(){
+        val w = File("earnings.txt").bufferedWriter()
+        w.use{out->
+            for (i in earning){
+                out.write(i.toString() + "\n")
+            }
+
+        }
     }
 
     fun addExpense(date: Date, category: String, price: BigDecimal, adi: String){
