@@ -92,7 +92,7 @@ object Database {
 
     //Open expenses text file to read each line and add each line of information to the expense array list
     fun initExpense(){
-        val f = File("expenses.txt").bufferedReader()
+        val f = File(".\\expenses.txt").bufferedReader()
         f.forEachLine {
             val text = it
             val pattern = "[^@]+".toRegex() // regex pattern where the character is not the '@' symbol which is what we use to separate info
@@ -108,7 +108,7 @@ object Database {
 
     //Open earnings text file to read each line and add the information to the earning array list
     fun initEarning(){
-        val f = File("earnings.txt").bufferedReader()
+        val f = File(".\\earnings.txt").bufferedReader()
         f.forEachLine {
             val text = it
             val pattern = "[^@]+".toRegex()
