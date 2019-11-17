@@ -39,11 +39,13 @@ object Database {
 
     fun addExpense(date: Date, category: String, price: BigDecimal, adi: String){
         expense.add(searchExpense(date,expense,0,expense.size-1), Expense(date, category, price, adi))
+        writeExpense()
 
     }
 
     fun addEarning(date: Date, source: String, amount: BigDecimal, adi: String){
         earning.add(searchEarning(date, earning,0,earning.size-1), Earning(date, source, amount, adi))
+        writeEarning()
     }
 
     //returns the index value of the array to include in the range
