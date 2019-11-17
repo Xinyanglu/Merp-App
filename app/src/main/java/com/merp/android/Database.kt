@@ -9,6 +9,8 @@ import com.merp.android.Expense as Expense
 object Database {
     var expense = ArrayList<Expense>()
     var earning =  ArrayList<Earning>()
+    private const val earnings_file = "src/main/java/com/merp/android/earnings.txt"
+    private const val expenses_file = "src/main/java/com/merp/android/expenses.txt"
 
     init{
         //uses regex to split up every line into date, source, amount, and additional info
@@ -19,7 +21,7 @@ object Database {
     }
 
     fun writeExpense(){
-        val w = File("expenses.txt").bufferedWriter()
+        val w = File(expenses_file).bufferedWriter()
         w.use{ out->
             for (i in expense){
                 out.write(i.toString() + "\n")
@@ -29,7 +31,7 @@ object Database {
     }
 
     fun writeEarning(){
-        val w = File("earnings.txt").bufferedWriter()
+        val w = File(earnings_file).bufferedWriter()
         w.use{out->
             for (i in earning){
                 out.write(i.toString() + "\n")
@@ -92,7 +94,7 @@ object Database {
 
     //Open expenses text file to read each line and add each line of information to the expense array list
     fun initExpense(){
-        val f = File(".\\expenses.txt").bufferedReader()
+        val f = File(expenses_file).bufferedReader()
         f.forEachLine {
             val text = it
             val pattern = "[^@]+".toRegex() // regex pattern where the character is not the '@' symbol which is what we use to separate info
@@ -108,7 +110,7 @@ object Database {
 
     //Open earnings text file to read each line and add the information to the earning array list
     fun initEarning(){
-        val f = File(".\\earnings.txt").bufferedReader()
+        val f = File(earnings_file).bufferedReader()
         f.forEachLine {
             val text = it
             val pattern = "[^@]+".toRegex()
