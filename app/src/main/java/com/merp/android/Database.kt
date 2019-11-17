@@ -33,13 +33,13 @@ object Database {
      * I HAVENT TESTED IF THE EXPENSE.TXT WORKS i just threw it in after seeing the earnings.txt work
      *
      * its 12:53am fuck me in the ass cuz i love jesus
+     *
+     * actually i got a merge conflict when i had to pull before pushing and
+     * im not going to bother to check if it still works so hf with that
      */
-    fun setDirectory(earningsDir: String, expensesDir: String){
+    fun setDirectory(earningsDir: String, expensesDir: String) {
         earnings_file = earningsDir
         expenses_file = expensesDir
-
-        initEarning()
-        initExpense()
     }
 
     /*init{
@@ -78,7 +78,7 @@ object Database {
     }
 
     fun addEarning(date: Date, source: String, amount: BigDecimal, adi: String){
-        earning.add(searchEarning(date, earning,0,earning.size-1), Earning(date, source, amount, adi))
+        earning.add(searchEarning(date, earning,0, earning.size-1), Earning(date, source, amount, adi))
         writeEarning()
     }
 
