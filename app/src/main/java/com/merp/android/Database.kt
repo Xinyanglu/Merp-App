@@ -17,7 +17,7 @@ object Database {
         initEarning()
 
         //initializes expenses array list
-        initExpense()
+        //initExpense()
     }
 
     fun writeExpense(){
@@ -54,6 +54,7 @@ object Database {
 
     //returns the index value of the array to include in the range
     fun searchEarning(date: Date, list: ArrayList<Earning>, min: Int, max: Int): Int{
+        if(earning.isEmpty()) return 0
         var i = (max+min)/2
         var d = list[i].getDate()
         if (max-min==1) {

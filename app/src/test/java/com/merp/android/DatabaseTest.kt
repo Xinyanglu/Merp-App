@@ -13,6 +13,6 @@ class DatabaseTest {
 
         Database.initEarning()
 
-        Assertions.assertEquals("3000-01-30Job500.52addinfo", Database.earning[0].toString())
+        Assertions.assertEquals("2005-05-15@Job@500.52@add info", Database.earning[0].toString())
     }
 }
