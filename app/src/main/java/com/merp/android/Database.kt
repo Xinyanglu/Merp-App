@@ -25,6 +25,7 @@ object Database {
                 out.write(i.toString() + "\n")
             }
         }
+        w.close()
     }
 
     fun writeEarning(){
@@ -35,6 +36,7 @@ object Database {
             }
 
         }
+        w.close()
     }
 
     fun addExpense(date: Date, category: String, price: BigDecimal, adi: String){
@@ -101,6 +103,7 @@ object Database {
             val addInfo = found[3].value
             expense.add(Expense(date, source, amount, addInfo))
         }
+        f.close()
     }
 
     //Open earnings text file to read each line and add the information to the earning array list
@@ -116,5 +119,6 @@ object Database {
             val addInfo = found[3].value
             earning.add(Earning(date,source,amount,addInfo))
         }
+        f.close()
     }
 }
