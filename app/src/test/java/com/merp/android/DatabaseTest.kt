@@ -7,7 +7,9 @@ class DatabaseTest {
 
     @Test
     fun testWriteEarning() {
+        //if the test isn't working, completely erase everything in earnings.txt I'm lazy
         Database.addEarning(Date(2005, 5, 15), "Job", BigDecimal("500.52"), "add info")
+        Database.addEarning(Date(3000, 2, 13), "Job", BigDecimal("500.52"), "add info")
 
         Database.earning.clear()
 

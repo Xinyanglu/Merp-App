@@ -22,7 +22,7 @@ object Database {
     }
 
     fun writeExpense(){
-        val w = File(expenses_file).bufferedWriter()
+        val w = BufferedWriter(FileWriter(expenses_file, false))
         w.use{ out->
             for (i in expense){
                 out.write(i.toString() + "\n")
@@ -33,7 +33,7 @@ object Database {
     }
 
     fun writeEarning(){
-        val w = File(earnings_file).bufferedWriter()
+        val w = BufferedWriter(FileWriter(earnings_file, false))
         w.use{out->
             for (i in earning){
                 out.write(i.toString() + "\n")
@@ -58,12 +58,12 @@ object Database {
         if(earning.isEmpty()) return 0
         var i = (max+min)/2
         var d = list[i].getDate()
-        if (max-min==1) {
-            return if (d.compareTo(date) == 1) i + 1
+        if (max-min<1) {
+            return if (date.compareTo(d) == 1) i + 1
             else i
         }
 
-        return when (d.compareTo(date)) {
+        return when (date.compareTo(d)) {
             1 ->  searchEarning(date, list, i, max)
             -1 ->  searchEarning(date, list, min, i)
             else -> i
@@ -74,12 +74,12 @@ object Database {
         if(expense.isEmpty()) return 0
         var i = (max+min)/2
         var d = list[i].getDate()
-        if (max-min==1) {
-            return if (d.compareTo(date) == 1) i + 1
+        if (max-min<1) {
+            return if (date.compareTo(d) == 1) i + 1
             else i
         }
 
-        return when (d.compareTo(date)) {
+        return when (date.compareTo(d)) {
             1 ->  searchExpense(date, list, i, max)
             -1 ->  searchExpense(date, list, min, i)
             else -> i
@@ -97,7 +97,7 @@ object Database {
 
     //Open expenses text file to read each line and add each line of information to the expense array list
     fun initExpense(){
-        val f = File(expenses_file).bufferedReader()
+        val f = BufferedReader(FileReader(expenses_file))
         f.forEachLine {
             val text = it
             val pattern = "[^@]+".toRegex() // regex pattern where the character is not the '@' symbol which is what we use to separate info
@@ -113,7 +113,8 @@ object Database {
 
     //Open earnings text file to read each line and add the information to the earning array list
     fun initEarning(){
-        val f = File(earnings_file).bufferedReader()
+        val f = BufferedReader(FileReader(earnings_file))
+
         f.forEachLine {
             val text = it
             val pattern = "[^@]+".toRegex()
