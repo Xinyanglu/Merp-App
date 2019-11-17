@@ -48,7 +48,7 @@ object Database {
     }
 
     fun addEarning(date: Date, source: String, amount: BigDecimal, adi: String){
-        earning.add(searchEarning(date, earning,0,earning.size-1), Earning(date, source, amount, adi))
+        earning.add(searchEarning(date, earning,0, earning.size-1), Earning(date, source, amount, adi))
         writeEarning()
     }
 
