@@ -14,10 +14,12 @@ object Database {
 
     init{
         //uses regex to split up every line into date, source, amount, and additional info
+        FileWriter(earnings_file, false).close()
         initEarning()
 
         //initializes expenses array list
-        //initExpense()
+        FileWriter(expenses_file, false).close()
+        initExpense()
     }
 
     fun writeExpense(){
@@ -25,6 +27,7 @@ object Database {
         w.use{ out->
             for (i in expense){
                 out.write(i.toString() + "\n")
+
             }
         }
         w.close()
@@ -36,7 +39,6 @@ object Database {
             for (i in earning){
                 out.write(i.toString() + "\n")
             }
-
         }
         w.close()
     }
@@ -70,6 +72,7 @@ object Database {
     }
 
     fun searchExpense(date: Date, list: ArrayList<Expense>, min: Int, max: Int): Int{
+        if(expense.isEmpty()) return 0
         var i = (max+min)/2
         var d = list[i].getDate()
         if (max-min==1) {
