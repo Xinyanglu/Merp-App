@@ -1,5 +1,7 @@
 package com.merp.android
 
+import android.os.Environment
+import android.util.Log
 import java.io.*
 import java.math.BigDecimal
 import com.merp.android.Date as Date
@@ -9,18 +11,44 @@ import com.merp.android.Expense as Expense
 object Database {
     var expense = ArrayList<Expense>()
     var earning =  ArrayList<Earning>()
-    private const val earnings_file = "src/main/java/com/merp/android/earnings.txt"
-    private const val expenses_file = "src/main/java/com/merp/android/expenses.txt"
 
-    init{
+    //private const val earnings_file = "src/main/java/com/merp/android/earnings.txt"
+    //private const val expenses_file = "src/main/java/com/merp/android/expenses.txt"
+
+    private var earnings_file = ""
+    private var expenses_file = ""
+
+
+    /**
+     * --------------------HELLO----------------------
+     * as far as i can tell, this is working properly
+     * the values are found in MainActivity.kt
+     * i left the init and old file dir variables commented out just in case
+     *
+     * HOWEVER: i dont think this is saving to the same earnings/expenses.txt files that we made
+     * if you use the "File" app on the AVD and press "Show Internal Storage" in the settings and navigate to it
+     * you should see find "entries>earnings.txt" under "Android SDK built for x86 or something like that
+     *
+     * but it seems to be read/writing properly with this other file anyways
+     * I HAVENT TESTED IF THE EXPENSE.TXT WORKS i just threw it in after seeing the earnings.txt work
+     *
+     * its 12:53am fuck me in the ass cuz i love jesus
+     */
+    fun setDirectory(earningsDir: String, expensesDir: String){
+        earnings_file = earningsDir
+        expenses_file = expensesDir
+
+        initEarning()
+        initExpense()
+    }
+
+    /*init{
         //uses regex to split up every line into date, source, amount, and additional info
-
         initEarning()
 
         //initializes expenses array list
-
-        initExpense()
-    }
+        //initExpense()
+    }*/
 
     fun writeExpense(){
         val w = BufferedWriter(FileWriter(expenses_file, false))
