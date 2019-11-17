@@ -13,12 +13,11 @@ object Database {
     private const val expenses_file = "src/main/java/com/merp/android/expenses.txt"
 
     init{
-        //uses regex to split up every line into date, source, amount, and additional info
-        FileWriter(earnings_file, false).close()
+
         initEarning()
 
         //initializes expenses array list
-        FileWriter(expenses_file, false).close()
+
         initExpense()
     }
 
