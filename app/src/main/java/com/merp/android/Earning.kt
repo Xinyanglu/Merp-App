@@ -41,7 +41,11 @@ class Earning(private var date: Date,
         category = c
     }
 
-    override fun toString(): String{
+    fun toFile(): String{
         return (getDate().getFullDate() + "@" + getCategory() + "@" + getAmount() + "@" + getAddInfo())
+    }
+
+    override fun toString(): String{
+        return (getDate().getFullDate() + ", " + getCategory() + ", " + getAmount() + ", " + getAddInfo())
     }
 }

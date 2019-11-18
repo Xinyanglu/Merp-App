@@ -39,7 +39,8 @@ class MainActivity : AppCompatActivity() {
         val expensesFile = File(entriesFolder.absolutePath, "/expenses.txt")
         if(!expensesFile.exists()) expensesFile.createNewFile()
         Database.setDirectory(earningsFile.absolutePath, expensesFile.absolutePath)
-
+        Database.initEarning()
+        Database.initExpense()
         setDate()
 
         btnEarnings.setOnClickListener {

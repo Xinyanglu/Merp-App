@@ -41,7 +41,11 @@ class Expense(private var date: Date,
         addInfo = adi
     }
 
-    override fun toString(): String{
+    fun toFile(): String{
         return (getDate().getFullDate() + "@" + getCategory() + "@" + getAmount() + "@" + getAddInfo())
+    }
+
+    override fun toString(): String{
+        return (getDate().getFullDate() + ", " + getCategory() + ", " + getAmount() + ", " + getAddInfo())
     }
 }

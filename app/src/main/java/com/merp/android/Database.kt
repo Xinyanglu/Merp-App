@@ -18,7 +18,6 @@ object Database {
     private var earnings_file = ""
     private var expenses_file = ""
 
-
     /**
      * --------------------HELLO----------------------
      * as far as i can tell, this is working properly
@@ -42,19 +41,20 @@ object Database {
         expenses_file = expensesDir
     }
 
-    /*init{
-        //uses regex to split up every line into date, source, amount, and additional info
-        initEarning()
+    fun getEarnings(): ArrayList<Earning>{
+        return earning
+    }
 
-        //initializes expenses array list
-        //initExpense()
-    }*/
+    fun getExpenses(): ArrayList<Expense>{
+        return expense
+    }
+
 
     fun writeExpense(){
         val w = BufferedWriter(FileWriter(expenses_file, false))
         w.use{ out->
             for (i in expense){
-                out.write(i.toString() + "\n")
+                out.write(i.toFile() + "\n")
 
             }
         }
@@ -65,7 +65,7 @@ object Database {
         val w = BufferedWriter(FileWriter(earnings_file, false))
         w.use{out->
             for (i in earning){
-                out.write(i.toString() + "\n")
+                out.write(i.toFile() + "\n")
             }
         }
         w.close()
@@ -74,7 +74,6 @@ object Database {
     fun addExpense(date: Date, category: String, price: BigDecimal, adi: String){
         expense.add(searchExpense(date,expense,0,expense.size-1), Expense(date, category, price, adi))
         writeExpense()
-
     }
 
     fun addEarning(date: Date, source: String, amount: BigDecimal, adi: String){
@@ -87,7 +86,7 @@ object Database {
         if(earning.isEmpty()) return 0
         var i = (max+min)/2
         var d = list[i].getDate()
-        if (max-min<1) {
+        if (max-min<=1) {
             return if (date.compareTo(d) == 1) i + 1
             else i
         }
@@ -103,7 +102,7 @@ object Database {
         if(expense.isEmpty()) return 0
         var i = (max+min)/2
         var d = list[i].getDate()
-        if (max-min<1) {
+        if (max-min<=1) {
             return if (date.compareTo(d) == 1) i + 1
             else i
         }
@@ -126,33 +125,39 @@ object Database {
 
     //Open expenses text file to read each line and add each line of information to the expense array list
     fun initExpense(){
+        expense.clear()
         val f = BufferedReader(FileReader(expenses_file))
         f.forEachLine {
             val text = it
-            val pattern = "[^@]+".toRegex() // regex pattern where the character is not the '@' symbol which is what we use to separate info
-            val found = pattern.findAll(text).toList()
-            val date = Date(found[0].value)
-            val source = found[1].value
-            val amount = BigDecimal(found[2].value)
-            val addInfo = found[3].value
-            expense.add(Expense(date, source, amount, addInfo))
+            if (text.isNotBlank()) {
+                val pattern =
+                    "[^@]+".toRegex() // regex pattern where the character is not the '@' symbol which is what we use to separate info
+                val found = pattern.findAll(text).toList()
+                val date = Date(found[0].value)
+                val source = found[1].value
+                val amount = BigDecimal(found[2].value)
+                val addInfo = found[3].value
+                expense.add(Expense(date, source, amount, addInfo))
+            }
         }
         f.close()
     }
 
     //Open earnings text file to read each line and add the information to the earning array list
     fun initEarning(){
+        earning.clear()
         val f = BufferedReader(FileReader(earnings_file))
-
         f.forEachLine {
             val text = it
-            val pattern = "[^@]+".toRegex()
-            val found = pattern.findAll(text).toList()
-            val date = Date(found[0].value)
-            val source = found[1].value
-            val amount = BigDecimal(found[2].value)
-            val addInfo = found[3].value
-            earning.add(Earning(date,source,amount,addInfo))
+            if (text.isNotBlank()) {
+                val pattern = "[^@]+".toRegex()
+                val found = pattern.findAll(text).toList()
+                val date = Date(found[0].value)
+                val source = found[1].value
+                val amount = BigDecimal(found[2].value)
+                val addInfo = found[3].value
+                earning.add(Earning(date, source, amount, addInfo))
+            }
         }
         f.close()
     }

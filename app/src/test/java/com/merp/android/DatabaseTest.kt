@@ -14,7 +14,6 @@ class DatabaseTest {
         Database.earning.clear()
 
         Database.initEarning()
-
         Assertions.assertEquals("2005-05-15@Job@500.52@add info", Database.earning[0].toString())
 
     }
