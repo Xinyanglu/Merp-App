@@ -31,10 +31,5 @@
         app:maxImageSize="40dp"
         app:srcCompat="@android:drawable/ic_input_add" />
 
-    <ListView
-        android:id="@+id/listview_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

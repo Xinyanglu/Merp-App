@@ -19,11 +19,11 @@ class ExpensesActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         var array = Database.getExpenses()
-        var listView: ListView = findViewById(R.id.listview_1)
+        var listView: ListView = findViewById(R.id.listExpenses)
 
         //creates adapter that uses items from earnings array and puts it into listview widget
-        var adapter = ArrayAdapter(this, R.layout.listview_expenses, array)
-        listView.setAdapter(adapter)
+        var adapter = ArrayAdapter(this, R.layout.fragment_entries_list, array)
+        listView.adapter = adapter
 
         fab.setOnClickListener {
             startActivity(Intent(this, EditExpenseActivity::class.java))

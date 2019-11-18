@@ -1,14 +1,12 @@
 package com.merp.android.activities
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import com.merp.android.R
 import android.content.Intent
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import com.merp.android.Database
-import com.merp.android.Earning
 
 import kotlinx.android.synthetic.main.activity_earnings.*
 
@@ -19,11 +17,11 @@ class EarningsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_earnings)
 
         var array = Database.getEarnings()
-        var listView:ListView = findViewById(R.id.listview_1)
+        var listView:ListView = findViewById(R.id.listEarnings)
 
         //creates adapter that uses items from earnings array and puts it into listview widget
-        var adapter = ArrayAdapter(this, R.layout.listview_earnings, array)
-        listView.setAdapter(adapter)
+        var adapter = ArrayAdapter(this, R.layout.fragment_entries_list, array)
+        listView.adapter = adapter
 
         setSupportActionBar(toolbar)
 
