@@ -24,6 +24,7 @@ class EditEarningActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        textAmount.text = resources.getString(R.string.text_amount_earned)
         val dp: DatePicker = findViewById(R.id.datePicker)
         setSources()
 

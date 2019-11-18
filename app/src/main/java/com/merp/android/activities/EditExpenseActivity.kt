@@ -27,6 +27,7 @@ class EditExpenseActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        textAmount.text = resources.getString(R.string.text_amount_spent)
         val dp: DatePicker = findViewById(R.id.datePicker)
         setSources()
 
