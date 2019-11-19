@@ -83,6 +83,10 @@ object Database {
 
     //returns the index value of the array to include in the range
     fun searchEarning(date: Date, list: ArrayList<Earning>, min: Int, max: Int): Int{
+        if (date.compareTo(list[max].getDate()) == 1){
+            return list.size
+        }
+
         if(earning.isEmpty()) return 0
         var i = (max+min)/2
         var d = list[i].getDate()
@@ -99,6 +103,10 @@ object Database {
     }
 
     fun searchExpense(date: Date, list: ArrayList<Expense>, min: Int, max: Int): Int{
+        if (date.compareTo(list[max].getDate()) == 1){
+            return list.size
+        }
+
         if(expense.isEmpty()) return 0
         var i = (max+min)/2
         var d = list[i].getDate()
@@ -136,7 +144,10 @@ object Database {
                 val date = Date(found[0].value)
                 val source = found[1].value
                 val amount = BigDecimal(found[2].value)
-                val addInfo = found[3].value
+                var addInfo = ""
+                try{
+                    addInfo = " " + found[3].value
+                }catch(e: Exception){}
                 expense.add(Expense(date, source, amount, addInfo))
             }
         }
@@ -155,7 +166,10 @@ object Database {
                 val date = Date(found[0].value)
                 val source = found[1].value
                 val amount = BigDecimal(found[2].value)
-                val addInfo = found[3].value
+                var addInfo = ""
+                try{
+                    addInfo = found[3].value
+                }catch(e: Exception){}
                 earning.add(Earning(date, source, amount, addInfo))
             }
         }
