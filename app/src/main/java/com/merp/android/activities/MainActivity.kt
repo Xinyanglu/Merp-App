@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setDate()
 
         //TODO(): check if these permission requests are necessary
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
@@ -34,14 +35,22 @@ class MainActivity : AppCompatActivity() {
         //---------------------THE FILE IO THING----------------------
         val entriesFolder = File(Environment.getExternalStorageDirectory(), "/entries")
         if(!entriesFolder.exists()) entriesFolder.mkdirs()
+
         val earningsFile = File(entriesFolder.absolutePath, "/earnings.txt")
         if(!earningsFile.exists()) earningsFile.createNewFile()
+
         val expensesFile = File(entriesFolder.absolutePath, "/expenses.txt")
         if(!expensesFile.exists()) expensesFile.createNewFile()
-        Database.setDirectory(earningsFile.absolutePath, expensesFile.absolutePath)
-        Database.initEarning()
-        Database.initExpense()
-        setDate()
+
+        val earningsSourcesFile = File(entriesFolder.absolutePath, "/earningsSources.txt")
+        if(!earningsSourcesFile.exists()) earningsSourcesFile.createNewFile()
+
+        val expensesSourcesFile = File(entriesFolder.absolutePath, "/expensesSources.txt")
+        if(!expensesSourcesFile.exists()) expensesSourcesFile.createNewFile()
+
+        Database.setDirectories(earningsFile.absolutePath, expensesFile.absolutePath, earningsSourcesFile.absolutePath, expensesSourcesFile.absolutePath)
+        Database.readEarnings()
+        Database.readExpenses()
 
         btnEarnings.setOnClickListener {
             startActivity(Intent(this, EarningsActivity::class.java))
@@ -52,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnReports.setOnClickListener {
-            TODO()
+            //TODO(): create activity for reports and implement this listener
         }
     }
 
@@ -66,3 +75,12 @@ class MainActivity : AppCompatActivity() {
         mainDate.text = sdf.format(Date())
     }
 }
+
+/**
+ * TODO
+ * perhaps change this activity's layout to have a drawer(?) functionality?
+ * get the drawer to display an expandable list view to display things like
+ * Earnings>View Earnings/Edit Earnings/Edit Sources of Earnings
+ * Expenses>View Expenses/Edit Expenses/Edit Sources of Expenses
+ * Reports>View Reports/???
+ */

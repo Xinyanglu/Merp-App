@@ -8,6 +8,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isEmpty
 import com.merp.android.Database
 import com.merp.android.Date
 import com.merp.android.R
@@ -38,8 +39,7 @@ class EditEarningActivity : AppCompatActivity() {
             if(enterNewSource.text.isEmpty()){
                 enterNewSource.error = "Field is empty"
             }else{
-                //TODO(): add <enterNewSource.text.toString()> to ArrayList of sources
-
+                Database.addEarningsSource(enterNewSource.text.toString())
                 setSources()
                 Log.d("EditEarningActivity", enterNewSource.text.toString())
             }
@@ -49,11 +49,11 @@ class EditEarningActivity : AppCompatActivity() {
         fab.setOnClickListener {
             var hasErrors = false
 
-            if(spinnerSource.selectedItemId.toInt() == 0){
+            if(spinnerSource.isEmpty()){
                 spinnerError.requestFocus()
                 spinnerError.error = "Source required"
                 hasErrors = true
-            } //TODO(): find a way to actually display the error message (currently does not properly display)
+            }
             else textSource.error = null //required as this will not be done automatically
 
             if(enterAmount.text.isEmpty()){
@@ -67,7 +67,7 @@ class EditEarningActivity : AppCompatActivity() {
 
                 //DEBUGGING - check if all the information of every stored earning is actually stored and retrievable
                 //INFORMATION IS PROPERLY STORED (Nov. 12 ~10:40 p.m.)
-                for(i in Database.earning){
+                for(i in Database.getEarnings()){
                     Log.d("Entered Earnings", i.toString())
                 }
             }
@@ -102,8 +102,8 @@ class EditEarningActivity : AppCompatActivity() {
             }
         }
 
-        //TODO(): replace values, create a way to get sources from Database (create an ArrayList of sources in Database?)
-        val sources = arrayListOf("CHOOSE SOURCE", "Job", "Misusing donation funds", "Lottery")
+        Database.readEarningsSources()
+        val sources: ArrayList<String> = Database.getEarningsSources()
         val adapter: ArrayAdapter<String> = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sources)
         dropdownSources.adapter = adapter
     }
