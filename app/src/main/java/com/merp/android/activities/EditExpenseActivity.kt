@@ -11,6 +11,7 @@ import android.widget.DatePicker
 import android.widget.Spinner
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isEmpty
 import com.merp.android.Database
 import com.merp.android.Date
 import com.merp.android.R
@@ -40,8 +41,7 @@ class EditExpenseActivity : AppCompatActivity() {
             if(enterNewSource.text.isEmpty()){
                 enterNewSource.error = "Field is empty"
             }else{
-                //TODO(): add <enterNewSource.text.toString()> to ArrayList of sources
-
+                Database.addExpensesSource(enterNewSource.text.toString())
                 setSources()
                 Log.d("EditExpenseActivity", enterNewSource.text.toString())
             }
@@ -50,11 +50,11 @@ class EditExpenseActivity : AppCompatActivity() {
         fab.setOnClickListener {
             var hasErrors = false
 
-            if(spinnerSource.selectedItemId.toInt() == 0){
+            if(spinnerSource.isEmpty()){
                 spinnerError.requestFocus()
                 spinnerError.error = "Source required"
                 hasErrors = true
-            } //TODO(): find a way to actually display the error message (currently does not properly display)
+            }
             else textSource.error = null //required as this will not be done automatically
 
             if(enterAmount.text.isEmpty()){
@@ -68,7 +68,7 @@ class EditExpenseActivity : AppCompatActivity() {
 
                 //DEBUGGING - check if all the information of every stored expense is actually stored and retrievable
                 //INFORMATION IS PROPERLY STORED (Nov. 12 ~10:40 p.m.)
-                for(i in Database.expense){
+                for(i in Database.getExpenses()){
                     Log.d("Entered Expenses", i.toString())
                 }
             }
@@ -92,7 +92,6 @@ class EditExpenseActivity : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 //do nothing
             }
-
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -103,8 +102,8 @@ class EditExpenseActivity : AppCompatActivity() {
             }
         }
 
-        //TODO(): replace values, create a way to get sources from Database (create an ArrayList of sources in Database?)
-        val sources = arrayListOf("CHOOSE SOURCE", "Food", "Utilities", "Entertainment")
+        Database.readExpensesSources()
+        val sources: ArrayList<String> = Database.getExpensesSources()
         val adapter: ArrayAdapter<String> = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sources)
         dropdownSources.adapter = adapter
     }
