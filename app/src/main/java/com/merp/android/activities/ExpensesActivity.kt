@@ -17,18 +17,26 @@ class ExpensesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_expenses)
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        var array = Database.getExpenses()
-        var listView: ListView = findViewById(R.id.listExpenses)
-
-        //creates adapter that uses items from earnings array and puts it into listview widget
-        var adapter = ArrayAdapter(this, R.layout.fragment_entries_list, array)
-        listView.adapter = adapter
+        updateList()
 
         fab.setOnClickListener {
             startActivity(Intent(this, EditExpenseActivity::class.java))
         }
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
+    override fun onResume() {
+        super.onResume()
+        updateList()
+    }
+
+    private fun updateList(){
+        val array = Database.getExpenses()
+        val listView: ListView = findViewById(R.id.listExpenses)
+
+        //creates adapter that uses items from earnings array and puts it into listview widget
+        val adapter = ArrayAdapter(this, R.layout.fragment_entries_list, array)
+        listView.adapter = adapter
+    }
 }
