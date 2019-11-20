@@ -15,22 +15,29 @@ class EarningsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_earnings)
-
-        var array = Database.getEarnings()
-        var listView:ListView = findViewById(R.id.listEarnings)
-
-        //creates adapter that uses items from earnings array and puts it into listview widget
-        var adapter = ArrayAdapter(this, R.layout.fragment_entries_list, array)
-        listView.adapter = adapter
-
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        updateList()
 
         fab.setOnClickListener {
             startActivity(Intent(this, EditEarningActivity::class.java))
         }
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
+    override fun onResume() {
+        super.onResume()
+        updateList()
+    }
+
+    private fun updateList(){
+        val array = Database.getEarnings()
+        val listView: ListView = findViewById(R.id.listEarnings)
+
+        //creates adapter that uses items from earnings array and puts it into listview widget
+        val adapter = ArrayAdapter(this, R.layout.fragment_entries_list, array)
+        listView.adapter = adapter
+    }
 
     /*
     TODO():

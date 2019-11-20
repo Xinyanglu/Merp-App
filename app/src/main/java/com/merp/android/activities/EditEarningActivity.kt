@@ -70,6 +70,7 @@ class EditEarningActivity : AppCompatActivity() {
                 for(i in Database.getEarnings()){
                     Log.d("Entered Earnings", i.toString())
                 }
+                finish()
             }
         }
     }

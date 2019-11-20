@@ -67,10 +67,10 @@ class EditExpenseActivity : AppCompatActivity() {
                 Database.addExpense(Date(dp.year, dp.month+1, dp.dayOfMonth), spinnerSource.selectedItem.toString(), BigDecimal(enterAmount.text.toString()), enterAddInfo.text.toString())
 
                 //DEBUGGING - check if all the information of every stored expense is actually stored and retrievable
-                //INFORMATION IS PROPERLY STORED (Nov. 12 ~10:40 p.m.)
                 for(i in Database.getExpenses()){
                     Log.d("Entered Expenses", i.toString())
                 }
+                finish()
             }
         }
     }
