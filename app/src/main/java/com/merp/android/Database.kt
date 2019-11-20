@@ -14,9 +14,6 @@ object Database {
     private val expensesSources = ArrayList<String>()
     private val earningsSources = ArrayList<String>()
 
-    //private const val earnings_file = "src/main/java/com/merp/android/earnings.txt"
-    //private const val expenses_file = "src/main/java/com/merp/android/expenses.txt"
-
     private var earnings_file = ""
     private var expenses_file = ""
     private var earnings_sources_file = ""
