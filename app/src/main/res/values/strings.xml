@@ -23,4 +23,11 @@
     <string name="text_additional_info">Additional Information</string>
     <string name="hint_enter_new_source">Enter new source</string>
     <string name="btn_add_source">Add</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!--menu_earnings-->
+    <string name="action_delete_earnings">Delete all earnings</string>
+
+    <!--menu_expenses-->
+    <string name="action_delete_expenses">Delete all expenses</string>
 </resources>

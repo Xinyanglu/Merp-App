@@ -2,6 +2,9 @@ package com.merp.android.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import com.google.android.material.snackbar.Snackbar
@@ -31,6 +34,11 @@ class ExpensesActivity : AppCompatActivity() {
         updateList()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_expenses, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
     private fun updateList(){
         val array = Database.getExpenses()
         val listView: ListView = findViewById(R.id.listExpenses)
@@ -38,5 +46,17 @@ class ExpensesActivity : AppCompatActivity() {
         //creates adapter that uses items from earnings array and puts it into listview widget
         val adapter = ArrayAdapter(this, R.layout.fragment_entries_list, array)
         listView.adapter = adapter
+    }
+
+    fun menuItemClicked(item: MenuItem){
+        Log.d("Expenses toolbar", "$item clicked")
+
+        when(item.itemId){
+            R.id.action_delete_expenses -> {
+                Database.getExpenses().clear()
+                Database.writeExpenses()
+                updateList()
+            }
+        }
     }
 }
