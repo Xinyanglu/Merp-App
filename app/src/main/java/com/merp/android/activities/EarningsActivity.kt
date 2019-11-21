@@ -4,6 +4,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.merp.android.R
 import android.content.Intent
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import com.merp.android.Database
@@ -30,6 +34,11 @@ class EarningsActivity : AppCompatActivity() {
         updateList()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_earnings, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
     private fun updateList(){
         val array = Database.getEarnings()
         val listView: ListView = findViewById(R.id.listEarnings)
@@ -37,6 +46,19 @@ class EarningsActivity : AppCompatActivity() {
         //creates adapter that uses items from earnings array and puts it into listview widget
         val adapter = ArrayAdapter(this, R.layout.fragment_entries_list, array)
         listView.adapter = adapter
+    }
+
+    fun menuItemClicked(item: MenuItem){
+        Log.d("Earnings toolbar", "$item clicked")
+
+        when(item.itemId){
+            R.id.action_settings -> println() //TODO(): will this be needed?
+            R.id.action_delete_earnings -> {
+                Database.getEarnings().clear()
+                Database.writeEarnings()
+                updateList()
+            }
+        }
     }
 
     /*
@@ -50,6 +72,6 @@ class EarningsActivity : AppCompatActivity() {
     how should earnings be deleted
     delete via a delete (trashcan?) button in EditEarningsActivity?
     delete via swiping an Earning in the list of earnings?
-        ^perhaps when you swipe an Earning, a button to delete appears on the side?
+    perhaps when you swipe an Earning, a button to delete appears on the side?
     */
 }
