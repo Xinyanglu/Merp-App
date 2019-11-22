@@ -20,34 +20,40 @@
             android:calendarViewShown="false"
             android:datePickerMode="spinner" />
 
+        <TextView
+            android:id="@+id/textSource"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:text="@string/text_source" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginBottom="30dp">
 
-            <TextView
-                android:id="@+id/textSource"
+            <Spinner
+                android:id="@+id/spinnerSource"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="@string/text_source"
-                android:focusable="true"
-                android:focusableInTouchMode="true" />
+                android:spinnerMode="dropdown" />
+
+            <View
+                android:id="@+id/verticalDivider"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#757575" />
 
             <Button
                 android:id="@+id/btnEditSources"
                 android:layout_width="48dp"
                 android:layout_height="40dp"
-                android:background="#00FFFFFF"
+                android:background="@color/defaultBackgroundColor"
                 android:text="@string/btn_edit_sources" />
         </LinearLayout>
-
-        <Spinner
-            android:id="@+id/spinnerSource"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:spinnerMode="dropdown" />
 
         <TextView
             android:id="@+id/textAmount"
@@ -105,8 +111,7 @@
         android:orientation="horizontal"
         android:translationX="50dp"
         android:translationY="225dp"
-        android:visibility="invisible"
-        tools:visibility="visible">
+        android:visibility="invisible">
 
         <EditText
             android:id="@+id/enterNewSource"

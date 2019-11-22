@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnReports.setOnClickListener {
-            //TODO(): create activity for reports and implement this listener
+            TODO()
         }
     }
 

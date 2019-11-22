@@ -7,6 +7,7 @@
     <string name="title_activity_edit_earning">Edit Earning</string>
     <string name="title_activity_expenses">Expenses</string>
     <string name="title_activity_edit_expense">Edit Expense</string>
+    <string name="title_activity_reports">Reports</string>
 
     <!-- activity_main -->
     <string name="text_edit_earnings">Edit Earnings</string>
@@ -30,4 +31,10 @@
 
     <!--menu_expenses-->
     <string name="action_delete_expenses">Delete all expenses</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
 </resources>
