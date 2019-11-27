@@ -21,8 +21,7 @@ import kotlin.system.exitProcess
 class MainActivity : AppCompatActivity() {
 
     private fun setup(){
-        //---------------------THE FILE IO THING----------------------
-        val entriesFolder = File(Environment.getExternalStorageDirectory(), "/entries") //TODO(): replace with <this.getExternalFilesDir()>?
+        val entriesFolder = File(this.getExternalFilesDir(null), "/entries")
         if (!entriesFolder.exists()) entriesFolder.mkdirs()
         Log.d("directories", entriesFolder.absolutePath)
 
@@ -67,7 +66,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setDate()
 
         Log.d("internalStorageDirectory?", this.filesDir.absolutePath)
 
