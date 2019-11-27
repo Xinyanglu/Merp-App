@@ -81,27 +81,34 @@ object Database {
         }
     }
 
+    //adds expense to expenses arraylist
     fun addExpense(date: Date, category: String, price: BigDecimal, adi: String){
         expense.add(searchExpenses(date,expense,0,expense.size-1), Expense(date, category, price, adi))
         writeExpenses()
     }
 
+    //adds the earning into the earnings array list and
+    //opens the earnings text file and writes everything inside the arraylist into it
     fun addEarning(date: Date, source: String, amount: BigDecimal, adi: String){
         earning.add(searchEarnings(date, earning,0, earning.size-1), Earning(date, source, amount, adi))
         writeEarnings()
     }
 
+    //adds the expense source to the arraylist and opens
+    // expenses source text file and writes everything inside expenses sources file into it
     fun addExpensesSource(source: String){
         expensesSources.add(searchExpensesSources(source, 0, expensesSources.size-1), source)
         writeExpensesSources()
     }
 
+    //opens earnings sources text file and writes
+    // everything in the earnings source arraylist into it
     fun addEarningsSource(source: String){
         earningsSources.add(searchEarningsSources(source, 0, earningsSources.size-1), source)
         writeEarningsSources()
     }
 
-    //returns the index value of the array to include in the range
+    //searches through earnings array list and returns the index of where the date should be inserted in to preserve order
 
     fun searchEarnings(date: Date, list: ArrayList<Earning>, min: Int, max: Int): Int{
         if(earning.isEmpty()) return 0
@@ -122,6 +129,7 @@ object Database {
         }
     }
 
+    //searches through the expenses array list and returns the index of the array of where the date should go to preserve order
     fun searchExpenses(date: Date, list: ArrayList<Expense>, min: Int, max: Int): Int{
         if(expense.isEmpty()) return 0
         if (date.compareTo(list[max].getDate()) == 1){
@@ -141,6 +149,7 @@ object Database {
         }
     }
 
+    //searches through the expenses sources to put the source in alphabetically to preserve order
     fun searchExpensesSources(source: String, min: Int, max: Int): Int{
         if(expensesSources.isEmpty()) return 0
         else{
@@ -160,6 +169,7 @@ object Database {
         }
     }
 
+    //searches through earnings sources to put the source in alphabetically to preserve the order.
     fun searchEarningsSources(source: String, min: Int, max: Int): Int{
         if(earningsSources.isEmpty()) return 0
         else{
@@ -224,6 +234,7 @@ object Database {
         r.close()
     }
 
+    //reads the expenses sources in the file
     fun readExpensesSources(){
         expensesSources.clear()
         val r = BufferedReader(FileReader((expenses_sources_file)))
@@ -232,6 +243,7 @@ object Database {
         }
     }
 
+    //reads the earnings sources in the file
     fun readEarningsSources(){
         earningsSources.clear()
         val r = BufferedReader(FileReader(earnings_sources_file))
@@ -241,11 +253,11 @@ object Database {
     }
 
     //returns a list of all the dates that are between the start and end date
-    fun searchRangeEarnings(start: Date, end: Date, list: ArrayList<Earning>): MutableList<Earning>{
-        return list.subList(searchEarnings(start,list,0,list.size-1),searchEarnings(end,list,0,list.size-1)+1)
+    fun searchRangeEarnings(start: Date, end: Date): MutableList<Earning>{
+        return earning.subList(searchEarnings(start,earning,0,earning.size-1),searchEarnings(end,earning,0,earning.size-1)+1)
     }
 
-    fun searchRangeExpenses(start: Date, end: Date, list: ArrayList<Expense>): MutableList<Expense>{
-        return list.subList(searchExpenses(start,list,0,list.size-1), searchExpenses(end,list,0,list.size-1)+1)
+    fun searchRangeExpenses(start: Date, end: Date): MutableList<Expense>{
+        return expense.subList(searchExpenses(start,expense,0,expense.size-1), searchExpenses(end,expense,0,expense.size-1)+1)
     }
 }

@@ -62,7 +62,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnReports.setOnClickListener {
-            //TODO(): create activity for reports and implement this listener
+            var intent = Intent(this, ChartActivity::class.java)
+            intent.putExtra("entry","earnings")
+            intent.putExtra("method","pie")
+            startActivity(intent)
         }
     }
 
