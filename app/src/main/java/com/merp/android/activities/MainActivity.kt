@@ -64,7 +64,6 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("entry","earnings")
             intent.putExtra("method","pie")
             startActivity(intent)
-            TODO()
         }
     }
 

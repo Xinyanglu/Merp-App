@@ -65,7 +65,7 @@ class ChartFragment : Fragment() {
             mPieChart.animateXY(5000,5000)
             var pieDataSet = PieDataSet(pieEntries, label)
 
-            //pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS as MutableList<Int>)
+            pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS.toMutableList())
             var pieData =  PieData(pieDataSet)
 
             mPieChart.setData(pieData)

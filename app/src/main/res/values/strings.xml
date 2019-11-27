@@ -32,14 +32,11 @@
     <!--menu_expenses-->
     <string name="action_delete_expenses">Delete all expenses</string>
 
-<<<<<<< HEAD
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-=======
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
->>>>>>> 9d5698e0d7b34cf296275e0391cf701b3366b7ae
 </resources>
