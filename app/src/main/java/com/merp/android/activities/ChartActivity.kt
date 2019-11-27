@@ -10,13 +10,13 @@ class ChartActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chart)
 
-        var intent = getIntent()
-        var extras = Bundle()
+        val intent = this.intent
+        val extras = Bundle()
         extras.putString("entry", intent.getStringExtra("entry"))
         extras.putString("method", intent.getStringExtra("method"))
-        var chartFragment = ChartFragment()
-        chartFragment.setArguments(extras)
+        val chartFragment = ChartFragment()
+        chartFragment.arguments = extras
 
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,chartFragment).commit()
+        supportFragmentManager.beginTransaction().add(R.id.fragment_container,chartFragment).commit()
     }
 }
