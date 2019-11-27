@@ -22,8 +22,8 @@ import kotlinx.android.synthetic.main.fragment_chart.*
  * A simple [Fragment] subclass.
  */
 class ChartFragment : Fragment() {
-    lateinit private var mLineChart:LineChart
-    lateinit private var mPieChart:PieChart
+    private lateinit var mLineChart:LineChart
+    private lateinit var mPieChart:PieChart
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +34,7 @@ class ChartFragment : Fragment() {
 
         mLineChart = view.findViewById(R.id.lineChart)
         mPieChart = view.findViewById(R.id.pieChart)
-        getChart(getArguments()?.getString("entry"), getArguments()?.getString("method"))
+        getChart(arguments?.getString("entry"), arguments?.getString("method"))
 
         return view
     }
@@ -42,7 +42,7 @@ class ChartFragment : Fragment() {
     //gets the information required to build the graph. Builds either a line graph or pie chart for expense or earning
     private fun getChart(entry: String?, method: String?){
         if (method.equals("pie")){
-            var pieEntries = ArrayList<PieEntry>()
+            val pieEntries = ArrayList<PieEntry>()
             var label = ""
             var desc = ""
 
@@ -61,18 +61,18 @@ class ChartFragment : Fragment() {
 
             }
 
-            mPieChart.setVisibility(View.VISIBLE)
+            mPieChart.visibility = View.VISIBLE
             mPieChart.animateXY(5000,5000)
-            var pieDataSet = PieDataSet(pieEntries, label)
+            val pieDataSet = PieDataSet(pieEntries, label)
 
             //pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS as MutableList<Int>)
-            var pieData =  PieData(pieDataSet)
+            val pieData =  PieData(pieDataSet)
 
-            mPieChart.setData(pieData)
+            mPieChart.data = pieData
 
-            var description = Description()
-            description.setText(desc)
-            mPieChart.setDescription(description)
+            val description = Description()
+            description.text = desc
+            mPieChart.description = description
             mPieChart.invalidate()
 
         }else if(method.equals("line")){
