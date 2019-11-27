@@ -59,6 +59,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnReports.setOnClickListener {
+            var intent = Intent(this, ChartActivity::class.java)
+            intent.putExtra("entry","earnings")
+            intent.putExtra("method","pie")
+            startActivity(intent)
             TODO()
         }
     }
