@@ -16,40 +16,38 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        setDate()
-
-        //TODO(): check if these permission requests are necessary
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1)
-        }
-
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
-        }
-
+    private fun setup(){
         //---------------------THE FILE IO THING----------------------
-        val entriesFolder = File(Environment.getExternalStorageDirectory(), "/entries")
-        if(!entriesFolder.exists()) entriesFolder.mkdirs()
+        val entriesFolder = File(Environment.getExternalStorageDirectory(), "/entries") //TODO(): replace with <this.getExternalFilesDir()>?
+        if (!entriesFolder.exists()) entriesFolder.mkdirs()
+        Log.d("directories", entriesFolder.absolutePath)
 
         val earningsFile = File(entriesFolder.absolutePath, "/earnings.txt")
-        if(!earningsFile.exists()) earningsFile.createNewFile()
+        if (!earningsFile.exists()) earningsFile.createNewFile()
+        Log.d("directories", earningsFile.absolutePath)
 
         val expensesFile = File(entriesFolder.absolutePath, "/expenses.txt")
-        if(!expensesFile.exists()) expensesFile.createNewFile()
+        if (!expensesFile.exists()) expensesFile.createNewFile()
+        Log.d("directories", expensesFile.absolutePath)
 
         val earningsSourcesFile = File(entriesFolder.absolutePath, "/earningsSources.txt")
-        if(!earningsSourcesFile.exists()) earningsSourcesFile.createNewFile()
+        if (!earningsSourcesFile.exists()) earningsSourcesFile.createNewFile()
+        Log.d("directories", earningsSourcesFile.absolutePath)
 
         val expensesSourcesFile = File(entriesFolder.absolutePath, "/expensesSources.txt")
-        if(!expensesSourcesFile.exists()) expensesSourcesFile.createNewFile()
+        if (!expensesSourcesFile.exists()) expensesSourcesFile.createNewFile()
+        Log.d("directories", expensesSourcesFile.absolutePath)
 
-        Database.setDirectories(earningsFile.absolutePath, expensesFile.absolutePath, earningsSourcesFile.absolutePath, expensesSourcesFile.absolutePath)
+        Database.setDirectories(
+            earningsFile.absolutePath,
+            expensesFile.absolutePath,
+            earningsSourcesFile.absolutePath,
+            expensesSourcesFile.absolutePath
+        )
         Database.readEarnings()
         Database.readExpenses()
 
@@ -66,6 +64,32 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("entry","earnings")
             intent.putExtra("method","pie")
             startActivity(intent)
+            TODO()
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        setDate()
+
+        Log.d("internalStorageDirectory?", this.filesDir.absolutePath)
+
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            setup()
+        }else{
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
+        }
+    }
+
+    //called whenever the user allows/denies a permission
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            setup()
+        }else{
+            finishAndRemoveTask()
         }
     }
 

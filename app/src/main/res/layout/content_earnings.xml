@@ -12,5 +12,6 @@
     <ListView
         android:id="@+id/listEarnings"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="@drawable/border_black"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

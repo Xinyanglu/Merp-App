@@ -22,8 +22,6 @@ class EarningsActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        updateList()
-
         fab.setOnClickListener {
             startActivity(Intent(this, EditEarningActivity::class.java))
         }
