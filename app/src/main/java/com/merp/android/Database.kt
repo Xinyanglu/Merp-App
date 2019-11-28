@@ -151,6 +151,9 @@ object Database {
     //searches through the expenses sources to put the source in alphabetically to preserve order
     private fun searchExpensesSources(source: String, min: Int, max: Int): Int{
         if(expensesSources.isEmpty()) return 0
+        if(source.compareTo(expensesSources[max]) == 1){
+            return expensesSources.size
+        }
         else{
             var i: Int = (max+min)/2
             var s: String = expensesSources[i]
@@ -171,20 +174,23 @@ object Database {
     //searches through earnings sources to put the source in alphabetically to preserve the order.
     fun searchEarningsSources(source: String, min: Int, max: Int): Int{
         if(earningsSources.isEmpty()) return 0
+        if(source.compareTo(earningsSources[max]) >= 1){
+            return earningsSources.size
+        }
         else{
             var i: Int = (max+min)/2
             var s: String = earningsSources[i]
 
             if(max-min <= 1){
-                return if(source.compareTo(s) == 1) i+1
+                return if(source.compareTo(s) >= 1) i+1
                 else i
-            }else {
-                return when (source.compareTo(s)) {
-                    1 -> searchEarningsSources(source, i, max)
-                    -1 -> searchEarningsSources(source, min, i)
-                    else -> i
-                }
             }
+
+            return if (source > s) {
+                searchEarningsSources(source, i, max)
+            }else if(source < s) {
+                searchEarningsSources(source, min, i)
+            }else return i
         }
     }
 

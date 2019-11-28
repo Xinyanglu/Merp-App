@@ -2,10 +2,12 @@
 <!-- Each List Item is displayed as TextView defined below -->
 
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/label"
+    tools:context=".activities.EntriesListFragment"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:padding="10dp"
     android:textSize="20sp"
-    android:textStyle="bold" >
+    android:textStyle="bold">
 </TextView> 

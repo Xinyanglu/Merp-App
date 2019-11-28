@@ -41,6 +41,7 @@ class EditEarningActivity : AppCompatActivity() {
             }else{
                 Database.addEarningsSource(enterNewSource.text.toString())
                 setSources()
+                layoutAddSource.visibility = View.INVISIBLE
                 Log.d("EditEarningActivity", enterNewSource.text.toString())
             }
         }
