@@ -44,22 +44,30 @@ class ChartFragment : Fragment() {
             var desc = ""
 
             if (entry.equals("earnings")){ //adding y (earning amount) and x (earning category) as a sector in the pie chart
-                for (earning in Database.getEarnings()){
-                    pieEntries.add(PieEntry(earning.getAmount().toFloat(), earning.getCategory()))
+                val values = Database.getEarningAmountPerCategory()
+                val categories = Database.getEarningsSources()
+
+                for (i in 0 until categories.size){
+                    pieEntries.add(PieEntry(values[i].toFloat(), categories[i]))
                 }
+
                 label = "Amount earned"
                 desc = "Amount earned per source"
+
             }else if (entry.equals("expenses")){
-                for (expense in Database.getExpenses()){ //adding y (expense amount) and x (earning category) as a sector in the pie chart
-                    pieEntries.add(PieEntry(expense.getAmount().toFloat(), expense.getCategory()))
+                val values = Database.getExpenseAmountPerCategory()
+                val categories = Database.getExpensesSources()
+
+                for (i in 0 until categories.size){
+                    pieEntries.add(PieEntry(values[i].toFloat(), categories[i]))
                 }
+
                 label = "Amount spent"
                 desc = "Amount spent per category"
-
             }
 
             mPieChart.visibility = View.VISIBLE
-            mPieChart.animateXY(5000,5000)
+            mPieChart.animateXY(1000,1000)
             val pieDataSet = PieDataSet(pieEntries, label)
 
             pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS.toMutableList())

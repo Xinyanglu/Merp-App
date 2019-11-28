@@ -47,7 +47,6 @@ object Database {
         w.use{ out->
             for (i in expense){
                 out.write(i.toFile() + "\n")
-
             }
         }
         w.close()
@@ -110,7 +109,7 @@ object Database {
 
     //searches through earnings array list and returns the index of where the date should be inserted in to preserve order
 
-    fun searchEarnings(date: Date, list: ArrayList<Earning>, min: Int, max: Int): Int{
+    private fun searchEarnings(date: Date, list: ArrayList<Earning>, min: Int, max: Int): Int{
         if(earning.isEmpty()) return 0
         if (date.compareTo(list[max].getDate()) == 1){
             return list.size
@@ -130,7 +129,7 @@ object Database {
     }
 
     //searches through the expenses array list and returns the index of the array of where the date should go to preserve order
-    fun searchExpenses(date: Date, list: ArrayList<Expense>, min: Int, max: Int): Int{
+    private fun searchExpenses(date: Date, list: ArrayList<Expense>, min: Int, max: Int): Int{
         if(expense.isEmpty()) return 0
         if (date.compareTo(list[max].getDate()) == 1){
             return list.size
@@ -150,7 +149,7 @@ object Database {
     }
 
     //searches through the expenses sources to put the source in alphabetically to preserve order
-    fun searchExpensesSources(source: String, min: Int, max: Int): Int{
+    private fun searchExpensesSources(source: String, min: Int, max: Int): Int{
         if(expensesSources.isEmpty()) return 0
         else{
             var i: Int = (max+min)/2
@@ -196,15 +195,13 @@ object Database {
         f.forEachLine {
             val text = it
             if (text.isNotBlank()) {
-                val pattern =
-                    "[^@]+".toRegex() // regex pattern where the character is not the '@' symbol which is what we use to separate info
-                val found = pattern.findAll(text).toList()
-                val date = Date(found[0].value)
-                val source = found[1].value
-                val amount = BigDecimal(found[2].value)
+                val found = text.split('@')
+                val date = Date(found[0])
+                val source = found[1]
+                val amount = BigDecimal(found[2])
                 var addInfo = ""
                 try{
-                    addInfo = " " + found[3].value
+                    addInfo = " " + found[3]
                 }catch(e: Exception){}
                 expense.add(Expense(date, source, amount, addInfo))
             }
@@ -219,14 +216,13 @@ object Database {
         r.forEachLine {
             val text = it
             if (text.isNotBlank()) {
-                val pattern = "[^@]+".toRegex()
-                val found = pattern.findAll(text).toList()
-                val date = Date(found[0].value)
-                val source = found[1].value
-                val amount = BigDecimal(found[2].value)
+                val found = text.split('@')
+                val date = Date(found[0])
+                val source = found[1]
+                val amount = BigDecimal(found[2])
                 var addInfo = ""
                 try{
-                    addInfo = found[3].value
+                    addInfo = found[3]
                 }catch(e: Exception){}
                 earning.add(Earning(date, source, amount, addInfo))
             }
@@ -250,6 +246,30 @@ object Database {
         r.forEachLine {
             earningsSources.add(it)
         }
+    }
+
+    fun getEarningAmountPerCategory(): Array<BigDecimal>{
+        val amounts = Array(getEarningsSources().size, {BigDecimal(0)})
+        for (source in 0 until getEarningsSources().size){
+            for (earning in getEarnings()){
+                if (earning.getCategory().equals(getEarningsSources()[source])){
+                    amounts[source] += amounts[source]+earning.getAmount()
+                }
+            }
+        }
+        return amounts
+    }
+
+    fun getExpenseAmountPerCategory(): Array<BigDecimal>{
+        val amounts = Array(getExpensesSources().size, {BigDecimal(0)})
+        for (source in 0 until getEarningsSources().size){
+            for (expense in getExpenses()){
+                if (expense.getCategory().equals(getExpensesSources())){
+                    amounts[source] += amounts[source] + expense.getAmount()
+                }
+            }
+        }
+        return amounts
     }
 
     //returns a list of all the dates that are between the start and end date
