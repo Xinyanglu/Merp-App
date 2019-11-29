@@ -13,6 +13,7 @@ import com.merp.android.Database
 import com.merp.android.Date
 import com.merp.android.R
 import kotlinx.android.synthetic.main.activity_edit_earning.*
+import kotlinx.android.synthetic.main.content_edit_earning.*
 import kotlinx.android.synthetic.main.fragment_edit_entry.*
 import java.math.BigDecimal
 
@@ -32,6 +33,7 @@ class EditEarningActivity : AppCompatActivity() {
         //TODO(): change button icon to be a pencil (or something more "edit"-like) in the xml file?
         btnEditSources.setOnClickListener{
             layoutAddSource.visibility = View.VISIBLE
+            //dimForeground(true)
             Log.d("EditEarningActivity", "btnEditSources clicked")
         }
 
@@ -41,7 +43,8 @@ class EditEarningActivity : AppCompatActivity() {
             }else{
                 Database.addEarningsSource(enterNewSource.text.toString())
                 setSources()
-                layoutAddSource.visibility = View.INVISIBLE
+                Snackbar.make(findViewById(R.id.editEarningActivityLayout), "New source: \"${enterNewSource.text}\" added", Snackbar.LENGTH_LONG).show()
+                onClick(this.editEarningContentLayout) //hides keyboard and layoutAddSource
                 Log.d("EditEarningActivity", enterNewSource.text.toString())
             }
         }
@@ -76,6 +79,7 @@ class EditEarningActivity : AppCompatActivity() {
         }
     }
 
+
     //when the background is clicked, hides keyboard and layoutAddSource
     //onClick methods (called from xml file) must have one and only one parameter of View type
     fun onClick(v: View){
@@ -83,6 +87,7 @@ class EditEarningActivity : AppCompatActivity() {
         imm.hideSoftInputFromWindow(this.currentFocus?.windowToken, 0)
 
         enterNewSource.error = null
+        enterNewSource.text.clear()
         layoutAddSource.visibility = View.INVISIBLE
     }
 
@@ -108,5 +113,10 @@ class EditEarningActivity : AppCompatActivity() {
         val sources: ArrayList<String> = Database.getEarningsSources()
         val adapter: ArrayAdapter<String> = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sources)
         dropdownSources.adapter = adapter
+    }
+
+    private fun dimForeground(dim: Boolean){
+        val fragment = supportFragmentManager.findFragmentById(R.id.editEntryFragment) as EditEntryFragment
+        fragment.dimForeground(dim)
     }
 }
