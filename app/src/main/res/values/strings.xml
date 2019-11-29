@@ -32,6 +32,10 @@
     <!--menu_expenses-->
     <string name="action_delete_expenses">Delete all expenses</string>
 
+    <!--view_reports-->
+    <string name="show_earnings">Show Earnings</string>
+    <string name="show_expenses">Show Expenses</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>

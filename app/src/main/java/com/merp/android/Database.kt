@@ -268,9 +268,9 @@ object Database {
 
     fun getExpenseAmountPerCategory(): Array<BigDecimal>{
         val amounts = Array(getExpensesSources().size, {BigDecimal(0)})
-        for (source in 0 until getEarningsSources().size){
+        for (source in 0 until getExpensesSources().size){
             for (expense in getExpenses()){
-                if (expense.getCategory().equals(getExpensesSources())){
+                if (expense.getCategory().equals(getExpensesSources()[source])){
                     amounts[source] += amounts[source] + expense.getAmount()
                 }
             }
