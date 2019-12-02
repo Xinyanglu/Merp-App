@@ -11,7 +11,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.ViewReportsActivity"></activity>
+        <activity
+            android:name=".activities.EarningsSourcesActivity"
+            android:label="@string/title_activity_earnings_sources"
+            android:parentActivityName=".activities.EditEarningActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.merp.android.activities.EditEarningActivity" />
+        </activity>
+        <activity android:name=".activities.ViewReportsActivity" />
         <activity android:name=".activities.ChartActivity" />
         <activity
             android:name=".activities.EditExpenseActivity"

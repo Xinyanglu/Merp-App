@@ -30,22 +30,13 @@ class EditExpenseActivity : AppCompatActivity() {
 
         textAmount.text = resources.getString(R.string.text_amount_spent)
         val dp: DatePicker = findViewById(R.id.datePicker)
-        setSources()
 
         //TODO(): change button icon to be a pencil (or something more "edit"-like) in the xml file?
         btnEditSources.setOnClickListener{
-            layoutAddSource.visibility = View.VISIBLE
+
         }
 
-        btnAddSource.setOnClickListener {
-            if(enterNewSource.text.isEmpty()){
-                enterNewSource.error = "Field is empty"
-            }else{
-                Database.addExpensesSource(enterNewSource.text.toString())
-                setSources()
-                Log.d("EditExpenseActivity", enterNewSource.text.toString())
-            }
-        }
+
 
         fab.setOnClickListener {
             var hasErrors = false
@@ -75,14 +66,16 @@ class EditExpenseActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        setSources()
+    }
+
     //when the background is clicked, hides keyboard and layoutAddSource
     //onClick methods (called from xml file) must have one and only one parameter of View type
     fun onClick(v: View){
         val imm: InputMethodManager = this.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(this.currentFocus?.windowToken, 0)
-
-        enterNewSource.error = null
-        layoutAddSource.visibility = View.INVISIBLE
     }
 
     private fun setSources(){
@@ -102,7 +95,6 @@ class EditExpenseActivity : AppCompatActivity() {
             }
         }
 
-        Database.readExpensesSources()
         val sources: ArrayList<String> = Database.getExpensesSources()
         val adapter: ArrayAdapter<String> = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sources)
         dropdownSources.adapter = adapter

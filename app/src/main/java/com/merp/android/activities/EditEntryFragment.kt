@@ -18,7 +18,7 @@ class EditEntryFragment : Fragment() {
         // Inflate the layout for this fragment
         val v = inflater.inflate(R.layout.fragment_edit_entry, container, false)
         val layout = v.findViewById<FrameLayout>(R.id.editEntryFragmentLayout)
-        layout.foreground.alpha = 0
+        //layout.foreground.alpha = 0 TODO(): add foreground back
         return v
     }
 

@@ -1,6 +1,7 @@
 package com.merp.android.activities
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -13,7 +14,6 @@ import com.merp.android.Database
 import com.merp.android.Date
 import com.merp.android.R
 import kotlinx.android.synthetic.main.activity_edit_earning.*
-import kotlinx.android.synthetic.main.content_edit_earning.*
 import kotlinx.android.synthetic.main.fragment_edit_entry.*
 import java.math.BigDecimal
 
@@ -28,25 +28,11 @@ class EditEarningActivity : AppCompatActivity() {
 
         textAmount.text = resources.getString(R.string.text_amount_earned)
         val dp: DatePicker = findViewById(R.id.datePicker)
-        setSources()
 
         //TODO(): change button icon to be a pencil (or something more "edit"-like) in the xml file?
         btnEditSources.setOnClickListener{
-            layoutAddSource.visibility = View.VISIBLE
-            //dimForeground(true)
+            startActivity(Intent(this, EarningsSourcesActivity::class.java))
             Log.d("EditEarningActivity", "btnEditSources clicked")
-        }
-
-        btnAddSource.setOnClickListener {
-            if(enterNewSource.text.isEmpty()){
-                enterNewSource.error = "Field is empty"
-            }else{
-                Database.addEarningsSource(enterNewSource.text.toString())
-                setSources()
-                Snackbar.make(findViewById(R.id.editEarningActivityLayout), "New source: \"${enterNewSource.text}\" added", Snackbar.LENGTH_LONG).show()
-                onClick(this.editEarningContentLayout) //hides keyboard and layoutAddSource
-                Log.d("EditEarningActivity", enterNewSource.text.toString())
-            }
         }
 
         //floating action button (save earning button)
@@ -67,28 +53,33 @@ class EditEarningActivity : AppCompatActivity() {
 
             //DatePicker indexes months starting at 0 (January), therefore +1
             if(!hasErrors){
-                Database.addEarning(Date(dp.year, dp.month+1, dp.dayOfMonth), spinnerSource.selectedItem.toString(), BigDecimal(enterAmount.text.toString()), enterAddInfo.text.toString())
+                val source = spinnerSource.selectedItem.toString()
+                val year = dp.year
+                val month = dp.month+1
+                val day = dp.dayOfMonth
+                val amount = enterAmount.text.toString()
+                Database.addEarning(Date(year, month, day), source, BigDecimal(amount), enterAddInfo.text.toString())
 
-                //DEBUGGING - check if all the information of every stored earning is actually stored and retrievable
-                //INFORMATION IS PROPERLY STORED (Nov. 12 ~10:40 p.m.)
-                for(i in Database.getEarnings()){
-                    Log.d("Entered Earnings", i.toString())
-                }
+                //pass data to EarningsActivity, where it will be used for Snackbar
+                val data = Intent()
+                data.putExtra("NEW_EARNING", "$source@$year@$month@$day@$amount")
+                setResult(Activity.RESULT_OK, data)
+
                 finish()
             }
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        setSources()
+    }
 
     //when the background is clicked, hides keyboard and layoutAddSource
     //onClick methods (called from xml file) must have one and only one parameter of View type
     fun onClick(v: View){
         val imm: InputMethodManager = this.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(this.currentFocus?.windowToken, 0)
-
-        enterNewSource.error = null
-        enterNewSource.text.clear()
-        layoutAddSource.visibility = View.INVISIBLE
     }
 
     private fun setSources(){
@@ -109,12 +100,12 @@ class EditEarningActivity : AppCompatActivity() {
             }
         }
 
-        Database.readEarningsSources()
         val sources: ArrayList<String> = Database.getEarningsSources()
         val adapter: ArrayAdapter<String> = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sources)
         dropdownSources.adapter = adapter
     }
 
+    //TODO(): figure out how to get this to work then implement it for EditExpenseActivity
     private fun dimForeground(dim: Boolean){
         val fragment = supportFragmentManager.findFragmentById(R.id.editEntryFragment) as EditEntryFragment
         fragment.dimForeground(dim)
