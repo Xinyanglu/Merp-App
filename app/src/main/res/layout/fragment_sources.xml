@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_margin="20dp"
         android:background="#AAAAAA"
         android:elevation="20dp"
         android:orientation="vertical"
@@ -21,7 +22,9 @@
         <TextView
             android:id="@+id/textConfirm"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textAlignment="center"/>
 
         <LinearLayout
             style="?android:attr/buttonBarButtonStyle"
