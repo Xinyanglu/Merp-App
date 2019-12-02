@@ -63,4 +63,8 @@ class Date : Comparable<Date>{
     fun getFullDate(): String{
         return date.toString()
     }
+
+    fun toFloat(): Float{
+        return ("" + getYear() + getMonth() + getDay()).toFloat()
+    }
 }

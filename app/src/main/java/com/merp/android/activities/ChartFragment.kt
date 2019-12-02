@@ -8,9 +8,7 @@ import android.view.ViewGroup
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Description
-import com.github.mikephil.charting.data.PieData
-import com.github.mikephil.charting.data.PieDataSet
-import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.merp.android.Database
 import com.merp.android.R
@@ -81,15 +79,35 @@ class ChartFragment : Fragment() {
             mPieChart.invalidate()
 
         }else if(method.equals("line")){
-
+            var label = ""
+            var desc = ""
+            val lineEntries = ArrayList<Entry>()
             if (entry.equals("earnings")){
-
-
+                for (earning in Database.getEarnings()){
+                    lineEntries.add(Entry(earning.getDate().toFloat(),earning.getAmount().toFloat()))
+                }
+                label = "Amount earned"
+                desc = "Amount earned per date"
             }else if(entry.equals("expenses")){
-
+                for (expense in Database.getExpenses()){
+                    lineEntries.add(Entry(expense.getDate().toFloat(),expense.getAmount().toFloat()))
+                }
+                label = "Amount spent"
+                desc = "Amount spent per date"
             }
+
+            mLineChart.visibility = View.VISIBLE
+            mLineChart.animateXY(1000,1000)
+            val lineDataSet = LineDataSet(lineEntries,label)
+
+            lineDataSet.setColors(ColorTemplate.COLORFUL_COLORS.toMutableList())
+            val lineData = LineData(lineDataSet)
+            mLineChart.data = lineData
+
+            val description = Description()
+            description.text = desc
+            mLineChart.description = description
+            mLineChart.invalidate()
         }
     }
-
-
 }
