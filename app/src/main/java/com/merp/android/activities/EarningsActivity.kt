@@ -1,20 +1,24 @@
 package com.merp.android.activities
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.merp.android.R
 import android.content.Intent
+import android.text.Layout
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import com.google.android.material.snackbar.Snackbar
 import com.merp.android.Database
 
 import kotlinx.android.synthetic.main.activity_earnings.*
 
 class EarningsActivity : AppCompatActivity() {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +27,7 @@ class EarningsActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         fab.setOnClickListener {
-            startActivity(Intent(this, EditEarningActivity::class.java))
+            startActivityForResult(Intent(this, EditEarningActivity::class.java), 999)
         }
     }
 
@@ -35,6 +39,28 @@ class EarningsActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_earnings, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(requestCode == 999){
+            if(resultCode == Activity.RESULT_OK){
+                if(data != null) {
+                    val result = data.getStringExtra("NEW_EARNING")
+                    val split = result.split("@")
+                    val source = split[0]
+                    val year = split[1]
+                    val month = split[2]
+                    val day = split[3]
+                    val amount = split[4]
+
+                    Snackbar.make(findViewById(R.id.earningsLayout),
+                            "New earning: $amount from $source ($year-$month-$day)",
+                            Snackbar.LENGTH_LONG).show()
+                }
+            }
+        }
     }
 
     private fun updateList(){

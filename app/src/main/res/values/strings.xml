@@ -36,6 +36,10 @@
     <string name="show_earnings">Show Earnings</string>
     <string name="show_expenses">Show Expenses</string>
 
+    <!--fragment_sources-->
+    <string name="hint_sources">Add/Search sources</string>
+    <string name="text_delete">Delete</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -43,4 +47,5 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
+    <string name="title_activity_earnings_sources">Earnings Sources</string>
 </resources>

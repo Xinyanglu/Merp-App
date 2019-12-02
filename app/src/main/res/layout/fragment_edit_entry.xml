@@ -5,7 +5,7 @@
     android:id="@+id/editEntryFragmentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:foreground="@drawable/dim_background"
+
     android:padding="30dp"
     tools:context=".activities.EditEntryFragment">
 
@@ -102,34 +102,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/layoutAddSource"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        android:clipToPadding="false"
-        android:elevation="20dp"
-        android:orientation="horizontal"
-        android:translationX="50dp"
-        android:translationY="225dp"
-        android:visibility="invisible">
 
-        <EditText
-            android:id="@+id/enterNewSource"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="@string/hint_enter_new_source"
-            android:inputType="textPersonName" />
-
-        <Button
-            android:id="@+id/btnAddSource"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/btn_add_source" />
-    </LinearLayout>
 
     <TextView
         android:id="@+id/spinnerError"
