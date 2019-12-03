@@ -12,6 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".activities.ExpensesSourcesActivity"
+            android:label="@string/title_activity_expenses_sources"
+            android:parentActivityName=".activities.EditExpenseActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.merp.android.activities.EditExpenseActivity" />
+        </activity>
+        <activity
             android:name=".activities.EarningsSourcesActivity"
             android:label="@string/title_activity_earnings_sources"
             android:parentActivityName=".activities.EditEarningActivity"

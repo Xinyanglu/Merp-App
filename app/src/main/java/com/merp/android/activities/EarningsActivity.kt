@@ -5,11 +5,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.merp.android.R
 import android.content.Intent
-import android.text.Layout
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import com.google.android.material.snackbar.Snackbar
@@ -18,7 +16,6 @@ import com.merp.android.Database
 import kotlinx.android.synthetic.main.activity_earnings.*
 
 class EarningsActivity : AppCompatActivity() {
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,22 +41,18 @@ class EarningsActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if(requestCode == 999){
-            if(resultCode == Activity.RESULT_OK){
-                if(data != null) {
-                    val result = data.getStringExtra("NEW_EARNING")
-                    val split = result.split("@")
-                    val source = split[0]
-                    val year = split[1]
-                    val month = split[2]
-                    val day = split[3]
-                    val amount = split[4]
+        if(requestCode == 999 && resultCode == Activity.RESULT_OK && data != null){
+            val result = data.getStringExtra("NEW_EARNING")
+            val split = result.split("@")
+            val source = split[0]
+            val year = split[1]
+            val month = split[2]
+            val day = split[3]
+            val amount = split[4]
 
-                    Snackbar.make(findViewById(R.id.earningsLayout),
-                            "New earning: $amount from $source ($year-$month-$day)",
-                            Snackbar.LENGTH_LONG).show()
-                }
-            }
+            Snackbar.make(findViewById(R.id.earningsLayout),
+                    "New earning: \$$amount earned from $source ($year-$month-$day)",
+                    Snackbar.LENGTH_LONG).show()
         }
     }
 

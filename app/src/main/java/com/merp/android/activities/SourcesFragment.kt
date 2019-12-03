@@ -9,9 +9,6 @@ import android.view.ViewGroup
 
 import com.merp.android.R
 
-/**
- * A simple [Fragment] subclass.
- */
 class SourcesFragment : Fragment() {
 
     override fun onCreateView(

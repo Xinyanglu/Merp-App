@@ -1,5 +1,6 @@
 package com.merp.android.activities
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -22,10 +23,8 @@ class ExpensesActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        updateList()
-
         fab.setOnClickListener {
-            startActivity(Intent(this, EditExpenseActivity::class.java))
+            startActivityForResult(Intent(this, EditExpenseActivity::class.java), 888)
         }
     }
 
@@ -39,11 +38,29 @@ class ExpensesActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(requestCode == 888 && resultCode == Activity.RESULT_OK && data != null){
+            val result = data.getStringExtra("NEW_EXPENSE")
+            val split = result.split("@")
+            val source = split[0]
+            val year = split[1]
+            val month = split[2]
+            val day = split[3]
+            val amount = split[4]
+
+            Snackbar.make(findViewById(R.id.expensesLayout),
+                    "New expense: \$$amount spent on $source ($year-$month-$day)",
+                    Snackbar.LENGTH_LONG).show()
+        }
+    }
+
     private fun updateList(){
         val array = Database.getExpenses()
         val listView: ListView = findViewById(R.id.listExpenses)
 
-        //creates adapter that uses items from earnings array and puts it into listview widget
+        //creates adapter that uses items from expenses array and puts it into listview widget
         val adapter = ArrayAdapter(this, R.layout.fragment_entries_list, array)
         listView.adapter = adapter
     }
