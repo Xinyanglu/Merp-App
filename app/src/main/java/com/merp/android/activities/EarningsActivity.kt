@@ -8,14 +8,19 @@ import android.content.Intent
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import androidx.core.widget.addTextChangedListener
 import com.google.android.material.snackbar.Snackbar
 import com.merp.android.Database
-
+import com.merp.android.Earning
 import kotlinx.android.synthetic.main.activity_earnings.*
+import kotlinx.android.synthetic.main.fragment_entries.*
 
 class EarningsActivity : AppCompatActivity() {
+    private lateinit var adapter: ArrayAdapter<Earning>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,8 +28,32 @@ class EarningsActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        var deleteIndex = 0 //records which item to delete
+
         fab.setOnClickListener {
             startActivityForResult(Intent(this, EditEarningActivity::class.java), 999)
+        }
+
+        searchBarEntries.addTextChangedListener{
+            this.adapter.filter.filter(it)
+        }
+
+        listEntries.setOnItemLongClickListener { parent, view, position, id ->
+            deleteIndex = position
+            textEntryInfo.text = Database.getEarnings()[position].toString()
+            layoutDeleteEntry.visibility = View.VISIBLE
+            true //required for some reason
+        }
+
+        btnCancelDeleteEntry.setOnClickListener {
+            layoutDeleteEntry.visibility = View.INVISIBLE
+        }
+
+        btnDeleteEntry.setOnClickListener {
+            Database.getEarnings().removeAt(deleteIndex)
+            Database.writeEarnings()
+            layoutDeleteEntry.visibility = View.INVISIBLE
+            updateList()
         }
     }
 
@@ -58,10 +87,10 @@ class EarningsActivity : AppCompatActivity() {
 
     private fun updateList(){
         val array = Database.getEarnings()
-        val listView: ListView = findViewById(R.id.listEarnings)
+        val listView: ListView = findViewById(R.id.listEntries)
 
         //creates adapter that uses items from earnings array and puts it into listview widget
-        val adapter = ArrayAdapter(this, R.layout.fragment_entries_list, array)
+        adapter = ArrayAdapter(this, R.layout.fragment_entries_list, array)
         listView.adapter = adapter
     }
 
@@ -76,6 +105,11 @@ class EarningsActivity : AppCompatActivity() {
                 updateList()
             }
         }
+    }
+
+    fun hideKeyboard(v: View){
+        val imm: InputMethodManager = this.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(this.currentFocus?.windowToken, 0)
     }
 
     /*

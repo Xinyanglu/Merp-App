@@ -4,7 +4,6 @@ import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import com.google.android.material.snackbar.Snackbar
@@ -46,12 +45,12 @@ class EarningsSourcesActivity : AppCompatActivity() {
         //TODO(): allow user to delete source even if there are existing earnings from that source?
         listSources.setOnItemLongClickListener { parent, view, position, id ->
             deleteIndex = position //record which item was long clicked (its index in the array)
-            textConfirm.text = Database.getEarningsSources()[position]
+            textSourceInfo.text = Database.getEarningsSources()[position]
             layoutDeleteSource.visibility = View.VISIBLE
             true // -> Boolean required for some reason
         }
 
-        btnCancel.setOnClickListener {
+        btnCancelDeleteSource.setOnClickListener {
             layoutDeleteSource.visibility = View.INVISIBLE
         }
 

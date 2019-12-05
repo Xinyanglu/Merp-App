@@ -6,16 +6,22 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import com.merp.android.Database
+import com.merp.android.Expense
 import com.merp.android.R
 
 import kotlinx.android.synthetic.main.activity_expenses.*
+import kotlinx.android.synthetic.main.fragment_entries.*
 
 class ExpensesActivity : AppCompatActivity() {
+    private lateinit var adapter: ArrayAdapter<Expense>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,8 +29,32 @@ class ExpensesActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        var deleteIndex = 0
+
         fab.setOnClickListener {
             startActivityForResult(Intent(this, EditExpenseActivity::class.java), 888)
+        }
+
+        searchBarEntries.addTextChangedListener {
+            this.adapter.filter.filter(it)
+        }
+
+        listEntries.setOnItemLongClickListener { parent, view, position, id ->
+            deleteIndex = position
+            textEntryInfo.text = Database.getExpenses()[position].toString()
+            layoutDeleteEntry.visibility = View.VISIBLE
+            true
+        }
+
+        btnCancelDeleteEntry.setOnClickListener {
+            layoutDeleteEntry.visibility = View.INVISIBLE
+        }
+
+        btnDeleteEntry.setOnClickListener {
+            Database.getExpenses().removeAt(deleteIndex)
+            Database.writeExpenses()
+            layoutDeleteEntry.visibility = View.INVISIBLE
+            updateList()
         }
     }
 
@@ -58,10 +88,10 @@ class ExpensesActivity : AppCompatActivity() {
 
     private fun updateList(){
         val array = Database.getExpenses()
-        val listView: ListView = findViewById(R.id.listExpenses)
+        val listView: ListView = findViewById(R.id.listEntries)
 
         //creates adapter that uses items from expenses array and puts it into listview widget
-        val adapter = ArrayAdapter(this, R.layout.fragment_entries_list, array)
+        adapter = ArrayAdapter(this, R.layout.fragment_entries_list, array)
         listView.adapter = adapter
     }
 
@@ -75,5 +105,10 @@ class ExpensesActivity : AppCompatActivity() {
                 updateList()
             }
         }
+    }
+
+    fun hideKeyboard(v: View){
+        val imm: InputMethodManager = this.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(this.currentFocus?.windowToken, 0)
     }
 }

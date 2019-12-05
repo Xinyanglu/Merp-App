@@ -7,12 +7,14 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activities.EarningsActivity"
     tools:showIn="@layout/activity_earnings"
-    android:padding="30dp">
+    android:padding="30dp"
+    android:onClick="hideKeyboard">
 
-    <ListView
-        android:id="@+id/listEarnings"
+    <fragment
+        android:id="@+id/entriesFragmentEarnings"
+        android:name="com.merp.android.activities.EntriesFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/border_black" />
+        tools:layout="@layout/fragment_entries"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

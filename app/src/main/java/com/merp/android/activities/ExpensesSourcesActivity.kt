@@ -43,12 +43,12 @@ class ExpensesSourcesActivity : AppCompatActivity() {
 
         listSources.setOnItemLongClickListener { parent, view, position, id ->
             deleteIndex = position //record which item was long clicked (its index in the array)
-            textConfirm.text = Database.getExpensesSources()[position]
+            textSourceInfo.text = Database.getExpensesSources()[position]
             layoutDeleteSource.visibility = View.VISIBLE
             true // -> Boolean required for some reason
         }
 
-        btnCancel.setOnClickListener {
+        btnCancelDeleteSource.setOnClickListener {
             layoutDeleteSource.visibility = View.INVISIBLE
         }
 
