@@ -30,7 +30,6 @@
                 android:value="com.merp.android.activities.EditEarningActivity" />
         </activity>
         <activity android:name=".activities.ViewReportsActivity" />
-        <activity android:name=".activities.ChartActivity" />
         <activity
             android:name=".activities.EditExpenseActivity"
             android:label="@string/title_activity_edit_expense"

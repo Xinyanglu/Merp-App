@@ -5,19 +5,30 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.merp.android.Database
 import com.merp.android.R
+import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.merp.android.Database.getAmountEarnedPerDate
+import com.merp.android.Database.getAmountSpentPerDate
+import com.merp.android.Database.getEarningDates
+import com.merp.android.Database.getExpenseDates
+import com.merp.android.Date
+
 
 /**
  * A simple [Fragment] subclass.
  */
 class ChartFragment : Fragment() {
-    private lateinit var mLineChart:LineChart
+    private lateinit var mBarChart:BarChart
     private lateinit var mPieChart:PieChart
 
     override fun onCreateView(
@@ -27,7 +38,7 @@ class ChartFragment : Fragment() {
         // Inflate the layout for this fragment
         val view =  inflater.inflate(R.layout.fragment_chart, container, false)
 
-        mLineChart = view.findViewById(R.id.lineChart)
+        mBarChart = view.findViewById(R.id.barChart)
         mPieChart = view.findViewById(R.id.pieChart)
         getChart(arguments?.getString("entry"), arguments?.getString("method"))
 
@@ -36,11 +47,11 @@ class ChartFragment : Fragment() {
 
     //gets the information required to build the graph. Builds either a line graph or pie chart for expense or earning
     private fun getChart(entry: String?, method: String?){
+        var yAxisLabel:Array<Float>
         if (method.equals("pie")){
             val pieEntries = ArrayList<PieEntry>()
             var label = ""
             var desc = ""
-
             if (entry.equals("earnings")){ //adding y (earning amount) and x (earning category) as a sector in the pie chart
                 val values = Database.getEarningAmountPerCategory()
                 val categories = Database.getEarningsSources()
@@ -78,36 +89,46 @@ class ChartFragment : Fragment() {
             mPieChart.description = description
             mPieChart.invalidate()
 
-        }else if(method.equals("line")){
+        }else if(method.equals("bar")){
             var label = ""
             var desc = ""
-            val lineEntries = ArrayList<Entry>()
+            val barEntries = ArrayList<BarEntry>()
+
             if (entry.equals("earnings")){
-                for (earning in Database.getEarnings()){
-                    lineEntries.add(Entry(earning.getDate().toFloat(),earning.getAmount().toFloat()))
+                yAxisLabel = getAmountEarnedPerDate()
+                for (earning in 0 until yAxisLabel.size){
+                    barEntries.add(BarEntry(earning.toFloat(),
+                       yAxisLabel[earning]))
                 }
                 label = "Amount earned"
                 desc = "Amount earned per date"
+
             }else if(entry.equals("expenses")){
-                for (expense in Database.getExpenses()){
-                    lineEntries.add(Entry(expense.getDate().toFloat(),expense.getAmount().toFloat()))
+                yAxisLabel = getAmountSpentPerDate()
+                for (expense in 0 until yAxisLabel.size){
+                    barEntries.add(BarEntry(expense.toFloat(),
+                       yAxisLabel[expense]))
                 }
                 label = "Amount spent"
                 desc = "Amount spent per date"
             }
 
-            mLineChart.visibility = View.VISIBLE
-            mLineChart.animateXY(1000,1000)
-            val lineDataSet = LineDataSet(lineEntries,label)
+            mBarChart.visibility = View.VISIBLE
 
-            lineDataSet.setColors(ColorTemplate.COLORFUL_COLORS.toMutableList())
-            val lineData = LineData(lineDataSet)
-            mLineChart.data = lineData
+            mBarChart.animateXY(1000,1000)
+            val barDataSet = BarDataSet(barEntries,label)
+
+            barDataSet.setColors(ColorTemplate.COLORFUL_COLORS.toMutableList())
+            val barData = BarData(barDataSet)
+            barData.setBarWidth(0.9f)
+
+            mBarChart.data = barData
+            mBarChart.setFitBars(true)
 
             val description = Description()
             description.text = desc
-            mLineChart.description = description
-            mLineChart.invalidate()
+            mBarChart.description = description
+            mBarChart.invalidate()
         }
     }
 }

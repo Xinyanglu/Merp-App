@@ -17,6 +17,9 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.system.exitProcess
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 
 class MainActivity : AppCompatActivity() {
 
@@ -61,7 +64,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnReports.setOnClickListener {
-          startActivity(Intent(this, ViewReportsActivity::class.java))
+            startActivity(Intent(this, ViewReportsActivity::class.java))
         }
     }
 
