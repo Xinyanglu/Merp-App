@@ -286,4 +286,50 @@ object Database {
     fun searchRangeExpenses(start: Date, end: Date): MutableList<Expense>{
         return expense.subList(searchExpenses(start,expense,0,expense.size-1), searchExpenses(end,expense,0,expense.size-1)+1)
     }
+
+    fun getEarningDates(): ArrayList<Date>{
+        var dates = ArrayList<Date>()
+        for (earning in getEarnings()){
+            if (!dates.contains(earning.getDate())) {
+                dates.add(earning.getDate())
+            }
+        }
+        return dates
+    }
+
+    fun getExpenseDates(): ArrayList<Date>{
+        var dates = ArrayList<Date>()
+        for (expense in getExpenses()){
+            if (!dates.contains(expense.getDate())) {
+                dates.add(expense.getDate())
+            }
+        }
+        return dates
+    }
+
+    fun getAmountEarnedPerDate(): Array<Float>{
+        var dates = getEarningDates()
+        var amounts = Array<Float>(dates.size,{0.toFloat()})
+        for(date in 0 until dates.size){
+            for(earning in getEarnings()){
+                if (earning.getDate().equals(dates[date])){
+                    amounts[date] += earning.getAmount().toFloat()
+                }
+            }
+        }
+        return amounts
+    }
+
+    fun getAmountSpentPerDate(): Array<Float>{
+        var dates = getExpenseDates()
+        var amounts = Array<Float>(dates.size,{0.toFloat()})
+        for(date in 0 until getExpenseDates().size){
+            for(expense in getExpenses()){
+                if (expense.getDate().equals(dates[date])){
+                    amounts[date] += expense.getAmount().toFloat()
+                }
+            }
+        }
+        return amounts
+    }
 }
