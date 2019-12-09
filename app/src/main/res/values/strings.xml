@@ -29,8 +29,14 @@
     <!--menu_earnings-->
     <string name="action_delete_earnings">Delete all earnings</string>
 
+    <!--content_earnings-->
+    <string name="hint_search_bar_earnings">Search earnings</string>
+
     <!--menu_expenses-->
     <string name="action_delete_expenses">Delete all expenses</string>
+
+    <!--content_expenses-->
+    <string name="hint_search_bar_expenses">Search expenses</string>
 
     <!--view_reports-->
     <string name="show_earnings">Show Earnings</string>
@@ -48,4 +54,5 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="title_activity_earnings_sources">Earnings Sources</string>
+    <string name="title_activity_expenses_sources">Expenses Sources</string>
 </resources>

@@ -11,41 +11,39 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import com.merp.android.Database
 import com.merp.android.R
-import kotlinx.android.synthetic.main.activity_earnings_sources.*
+
+import kotlinx.android.synthetic.main.activity_expenses_sources.*
 import kotlinx.android.synthetic.main.fragment_sources.*
 
-class EarningsSourcesActivity : AppCompatActivity() {
+class ExpensesSourcesActivity : AppCompatActivity() {
     private lateinit var adapter: ArrayAdapter<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_earnings_sources)
+        setContentView(R.layout.activity_expenses_sources)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        var deleteIndex = 0 //records which item to delete
+        var deleteIndex = 0
 
-        //filters list for sources that match the contents of the EditText view
         enterNewSource.addTextChangedListener{
             this.adapter.filter.filter(it)
         }
 
         btnAddSource.setOnClickListener{
-            //TODO(): error checking for existing sources of the same name
             if(enterNewSource.text.isEmpty()){
                 enterNewSource.error = "Field is empty"
             }else{
-                Database.addEarningsSource(enterNewSource.text.toString())
-                Snackbar.make(findViewById(R.id.earningsSourcesLayout), "New source: \"${enterNewSource.text}\" added", Snackbar.LENGTH_LONG).show()
+                Database.addExpensesSource(enterNewSource.text.toString())
+                Snackbar.make(findViewById(R.id.expensesSourcesLayout), "New source: \"${enterNewSource.text}\" added", Snackbar.LENGTH_LONG).show()
                 enterNewSource.text.clear()
                 updateList()
             }
         }
 
-        //TODO(): allow user to delete source even if there are existing earnings from that source?
         listSources.setOnItemLongClickListener { parent, view, position, id ->
             deleteIndex = position //record which item was long clicked (its index in the array)
-            textSourceInfo.text = Database.getEarningsSources()[position]
+            textSourceInfo.text = Database.getExpensesSources()[position]
             layoutDeleteSource.visibility = View.VISIBLE
             true // -> Boolean required for some reason
         }
@@ -55,8 +53,8 @@ class EarningsSourcesActivity : AppCompatActivity() {
         }
 
         btnDeleteSource.setOnClickListener {
-            Database.getEarningsSources().removeAt(deleteIndex) //erase source from array
-            Database.writeEarningsSources() //erase source from text file
+            Database.getExpensesSources().removeAt(deleteIndex) //erase source from array
+            Database.writeExpensesSources() //erase source from text file
             layoutDeleteSource.visibility = View.INVISIBLE
             updateList()
         }
@@ -67,13 +65,13 @@ class EarningsSourcesActivity : AppCompatActivity() {
         updateList()
     }
 
-    fun onClick(v: View){
+    fun onClick(vi: View){
         val imm: InputMethodManager = this.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(this.currentFocus?.windowToken, 0)
     }
 
     private fun updateList(){
-        val array = Database.getEarningsSources()
+        val array = Database.getExpensesSources()
         val listView: ListView = findViewById(R.id.listSources)
 
         //creates adapter that uses items from earnings array and puts it into listview widget

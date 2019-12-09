@@ -1,15 +1,14 @@
 package com.merp.android.activities
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import android.widget.Spinner
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isEmpty
 import com.merp.android.Database
@@ -33,10 +32,8 @@ class EditExpenseActivity : AppCompatActivity() {
 
         //TODO(): change button icon to be a pencil (or something more "edit"-like) in the xml file?
         btnEditSources.setOnClickListener{
-
+            startActivity(Intent(this, ExpensesSourcesActivity::class.java))
         }
-
-
 
         fab.setOnClickListener {
             var hasErrors = false
@@ -55,12 +52,17 @@ class EditExpenseActivity : AppCompatActivity() {
 
             //DatePicker indexes months starting at 0 (January), therefore +1
             if(!hasErrors){
-                Database.addExpense(Date(dp.year, dp.month+1, dp.dayOfMonth), spinnerSource.selectedItem.toString(), BigDecimal(enterAmount.text.toString()), enterAddInfo.text.toString())
+                val source = spinnerSource.selectedItem.toString()
+                val year = dp.year
+                val month = dp.month+1
+                val day = dp.dayOfMonth
+                val amount = enterAmount.text.toString()
+                Database.addExpense(Date(year, month, day), source, BigDecimal(amount), enterAddInfo.text.toString())
 
-                //DEBUGGING - check if all the information of every stored expense is actually stored and retrievable
-                for(i in Database.getExpenses()){
-                    Log.d("Entered Expenses", i.toString())
-                }
+                val data = Intent()
+                data.putExtra("NEW_EXPENSE", "$source@$year@$month@$day@$amount")
+                setResult(Activity.RESULT_OK, data)
+
                 finish()
             }
         }
