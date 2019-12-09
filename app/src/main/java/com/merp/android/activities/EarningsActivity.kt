@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.core.widget.addTextChangedListener
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.merp.android.Database
 import com.merp.android.Earning
@@ -87,10 +88,11 @@ class EarningsActivity : AppCompatActivity() {
 
     private fun updateList(){
         val array = Database.getEarnings()
+
         val listView: ListView = findViewById(R.id.listEntries)
 
         //creates adapter that uses items from earnings array and puts it into listview widget
-        adapter = ArrayAdapter(this, R.layout.fragment_entries_list, array)
+        adapter = ArrayAdapter(this, R.layout.fragment_entries_list, array) //TODO(): use 4 parameter constructor: ArrayAdapter(this, R.layout.<layout>, R.id.<TextView>, array)
         listView.adapter = adapter
     }
 
@@ -126,3 +128,4 @@ class EarningsActivity : AppCompatActivity() {
     perhaps when you swipe an Earning, a button to delete appears on the side?
     */
 }
+
