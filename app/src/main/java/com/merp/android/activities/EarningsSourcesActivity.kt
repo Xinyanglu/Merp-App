@@ -32,8 +32,10 @@ class EarningsSourcesActivity : AppCompatActivity() {
 
         btnAddSource.setOnClickListener{
             //TODO(): error checking for existing sources of the same name
-            if(enterNewSource.text.isEmpty()){
+            if(enterNewSource.text.isEmpty()) {
                 enterNewSource.error = "Field is empty"
+            }else if(Database.getEarningsSources().contains(enterNewSource.text.toString())){
+                enterNewSource.error = "This source already exists"
             }else{
                 Database.addEarningsSource(enterNewSource.text.toString())
                 Snackbar.make(findViewById(R.id.earningsSourcesLayout), "New source: \"${enterNewSource.text}\" added", Snackbar.LENGTH_LONG).show()

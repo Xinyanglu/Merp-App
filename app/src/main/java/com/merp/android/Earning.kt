@@ -3,7 +3,7 @@ package com.merp.android
 import java.math.*
 
 class Earning(private var date: Date,
-              private var category: String,
+              private var source: String,
               private var amount: BigDecimal,
               private var addInfo: String) {
 
@@ -20,8 +20,8 @@ class Earning(private var date: Date,
         return addInfo
     }
 
-    fun getCategory(): String{
-        return category
+    fun getSource(): String{
+        return source
     }
 
     //Setters
@@ -37,15 +37,15 @@ class Earning(private var date: Date,
         addInfo = adi
     }
 
-    fun setCategory(c: String){
-        category = c
+    fun setSource(c: String){
+        source = c
     }
 
     fun toFile(): String{
-        return (getDate().getFullDate() + "@" + getCategory() + "@" + getAmount() + "@" + getAddInfo())
+        return (getDate().getFullDate() + "@" + getSource() + "@" + getAmount() + "@" + getAddInfo())
     }
 
     override fun toString(): String{
-        return (getDate().getFullDate() + ", " + getCategory() + ", " + getAmount() + ", " + getAddInfo())
+        return (getDate().getFullDate() + ", " + getSource() + ", " + getAmount() + ", " + getAddInfo())
     }
 }
