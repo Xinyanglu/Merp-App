@@ -14,7 +14,7 @@ class ExpenseTest {
     @Test
     fun testGetCategory(){
         val instance = Expense(Date(2015, 9, 23), "Food", BigDecimal("300"), "This is not a description")
-        Assertions.assertEquals("Food", instance.getCategory())
+        Assertions.assertEquals("Food", instance.getSource())
     }
 
     @Test
@@ -39,8 +39,8 @@ class ExpenseTest {
     @Test
     fun testSetCategory(){
         val instance = Expense(Date(2015, 9, 23), "Food", BigDecimal("300"), "This is not a description")
-        instance.setCategory("Entertainment")
-        Assertions.assertEquals("Entertainment", instance.getCategory())
+        instance.setSource("Entertainment")
+        Assertions.assertEquals("Entertainment", instance.getSource())
     }
 
     @Test

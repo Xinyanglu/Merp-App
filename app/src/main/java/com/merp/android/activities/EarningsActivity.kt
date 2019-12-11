@@ -3,7 +3,6 @@ package com.merp.android.activities
 import android.app.Activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.merp.android.R
 import android.content.Intent
 import android.util.Log
 import android.view.Menu
@@ -13,15 +12,14 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.core.widget.addTextChangedListener
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import com.merp.android.Database
-import com.merp.android.Earning
+import com.merp.android.*
 import kotlinx.android.synthetic.main.activity_earnings.*
 import kotlinx.android.synthetic.main.fragment_entries.*
+import java.math.BigDecimal
 
 class EarningsActivity : AppCompatActivity() {
-    private lateinit var adapter: ArrayAdapter<Earning>
+    private lateinit var adapter: CustomAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,12 +85,17 @@ class EarningsActivity : AppCompatActivity() {
     }
 
     private fun updateList(){
-        val array = Database.getEarnings()
+        val dates = Database.getEveryEarningsDate()
+        val sources = Database.getEveryEarningsSource()
+        val amounts = Database.getEveryEarningsAmount()
+        val addInfo = Database.getEveryEarningsAddInfo()
 
+        val customItems = ArrayList<CustomListItem>()
+        for(i in 0 until dates.size){
+            customItems.add(CustomListItem(dates[i].getFullDate(), sources[i], "\$${amounts[i]}", addInfo[i]))
+        }
+        adapter = CustomAdapter(this, R.layout.fragment_entries_list, customItems)
         val listView: ListView = findViewById(R.id.listEntries)
-
-        //creates adapter that uses items from earnings array and puts it into listview widget
-        adapter = ArrayAdapter(this, R.layout.fragment_entries_list, array) //TODO(): use 4 parameter constructor: ArrayAdapter(this, R.layout.<layout>, R.id.<TextView>, array)
         listView.adapter = adapter
     }
 

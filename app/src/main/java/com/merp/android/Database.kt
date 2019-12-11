@@ -1,7 +1,5 @@
 package com.merp.android
 
-import android.os.Environment
-import android.util.Log
 import java.io.*
 import java.math.BigDecimal
 import com.merp.android.Date as Date
@@ -258,7 +256,7 @@ object Database {
         val amounts = Array(getEarningsSources().size, {BigDecimal(0)})
         for (source in 0 until getEarningsSources().size){
             for (earning in getEarnings()){
-                if (earning.getCategory().equals(getEarningsSources()[source])){
+                if (earning.getSource().equals(getEarningsSources()[source])){
                     amounts[source] += amounts[source]+earning.getAmount()
                 }
             }
@@ -270,7 +268,7 @@ object Database {
         val amounts = Array(getExpensesSources().size, {BigDecimal(0)})
         for (source in 0 until getExpensesSources().size){
             for (expense in getExpenses()){
-                if (expense.getCategory().equals(getExpensesSources()[source])){
+                if (expense.getSource().equals(getExpensesSources()[source])){
                     amounts[source] += amounts[source] + expense.getAmount()
                 }
             }
@@ -331,5 +329,37 @@ object Database {
             }
         }
         return amounts
+    }
+
+    fun getEveryEarningsDate(): ArrayList<Date>{
+        val array = ArrayList<Date>()
+        for(i in earning){
+            array.add(i.getDate())
+        }
+        return array
+    }
+
+    fun getEveryEarningsSource(): ArrayList<String>{
+        val array = ArrayList<String>()
+        for(i in earning){
+            array.add(i.getSource())
+        }
+        return array
+    }
+
+    fun getEveryEarningsAmount(): ArrayList<BigDecimal>{
+        val array = ArrayList<BigDecimal>()
+        for(i in earning){
+            array.add(i.getAmount())
+        }
+        return array
+    }
+
+    fun getEveryEarningsAddInfo(): ArrayList<String>{
+        val array = ArrayList<String>()
+        for(i in earning){
+            array.add(i.getAddInfo())
+        }
+        return array
     }
 }
