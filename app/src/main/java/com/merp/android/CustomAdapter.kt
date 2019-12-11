@@ -30,7 +30,7 @@ class CustomAdapter(context: Context,
 
         if(v == null){
             holder = ViewHolder()
-            v = LayoutInflater.from(mContext).inflate(R.layout.fragment_entries_list, null)
+            v = LayoutInflater.from(mContext).inflate(resourceLayout, null)
             v.tag = holder
         }else{
             holder = v.tag as ViewHolder
@@ -44,9 +44,6 @@ class CustomAdapter(context: Context,
             holder.textView3 = v?.findViewById(R.id.textAmount)
             holder.textView4 = v?.findViewById(R.id.textAddInfo)
 
-            Log.d("CUSTOMADAPTER", position.toString())
-            Log.d("CUSTOMADAPTER", mItems[position].getTVDate())
-            Log.d("CUSTOMADAPTER", (holder.textView1 == null).toString())
             if(holder.textView1 != null) {
                 holder.textView1!!.text = mItems[position].getTVDate()
             }
@@ -60,7 +57,6 @@ class CustomAdapter(context: Context,
                 holder.textView4?.text = mItems[position].getTVAddInfo()
             }
         }
-
         return v!!
     }
 }

@@ -13,15 +13,13 @@ import android.widget.ListView
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
-import com.merp.android.Database
-import com.merp.android.Expense
-import com.merp.android.R
+import com.merp.android.*
 
 import kotlinx.android.synthetic.main.activity_expenses.*
 import kotlinx.android.synthetic.main.fragment_entries.*
 
 class ExpensesActivity : AppCompatActivity() {
-    private lateinit var adapter: ArrayAdapter<Expense>
+    private lateinit var adapter: ArrayAdapter<CustomListItem>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,11 +85,17 @@ class ExpensesActivity : AppCompatActivity() {
     }
 
     private fun updateList(){
-        val array = Database.getExpenses()
-        val listView: ListView = findViewById(R.id.listEntries)
+        val dates = Database.getEveryExpensesDate()
+        val sources = Database.getEveryExpensessSource()
+        val amounts = Database.getEveryExpensesAmount()
+        val addInfo = Database.getEveryExpensesAddInfo()
 
-        //creates adapter that uses items from expenses array and puts it into listview widget
-        adapter = ArrayAdapter(this, R.layout.fragment_entries_list, array)
+        val customItems = ArrayList<CustomListItem>()
+        for(i in 0 until dates.size){
+            customItems.add(CustomListItem(dates[i].getFullDate(), sources[i], "\$${amounts[i]}", addInfo[i]))
+        }
+        adapter = CustomAdapter(this, R.layout.fragment_entries_list, customItems)
+        val listView: ListView = findViewById(R.id.listEntries)
         listView.adapter = adapter
     }
 

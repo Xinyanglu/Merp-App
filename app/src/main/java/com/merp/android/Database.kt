@@ -362,4 +362,36 @@ object Database {
         }
         return array
     }
+
+    fun getEveryExpensesDate(): ArrayList<Date>{
+        val array = ArrayList<Date>()
+        for(i in expense){
+            array.add(i.getDate())
+        }
+        return array
+    }
+
+    fun getEveryExpensessSource(): ArrayList<String>{
+        val array = ArrayList<String>()
+        for(i in expense){
+            array.add(i.getSource())
+        }
+        return array
+    }
+
+    fun getEveryExpensesAmount(): ArrayList<BigDecimal>{
+        val array = ArrayList<BigDecimal>()
+        for(i in expense){
+            array.add(i.getAmount())
+        }
+        return array
+    }
+
+    fun getEveryExpensesAddInfo(): ArrayList<String>{
+        val array = ArrayList<String>()
+        for(i in expense){
+            array.add(i.getAddInfo())
+        }
+        return array
+    }
 }
