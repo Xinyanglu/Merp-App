@@ -287,12 +287,30 @@ object Database {
         return expense.subList(searchExpenses(start,expense,0,expense.size-1), searchExpenses(end,expense,0,expense.size-1)+1)
     }
 
+    fun getEarningDateStrings(): ArrayList<String>{
+        var dates = ArrayList<String>()
+
+        for (date in getEarningDates()){
+            dates.add(date.getFullDate())
+        }
+        return dates
+    }
+
     fun getEarningDates(): ArrayList<Date>{
         var dates = ArrayList<Date>()
         for (earning in getEarnings()){
             if (!dates.contains(earning.getDate())) {
                 dates.add(earning.getDate())
             }
+        }
+        return dates
+    }
+
+    fun getExpenseDateStrings(): ArrayList<String>{
+        var dates = ArrayList<String>()
+
+        for (date in getExpenseDates()){
+            dates.add(date.getFullDate())
         }
         return dates
     }
