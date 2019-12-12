@@ -19,7 +19,9 @@ import kotlinx.android.synthetic.main.activity_expenses.*
 import kotlinx.android.synthetic.main.fragment_entries.*
 
 class ExpensesActivity : AppCompatActivity() {
-    private lateinit var adapter: ArrayAdapter<CustomListItem>
+    private lateinit var adapter: CustomAdapter
+    private val NEW_EXPENSE_CODE = 201
+    private val EDIT_EXPENSE_CODE = 202
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,11 +32,36 @@ class ExpensesActivity : AppCompatActivity() {
         var deleteIndex = 0
 
         fab.setOnClickListener {
-            startActivityForResult(Intent(this, EditExpenseActivity::class.java), 888)
+            val data = Intent(this, EditExpenseActivity::class.java).apply {
+                putExtra("REQUEST_CODE", NEW_EXPENSE_CODE)
+            }
+            startActivityForResult(data, NEW_EXPENSE_CODE)
         }
 
         searchBarEntries.addTextChangedListener {
             this.adapter.filter.filter(it)
+        }
+
+        listEntries.setOnItemClickListener { parent, view, position, id ->
+            val item = Database.getExpenses()[position]
+
+            val year = item.getDate().getYear()
+            val month = item.getDate().getMonth()
+            val day = item.getDate().getDay()
+            val source = item.getSource()
+            val amount = item.getAmount()
+            var addInfo: String
+            try{
+                addInfo = item.getAddInfo()
+            }catch(e: Exception){
+                addInfo = ""
+            }
+
+            val data = Intent(this, EditExpenseActivity::class.java).apply {
+                putExtra("EDIT_EXPENSE", "$year@$month@$day@$source@$amount@$addInfo@$position")
+                putExtra("REQUEST_CODE", EDIT_EXPENSE_CODE)
+            }
+            startActivityForResult(data, EDIT_EXPENSE_CODE)
         }
 
         listEntries.setOnItemLongClickListener { parent, view, position, id ->
@@ -69,18 +96,23 @@ class ExpensesActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if(requestCode == 888 && resultCode == Activity.RESULT_OK && data != null){
-            val result = data.getStringExtra("NEW_EXPENSE")
-            val split = result.split("@")
-            val source = split[0]
-            val year = split[1]
-            val month = split[2]
-            val day = split[3]
-            val amount = split[4]
-
+        if((requestCode == NEW_EXPENSE_CODE || requestCode == EDIT_EXPENSE_CODE) && resultCode == Activity.RESULT_OK && data != null){
+            val text: String
+            if(requestCode == NEW_EXPENSE_CODE) {
+                val result = data.getStringExtra("NEW_EXPENSE")
+                val split = result.split("@")
+                val source = split[0]
+                val year = split[1]
+                val month = split[2]
+                val day = split[3]
+                val amount = split[4]
+                text = "New expense: \$$amount spent on $source ($year-$month-$day)"
+            }else{
+                text = "Expense updated"
+            }
             Snackbar.make(findViewById(R.id.expensesLayout),
-                    "New expense: \$$amount spent on $source ($year-$month-$day)",
-                    Snackbar.LENGTH_LONG).show()
+                    text,
+                    Snackbar.LENGTH_INDEFINITE).show()
         }
     }
 

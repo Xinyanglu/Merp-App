@@ -15,11 +15,16 @@ import androidx.core.widget.addTextChangedListener
 import com.google.android.material.snackbar.Snackbar
 import com.merp.android.*
 import kotlinx.android.synthetic.main.activity_earnings.*
+import kotlinx.android.synthetic.main.fragment_edit_entry.*
 import kotlinx.android.synthetic.main.fragment_entries.*
+import java.lang.Exception
+import java.lang.NullPointerException
 import java.math.BigDecimal
 
 class EarningsActivity : AppCompatActivity() {
     private lateinit var adapter: CustomAdapter
+    private val NEW_EARNING_CODE = 101
+    private val EDIT_EARNING_CODE =  102
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,11 +35,36 @@ class EarningsActivity : AppCompatActivity() {
         var deleteIndex = 0 //records which item to delete
 
         fab.setOnClickListener {
-            startActivityForResult(Intent(this, EditEarningActivity::class.java), 999)
+            val data = Intent(this, EditEarningActivity::class.java).apply {
+                putExtra("REQUEST_CODE", NEW_EARNING_CODE)
+            }
+            startActivityForResult(data, NEW_EARNING_CODE)
         }
 
         searchBarEntries.addTextChangedListener{
             this.adapter.filter.filter(it)
+        }
+
+        listEntries.setOnItemClickListener { parent, view, position, id ->
+            val item = Database.getEarnings()[position]
+
+            val year = item.getDate().getYear()
+            val month = item.getDate().getMonth()
+            val day = item.getDate().getDay()
+            val source = item.getSource()
+            val amount = item.getAmount()
+            var addInfo: String
+            try {
+                addInfo = item.getAddInfo()
+            }catch(e: Exception){
+                addInfo = ""
+            }
+
+            val data = Intent(this, EditEarningActivity::class.java).apply {
+                putExtra("EDIT_EARNING", "$year@$month@$day@$source@$amount@$addInfo@$position")
+                putExtra("REQUEST_CODE", EDIT_EARNING_CODE)
+            }
+            startActivityForResult(data, EDIT_EARNING_CODE)
         }
 
         listEntries.setOnItemLongClickListener { parent, view, position, id ->
@@ -69,18 +99,23 @@ class EarningsActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if(requestCode == 999 && resultCode == Activity.RESULT_OK && data != null){
-            val result = data.getStringExtra("NEW_EARNING")
-            val split = result.split("@")
-            val source = split[0]
-            val year = split[1]
-            val month = split[2]
-            val day = split[3]
-            val amount = split[4]
-
+        if((requestCode == NEW_EARNING_CODE || requestCode == EDIT_EARNING_CODE) && resultCode == Activity.RESULT_OK && data != null){
+            val text: String
+            if(requestCode == NEW_EARNING_CODE) {
+                val result = data.getStringExtra("NEW_EARNING")
+                val split = result.split("@")
+                val source = split[0]
+                val year = split[1]
+                val month = split[2]
+                val day = split[3]
+                val amount = split[4]
+                text = "New earning: \$$amount earned from $source ($year-$month-$day)"
+            }else{
+                text = "Earning updated"
+            }
             Snackbar.make(findViewById(R.id.earningsLayout),
-                    "New earning: \$$amount earned from $source ($year-$month-$day)",
-                    Snackbar.LENGTH_LONG).show()
+                    text,
+                    Snackbar.LENGTH_INDEFINITE).show()
         }
     }
 

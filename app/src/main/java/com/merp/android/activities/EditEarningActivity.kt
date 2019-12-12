@@ -16,8 +16,12 @@ import kotlinx.android.synthetic.main.activity_edit_earning.*
 import kotlinx.android.synthetic.main.fragment_edit_entry.*
 import java.math.BigDecimal
 
-
 class EditEarningActivity : AppCompatActivity() {
+    private val NEW_EARNING_CODE = 101
+    private val EDIT_EARNING_CODE = 102
+    private var index = -999
+    private var requestCode = -999
+    private lateinit var dp: DatePicker
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,12 +30,13 @@ class EditEarningActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         textAmount.text = resources.getString(R.string.text_amount_earned)
-        val dp: DatePicker = findViewById(R.id.datePicker)
+        dp = findViewById(R.id.datePicker)
+
+        requestCode = intent.getIntExtra("REQUEST_CODE", -999)
 
         //TODO(): change button icon to be a pencil (or something more "edit"-like) in the xml file?
         btnEditSources.setOnClickListener{
             startActivity(Intent(this, EarningsSourcesActivity::class.java))
-            Log.d("EditEarningActivity", "btnEditSources clicked")
         }
 
         //floating action button (save earning button)
@@ -42,8 +47,7 @@ class EditEarningActivity : AppCompatActivity() {
                 spinnerError.requestFocus()
                 spinnerError.error = "Source required"
                 hasErrors = true
-            }
-            else textSource.error = null //required as this will not be done automatically
+            }else textSource.error = null //required as this will not be done automatically
 
             if(enterAmount.text.isEmpty()){
                 enterAmount.error = "Amount required"
@@ -57,13 +61,30 @@ class EditEarningActivity : AppCompatActivity() {
                 val month = dp.month+1
                 val day = dp.dayOfMonth
                 val amount = enterAmount.text.toString()
-                Database.addEarning(Date(year, month, day), source, BigDecimal(amount), enterAddInfo.text.toString())
+                val addInfo: String? = enterAddInfo.text.toString()
 
-                //pass data to EarningsActivity, where it will be used for Snackbar
                 val data = Intent()
-                data.putExtra("NEW_EARNING", "$source@$year@$month@$day@$amount")
-                setResult(Activity.RESULT_OK, data)
 
+                if(requestCode == EDIT_EARNING_CODE){
+                    val earning = Database.getEarnings()[index]
+                    earning.setDate(Date(year, month, day))
+                    earning.setSource(source)
+                    earning.setAmount(BigDecimal(amount))
+                    if(addInfo != null){
+                        earning.setAddInfo(addInfo)
+                    }
+                    Database.writeEarnings()
+                }else if(requestCode == NEW_EARNING_CODE) {
+                    Database.addEarning(
+                        Date(year, month, day),
+                        source,
+                        BigDecimal(amount),
+                        enterAddInfo.text.toString())
+
+                    //pass data to EarningsActivity, where it will be used for Snackbar
+                    data.putExtra("NEW_EARNING", "$source@$year@$month@$day@$amount")
+                }
+                setResult(Activity.RESULT_OK, data)
                 finish()
             }
         }
@@ -72,6 +93,28 @@ class EditEarningActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         setSources()
+
+        if(requestCode == EDIT_EARNING_CODE){
+            val result = intent.getStringExtra("EDIT_EARNING")
+            val split = result.split("@")
+            val year = split[0].toInt()
+            val month = split[1].toInt() - 1 //month index for DatePicker starts at 0 for January
+            val day = split[2].toInt()
+            val source = split[3]
+            val amount = split[4]
+            val addInfo = split[5]
+            index = split[6].toInt()
+
+            dp.updateDate(year, month, day)
+            for(i in 0 until spinnerSource.count){
+                if(spinnerSource.getItemAtPosition(i).toString() == source){
+                    spinnerSource.setSelection(i)
+                    break
+                }
+            }
+            enterAmount.setText(amount)
+            enterAddInfo.setText(addInfo)
+        }
     }
 
     //when the background is clicked, hides keyboard and layoutAddSource
