@@ -344,7 +344,7 @@ object Database {
         var amounts = Array<Float>(dates.size,{0.toFloat()})
         for(date in 0 until dates.size){
             for(earning in getEarnings()){
-                if (earning.getDate().equals(dates[date])){
+                if (earning.getDate().getFullDate() == (dates[date].getFullDate())){
                     amounts[date] += earning.getAmount().toFloat()
                 }
             }
@@ -357,7 +357,7 @@ object Database {
         var amounts = Array<Float>(dates.size,{0.toFloat()})
         for(date in 0 until getExpenseDates().size){
             for(expense in getExpenses()){
-                if (expense.getDate().equals(dates[date])){
+                if (expense.getDate().getFullDate() == (dates[date].getFullDate())){
                     amounts[date] += expense.getAmount().toFloat()
                 }
             }
