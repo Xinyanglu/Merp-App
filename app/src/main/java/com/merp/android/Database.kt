@@ -295,11 +295,19 @@ object Database {
     }
 
     fun getEarningDates(): ArrayList<Date>{
+        var contains = false
         var dates = ArrayList<Date>()
         for (earning in getEarnings()){
-            if (!dates.contains(earning.getDate())) {
+            for (date in dates){
+                if (date.getFullDate() == earning.getDate().getFullDate()){
+                    contains = true
+                    break
+                }
+            }
+            if(!contains){
                 dates.add(earning.getDate())
             }
+            contains = false
         }
         return dates
     }
@@ -314,11 +322,19 @@ object Database {
     }
 
     fun getExpenseDates(): ArrayList<Date>{
+        var contains = false
         var dates = ArrayList<Date>()
         for (expense in getExpenses()){
-            if (!dates.contains(expense.getDate())) {
+            for (date in dates){
+                if (date.getFullDate() == expense.getDate().getFullDate()){
+                    contains = true
+                    break
+                }
+            }
+            if(!contains){
                 dates.add(expense.getDate())
             }
+            contains = false
         }
         return dates
     }
