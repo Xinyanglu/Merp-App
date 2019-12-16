@@ -6,11 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.github.mikephil.charting.charts.BarChart
-import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.data.*
-import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
@@ -20,7 +18,9 @@ import com.merp.android.*
 import com.merp.android.Database.getAmountEarnedPerDate
 import com.merp.android.Database.getAmountSpentPerDate
 import com.merp.android.Database.getEarningDates
+import com.merp.android.Database.getEarnings
 import com.merp.android.Database.getExpenseDates
+import com.merp.android.Database.getExpenses
 
 
 /**
@@ -96,24 +96,24 @@ class ChartFragment : Fragment() {
             val barEntries = ArrayList<BarEntry>()
 
             if (entry.equals("earnings")){
-                yAxis = getAmountEarnedPerDate()
+                yAxis = getAmountEarnedPerDate(getEarnings())
                 for (earning in 0 until yAxis.size){
                     barEntries.add(BarEntry(earning.toFloat(),
                        yAxis[earning]))
                 }
                 label = "Amount earned"
                 desc = "Amount earned per date"
-                tempXAxisLabels = getEarningDates()
+                tempXAxisLabels = getEarningDates(getEarnings())
 
             }else if(entry.equals("expenses")){
-                yAxis = getAmountSpentPerDate()
+                yAxis = getAmountSpentPerDate(getExpenses())
                 for (expense in 0 until yAxis.size){
                     barEntries.add(BarEntry(expense.toFloat(),
                        yAxis[expense]))
                 }
                 label = "Amount spent"
                 desc = "Amount spent per date"
-                tempXAxisLabels = getExpenseDates()
+                tempXAxisLabels = getExpenseDates(getExpenses())
             }
 
             mBarChart.visibility = View.VISIBLE
@@ -148,6 +148,9 @@ class ChartFragment : Fragment() {
             val description = Description()
             description.text = desc
             mBarChart.description = description
+
+            mBarChart.setVisibleXRangeMaximum(4f)
+            mBarChart.setVisibleXRangeMinimum(4f)
             mBarChart.invalidate()
         }
     }
