@@ -81,7 +81,7 @@ class EditEarningActivity : AppCompatActivity() {
                         BigDecimal(amount),
                         enterAddInfo.text.toString())
 
-                    //pass data to EarningsActivity, where it will be used for Snackbar
+                    //pass data to EarningsActivity where it will be used for Snackbar
                     data.putExtra("NEW_EARNING", "$source@$year@$month@$day@$amount")
                 }
                 setResult(Activity.RESULT_OK, data)

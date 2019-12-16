@@ -5,9 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
-import android.view.Menu
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.merp.android.Database
@@ -16,10 +14,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.system.exitProcess
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 
 class MainActivity : AppCompatActivity() {
 
@@ -71,8 +65,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        Log.d("internalStorageDirectory?", this.filesDir.absolutePath)
 
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             setup()
