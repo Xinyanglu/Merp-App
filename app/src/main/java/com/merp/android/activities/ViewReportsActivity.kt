@@ -1,11 +1,11 @@
 package com.merp.android.activities
 
-import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.merp.android.R
 import kotlinx.android.synthetic.main.activity_view_reports.*
+import kotlinx.android.synthetic.main.content_view_reports.*
 
 class ViewReportsActivity : AppCompatActivity() {
 
@@ -30,6 +30,8 @@ class ViewReportsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_reports)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val intent = this.intent
         val extras = Bundle()

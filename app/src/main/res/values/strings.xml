@@ -7,7 +7,7 @@
     <string name="title_activity_edit_earning">Edit Earning</string>
     <string name="title_activity_expenses">Expenses</string>
     <string name="title_activity_edit_expense">Edit Expense</string>
-    <string name="title_activity_reports">Reports</string>
+    <string name="title_activity_view_reports">View Reports</string>
 
     <!-- activity_main -->
     <string name="text_edit_earnings">Edit Earnings</string>
