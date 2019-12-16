@@ -285,19 +285,19 @@ object Database {
         return expense.subList(searchExpenses(start,expense,0,expense.size-1), searchExpenses(end,expense,0,expense.size-1)+1)
     }
 
-    fun getEarningDateStrings(): ArrayList<String>{
+    fun getEarningDateStrings(array: ArrayList<Earning>): ArrayList<String>{
         var dates = ArrayList<String>()
 
-        for (date in getEarningDates()){
+        for (date in getEarningDates(array)){
             dates.add(date.getFullDate())
         }
         return dates
     }
 
-    fun getEarningDates(): ArrayList<Date>{
+    fun getEarningDates(array: ArrayList<Earning>): ArrayList<Date>{
         var contains = false
         var dates = ArrayList<Date>()
-        for (earning in getEarnings()){
+        for (earning in array){
             for (date in dates){
                 if (date.getFullDate() == earning.getDate().getFullDate()){
                     contains = true
@@ -312,19 +312,19 @@ object Database {
         return dates
     }
 
-    fun getExpenseDateStrings(): ArrayList<String>{
+    fun getExpenseDateStrings(array: ArrayList<Expense>): ArrayList<String>{
         var dates = ArrayList<String>()
 
-        for (date in getExpenseDates()){
+        for (date in getExpenseDates(array)){
             dates.add(date.getFullDate())
         }
         return dates
     }
 
-    fun getExpenseDates(): ArrayList<Date>{
+    fun getExpenseDates(array: ArrayList<Expense>): ArrayList<Date>{
         var contains = false
         var dates = ArrayList<Date>()
-        for (expense in getExpenses()){
+        for (expense in array){
             for (date in dates){
                 if (date.getFullDate() == expense.getDate().getFullDate()){
                     contains = true
@@ -339,11 +339,11 @@ object Database {
         return dates
     }
 
-    fun getAmountEarnedPerDate(): Array<Float>{
-        var dates = getEarningDates()
+    fun getAmountEarnedPerDate(array: ArrayList<Earning>): Array<Float>{
+        var dates = getEarningDates(array)
         var amounts = Array<Float>(dates.size,{0.toFloat()})
         for(date in 0 until dates.size){
-            for(earning in getEarnings()){
+            for(earning in array){
                 if (earning.getDate().getFullDate() == (dates[date].getFullDate())){
                     amounts[date] += earning.getAmount().toFloat()
                 }
@@ -352,11 +352,11 @@ object Database {
         return amounts
     }
 
-    fun getAmountSpentPerDate(): Array<Float>{
-        var dates = getExpenseDates()
+    fun getAmountSpentPerDate(array: ArrayList<Expense>): Array<Float>{
+        var dates = getExpenseDates(array)
         var amounts = Array<Float>(dates.size,{0.toFloat()})
-        for(date in 0 until getExpenseDates().size){
-            for(expense in getExpenses()){
+        for(date in 0 until dates.size){
+            for(expense in array){
                 if (expense.getDate().getFullDate() == (dates[date].getFullDate())){
                     amounts[date] += expense.getAmount().toFloat()
                 }
