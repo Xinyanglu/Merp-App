@@ -26,9 +26,11 @@ import com.merp.android.Database.getExpenses
 /**
  * A simple [Fragment] subclass.
  */
-class ChartFragment : Fragment() {
+class ChartFragment(entryType: String, chartType: String) : Fragment() {
     private lateinit var mBarChart:BarChart
     private lateinit var mPieChart:PieChart
+    private var e =entryType
+    private var m = chartType
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,8 +41,7 @@ class ChartFragment : Fragment() {
 
         mBarChart = view.findViewById(R.id.barChart)
         mPieChart = view.findViewById(R.id.pieChart)
-        getChart(arguments?.getString("entry"), arguments?.getString("method"))
-
+        getChart(e,m)
         return view
     }
 
