@@ -33,7 +33,16 @@ class ExpensesSourcesActivity : AppCompatActivity() {
         btnAddSource.setOnClickListener{
             if(enterNewSource.text.isEmpty()){
                 enterNewSource.error = "Field is empty"
+            }else if(Database.getExpensesSources().contains(enterNewSource.text.toString())){
+                enterNewSource.error = "This source already exists"
             }else{
+                if(enterNewSource.text.startsWith(" ")){
+                    var temp = enterNewSource.text.toString()
+                    while(temp.startsWith(" ")){
+                        temp = temp.replaceFirst(" ", "")
+                    }
+                    enterNewSource.setText(temp)
+                }
                 Database.addExpensesSource(enterNewSource.text.toString())
                 Snackbar.make(findViewById(R.id.expensesSourcesLayout), "New source: \"${enterNewSource.text}\" added", Snackbar.LENGTH_LONG).show()
                 enterNewSource.text.clear()
@@ -74,7 +83,7 @@ class ExpensesSourcesActivity : AppCompatActivity() {
         val array = Database.getExpensesSources()
         val listView: ListView = findViewById(R.id.listSources)
 
-        //creates adapter that uses items from earnings array and puts it into listview widget
+        //creates adapter that takes items from array and puts them into a ListView
         adapter = ArrayAdapter(this, R.layout.fragment_sources_list, array)
         listView.adapter = adapter
     }

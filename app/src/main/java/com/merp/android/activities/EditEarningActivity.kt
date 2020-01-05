@@ -3,7 +3,6 @@ package com.merp.android.activities
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -46,8 +45,6 @@ class EditEarningActivity : AppCompatActivity() {
             var numDecimalPlaces = 0
 
             if(spinnerSource.isEmpty()){
-                /*spinnerError.requestFocus()
-                spinnerError.error = "Source required"*/
                 textSource.requestFocus()
                 textSource.error = "Source required"
                 hasErrors = true
@@ -112,8 +109,8 @@ class EditEarningActivity : AppCompatActivity() {
                         Date(year, month, day),
                         source,
                         BigDecimal(amount),
-                        enterAddInfo.text.toString())
-                    Log.d("HELLOTHARE", Database.getEarnings().toString())
+                        enterAddInfo.text.toString()
+                    )
                     //pass data to EarningsActivity where it will be used for Snackbar
                     data.putExtra("NEW_EARNING", "$source@$year@$month@$day@$amount")
                 }
@@ -160,21 +157,6 @@ class EditEarningActivity : AppCompatActivity() {
     private fun setSources(){
         //spinner (dropdown menu) for sources
         val dropdownSources: Spinner = findViewById(R.id.spinnerSource)
-        dropdownSources.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                //do nothing
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                spinnerError.error = null
-            }
-        }
-
         val sources: ArrayList<String> = Database.getEarningsSources()
         val adapter: ArrayAdapter<String> = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sources)
         dropdownSources.adapter = adapter

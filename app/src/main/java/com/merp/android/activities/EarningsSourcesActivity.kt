@@ -83,7 +83,7 @@ class EarningsSourcesActivity : AppCompatActivity() {
         val array = Database.getEarningsSources()
         val listView: ListView = findViewById(R.id.listSources)
 
-        //creates adapter that uses items from earnings array and puts it into listview widget
+        //creates adapter that takes items from array and puts them into a ListView
         adapter = ArrayAdapter(this, R.layout.fragment_sources_list, array)
         listView.adapter = adapter
     }

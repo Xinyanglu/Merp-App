@@ -9,17 +9,12 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.core.widget.addTextChangedListener
 import com.google.android.material.snackbar.Snackbar
 import com.merp.android.*
 import kotlinx.android.synthetic.main.activity_earnings.*
-import kotlinx.android.synthetic.main.fragment_edit_entry.*
 import kotlinx.android.synthetic.main.fragment_entries.*
-import java.lang.Exception
-import java.lang.NullPointerException
-import java.math.BigDecimal
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -49,7 +44,6 @@ class EarningsActivity : AppCompatActivity() {
 
         listEntries.setOnItemClickListener { parent, view, position, id ->
             val item = Database.getEarnings()[position]
-
             val year = item.getDate().getYear()
             val month = item.getDate().getMonth()
             val day = item.getDate().getDay()
