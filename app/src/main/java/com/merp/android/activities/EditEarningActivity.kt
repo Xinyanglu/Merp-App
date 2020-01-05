@@ -42,16 +42,28 @@ class EditEarningActivity : AppCompatActivity() {
         //floating action button (save earning button)
         fab.setOnClickListener {
             var hasErrors = false
+            var numDecimalPlaces = 0
+
 
             if(spinnerSource.isEmpty()){
                 spinnerError.requestFocus()
                 spinnerError.error = "Source required"
                 hasErrors = true
-            }else textSource.error = null //required as this will not be done automatically
+            }else{
+                //required as this will not be done automatically
+                textSource.error = null
+            }
 
             if(enterAmount.text.isEmpty()){
                 enterAmount.error = "Amount required"
                 hasErrors = true
+            }else if(enterAmount.text.contains(".")) {
+                val index = enterAmount.text.indexOf(".")+1 //index after the decimal (to find number of decimal places)
+                numDecimalPlaces = enterAmount.text.substring(index).length
+                if(numDecimalPlaces > 2){ //if more than 2 decimal places
+                    enterAmount.error = "Max 2 decimal places"
+                    hasErrors = true
+                }
             }
 
             //DatePicker indexes months starting at 0 (January), therefore +1
@@ -60,9 +72,17 @@ class EditEarningActivity : AppCompatActivity() {
                 val year = dp.year
                 val month = dp.month+1
                 val day = dp.dayOfMonth
-                val amount = enterAmount.text.toString()
-                val addInfo: String? = enterAddInfo.text.toString()
 
+                var amount = enterAmount.text.toString()
+                if(!amount.contains(".")){
+                    amount += "."
+                }
+                //for consistency, make amounts have 2 decimal places
+                for(i in 0 until (2-numDecimalPlaces)){
+                    amount += "0"
+                }
+
+                val addInfo = enterAddInfo.text.toString()
                 val data = Intent()
 
                 if(requestCode == EDIT_EARNING_CODE){
@@ -70,9 +90,7 @@ class EditEarningActivity : AppCompatActivity() {
                     earning.setDate(Date(year, month, day))
                     earning.setSource(source)
                     earning.setAmount(BigDecimal(amount))
-                    if(addInfo != null){
-                        earning.setAddInfo(addInfo)
-                    }
+                    earning.setAddInfo(addInfo)
                     Database.writeEarnings()
                 }else if(requestCode == NEW_EARNING_CODE) {
                     Database.addEarning(

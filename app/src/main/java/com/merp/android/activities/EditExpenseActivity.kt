@@ -62,7 +62,7 @@ class EditExpenseActivity : AppCompatActivity() {
                 val month = dp.month+1
                 val day = dp.dayOfMonth
                 val amount = enterAmount.text.toString()
-                val addInfo: String? = enterAddInfo.text.toString()
+                val addInfo = enterAddInfo.text.toString()
 
                 val data = Intent()
 
@@ -71,9 +71,7 @@ class EditExpenseActivity : AppCompatActivity() {
                     expense.setDate(Date(year, month, day))
                     expense.setSource(source)
                     expense.setAmount(BigDecimal(amount))
-                    if(addInfo != null){
-                        expense.setAddInfo(addInfo)
-                    }
+                    expense.setAddInfo(addInfo)
                     Database.writeExpenses()
                 }else if(requestCode == NEW_EXPENSE_CODE) {
                     Database.addExpense(

@@ -20,6 +20,8 @@ import kotlinx.android.synthetic.main.fragment_entries.*
 import java.lang.Exception
 import java.lang.NullPointerException
 import java.math.BigDecimal
+import java.util.*
+import kotlin.collections.ArrayList
 
 class EarningsActivity : AppCompatActivity() {
     private lateinit var adapter: CustomAdapter
@@ -42,7 +44,8 @@ class EarningsActivity : AppCompatActivity() {
         }
 
         searchBarEntries.addTextChangedListener{
-            this.adapter.filter.filter(it)
+            //this.adapter.filter.filter(it)
+            filterList(it.toString())
         }
 
         listEntries.setOnItemClickListener { parent, view, position, id ->
@@ -54,11 +57,12 @@ class EarningsActivity : AppCompatActivity() {
             val source = item.getSource()
             val amount = item.getAmount()
             var addInfo: String
-            try {
-                addInfo = item.getAddInfo()
+            //try {
+                addInfo = item.getAddInfo()/*
             }catch(e: Exception){
                 addInfo = ""
-            }
+            }*/
+
 
             val data = Intent(this, EditEarningActivity::class.java).apply {
                 putExtra("EDIT_EARNING", "$year@$month@$day@$source@$amount@$addInfo@$position")
@@ -82,13 +86,13 @@ class EarningsActivity : AppCompatActivity() {
             Database.getEarnings().removeAt(deleteIndex)
             Database.writeEarnings()
             layoutDeleteEntry.visibility = View.INVISIBLE
-            updateList()
+            updateList(createCustomItemsList())
         }
     }
 
     override fun onResume() {
         super.onResume()
-        updateList()
+        updateList(createCustomItemsList())
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -119,19 +123,46 @@ class EarningsActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateList(){
+    private fun updateList(list: ArrayList<CustomListItem>){
+        /*
         val dates = Database.getEveryEarningsDate()
         val sources = Database.getEveryEarningsSource()
         val amounts = Database.getEveryEarningsAmount()
         val addInfo = Database.getEveryEarningsAddInfo()
 
+
         val customItems = ArrayList<CustomListItem>()
         for(i in 0 until dates.size){
             customItems.add(CustomListItem(dates[i].getFullDate(), sources[i], "\$${amounts[i]}", addInfo[i]))
-        }
-        adapter = CustomAdapter(this, R.layout.fragment_entries_list, customItems)
+        }*/
+
+        adapter = CustomAdapter(this, R.layout.fragment_entries_list, list)
         val listView: ListView = findViewById(R.id.listEntries)
         listView.adapter = adapter
+    }
+
+    private fun filterList(query: String){
+        val filteredItems = createCustomItemsList()
+
+        for(i in (filteredItems.size-1) downTo 0){
+            val item = filteredItems[i]
+            val itemInfo = (item.getTVDate() + item.getTVSource() + item.getTVAmount() + item.getTVAddInfo()).toLowerCase(Locale.US)
+            if(!itemInfo.contains(query.toLowerCase(Locale.US))){
+                filteredItems.removeAt(i)
+            }
+        }
+        updateList(filteredItems)
+    }
+
+    private fun createCustomItemsList(): ArrayList<CustomListItem>{
+        val info = Database.getEarnings()
+        val customItems = ArrayList<CustomListItem>()
+
+        for(i in info){
+            val split = i.toFile().split("@")
+            customItems.add(CustomListItem(split[0], split[1], "$" + split[2], split[3]))
+        }
+        return customItems
     }
 
     fun menuItemClicked(item: MenuItem){
@@ -142,7 +173,7 @@ class EarningsActivity : AppCompatActivity() {
             R.id.action_delete_earnings -> {
                 Database.getEarnings().clear()
                 Database.writeEarnings()
-                updateList()
+                updateList(createCustomItemsList())
             }
         }
     }
