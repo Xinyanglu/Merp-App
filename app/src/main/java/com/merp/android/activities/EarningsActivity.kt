@@ -44,7 +44,6 @@ class EarningsActivity : AppCompatActivity() {
         }
 
         searchBarEntries.addTextChangedListener{
-            //this.adapter.filter.filter(it)
             filterList(it.toString())
         }
 
@@ -56,13 +55,7 @@ class EarningsActivity : AppCompatActivity() {
             val day = item.getDate().getDay()
             val source = item.getSource()
             val amount = item.getAmount()
-            var addInfo: String
-            //try {
-                addInfo = item.getAddInfo()/*
-            }catch(e: Exception){
-                addInfo = ""
-            }*/
-
+            val addInfo = item.getAddInfo()
 
             val data = Intent(this, EditEarningActivity::class.java).apply {
                 putExtra("EDIT_EARNING", "$year@$month@$day@$source@$amount@$addInfo@$position")
@@ -104,38 +97,30 @@ class EarningsActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if((requestCode == NEW_EARNING_CODE || requestCode == EDIT_EARNING_CODE) && resultCode == Activity.RESULT_OK && data != null){
-            val text: String
+            var text = ""
             if(requestCode == NEW_EARNING_CODE) {
                 val result = data.getStringExtra("NEW_EARNING")
-                val split = result.split("@")
-                val source = split[0]
-                val year = split[1]
-                val month = split[2]
-                val day = split[3]
-                val amount = split[4]
-                text = "New earning: \$$amount earned from $source ($year-$month-$day)"
+                if(result != null) {
+                    val split = result.split("@")
+                    val source = split[0]
+                    val year = split[1]
+                    val month = split[2]
+                    val day = split[3]
+                    val amount = split[4]
+                    text = "New earning: \$$amount earned from $source ($year-$month-$day)"
+                }
             }else{
                 text = "Earning updated"
             }
-            Snackbar.make(findViewById(R.id.earningsLayout),
-                    text,
-                    Snackbar.LENGTH_INDEFINITE).show()
+            Snackbar.make(
+                findViewById(R.id.earningsLayout),
+                text,
+                Snackbar.LENGTH_INDEFINITE
+            ).show()
         }
     }
 
     private fun updateList(list: ArrayList<CustomListItem>){
-        /*
-        val dates = Database.getEveryEarningsDate()
-        val sources = Database.getEveryEarningsSource()
-        val amounts = Database.getEveryEarningsAmount()
-        val addInfo = Database.getEveryEarningsAddInfo()
-
-
-        val customItems = ArrayList<CustomListItem>()
-        for(i in 0 until dates.size){
-            customItems.add(CustomListItem(dates[i].getFullDate(), sources[i], "\$${amounts[i]}", addInfo[i]))
-        }*/
-
         adapter = CustomAdapter(this, R.layout.fragment_entries_list, list)
         val listView: ListView = findViewById(R.id.listEntries)
         listView.adapter = adapter
@@ -169,7 +154,6 @@ class EarningsActivity : AppCompatActivity() {
         Log.d("Earnings toolbar", "$item clicked")
 
         when(item.itemId){
-            R.id.action_settings -> println() //TODO(): will this be needed?
             R.id.action_delete_earnings -> {
                 Database.getEarnings().clear()
                 Database.writeEarnings()
@@ -190,11 +174,6 @@ class EarningsActivity : AppCompatActivity() {
     after an earning is deleted
     give UNDO an onClickListener and program it to undo the delete?
     would this require the "deleted" earning to be stored temporarily?
-
-    how should earnings be deleted
-    delete via a delete (trashcan?) button in EditEarningsActivity?
-    delete via swiping an Earning in the list of earnings?
-    perhaps when you swipe an Earning, a button to delete appears on the side?
     */
 }
 

@@ -94,12 +94,3 @@ class MainActivity : AppCompatActivity() {
         mainDate.text = sdf.format(Date())
     }
 }
-
-/**
- * TODO
- * perhaps change this activity's layout to have a drawer(?) functionality?
- * get the drawer to display an expandable list view to display things like
- * Earnings>View Earnings/Edit Earnings/Edit Sources of Earnings
- * Expenses>View Expenses/Edit Expenses/Edit Sources of Expenses
- * Reports>View Reports/???
- */

@@ -3,6 +3,7 @@ package com.merp.android.activities
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -44,13 +45,13 @@ class EditEarningActivity : AppCompatActivity() {
             var hasErrors = false
             var numDecimalPlaces = 0
 
-
             if(spinnerSource.isEmpty()){
-                spinnerError.requestFocus()
-                spinnerError.error = "Source required"
+                /*spinnerError.requestFocus()
+                spinnerError.error = "Source required"*/
+                textSource.requestFocus()
+                textSource.error = "Source required"
                 hasErrors = true
             }else{
-                //required as this will not be done automatically
                 textSource.error = null
             }
 
@@ -66,8 +67,22 @@ class EditEarningActivity : AppCompatActivity() {
                 }
             }
 
+            /**
+             * TODO: app does not save the very first entry after installation???
+             */
+
             //DatePicker indexes months starting at 0 (January), therefore +1
             if(!hasErrors){
+                //if additional info has unnecessary line breaks at beginning, remove them
+                //if additional info is all line breaks, set additional info to ""
+                if(enterAddInfo.text.contains("\n")){
+                    var temp = enterAddInfo.text.toString()
+                    while(temp.startsWith("\n")){
+                        temp = temp.replaceFirst("\n", "")
+                    }
+                    enterAddInfo.setText(temp)
+                }
+
                 val source = spinnerSource.selectedItem.toString()
                 val year = dp.year
                 val month = dp.month+1
@@ -77,7 +92,7 @@ class EditEarningActivity : AppCompatActivity() {
                 if(!amount.contains(".")){
                     amount += "."
                 }
-                //for consistency, make amounts have 2 decimal places
+                //for consistency, make all amounts have 2 decimal places
                 for(i in 0 until (2-numDecimalPlaces)){
                     amount += "0"
                 }
@@ -98,7 +113,7 @@ class EditEarningActivity : AppCompatActivity() {
                         source,
                         BigDecimal(amount),
                         enterAddInfo.text.toString())
-
+                    Log.d("HELLOTHARE", Database.getEarnings().toString())
                     //pass data to EarningsActivity where it will be used for Snackbar
                     data.putExtra("NEW_EARNING", "$source@$year@$month@$day@$amount")
                 }

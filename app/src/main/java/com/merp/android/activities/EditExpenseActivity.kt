@@ -43,12 +43,16 @@ class EditExpenseActivity : AppCompatActivity() {
 
         fab.setOnClickListener {
             var hasErrors = false
+            var numDecimalPlaces = 0
 
             if(spinnerSource.isEmpty()){
                 spinnerError.requestFocus()
                 spinnerError.error = "Source required"
                 hasErrors = true
-            }else textSource.error = null //required as this will not be done automatically
+            }else{
+                //required as this will not be done automatically
+                textSource.error = null
+            }
 
             if(enterAmount.text.isEmpty()){
                 enterAmount.error = "Amount required"

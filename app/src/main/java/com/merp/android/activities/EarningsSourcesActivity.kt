@@ -31,12 +31,18 @@ class EarningsSourcesActivity : AppCompatActivity() {
         }
 
         btnAddSource.setOnClickListener{
-            //TODO(): error checking for existing sources of the same name
             if(enterNewSource.text.isEmpty()) {
                 enterNewSource.error = "Field is empty"
             }else if(Database.getEarningsSources().contains(enterNewSource.text.toString())){
                 enterNewSource.error = "This source already exists"
             }else{
+                if(enterNewSource.text.startsWith(" ")){
+                    var temp = enterNewSource.text.toString()
+                    while(temp.startsWith(" ")){
+                        temp = temp.replaceFirst(" ", "")
+                    }
+                    enterNewSource.setText(temp)
+                }
                 Database.addEarningsSource(enterNewSource.text.toString())
                 Snackbar.make(findViewById(R.id.earningsSourcesLayout), "New source: \"${enterNewSource.text}\" added", Snackbar.LENGTH_LONG).show()
                 enterNewSource.text.clear()
@@ -44,7 +50,6 @@ class EarningsSourcesActivity : AppCompatActivity() {
             }
         }
 
-        //TODO(): allow user to delete source even if there are existing earnings from that source?
         listSources.setOnItemLongClickListener { parent, view, position, id ->
             deleteIndex = position //record which item was long clicked (its index in the array)
             textSourceInfo.text = Database.getEarningsSources()[position]

@@ -16,8 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="@string/hint_search_bar_earnings" />
+            android:hint="@string/hint_search_for_keyword"
+            android:inputType="textPersonName" />
 
         <ListView
             android:id="@+id/listEntries"
@@ -47,15 +47,13 @@
             android:textAlignment="center"/>
 
         <LinearLayout
-            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btnCancelDeleteEntry"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@android:string/cancel"
@@ -63,11 +61,10 @@
 
             <Button
                 android:id="@+id/btnDeleteEntry"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="#FF0000"
+                android:backgroundTint="#FF0000"
                 android:text="@string/text_delete"
                 android:textColor="#000000" />
         </LinearLayout>
