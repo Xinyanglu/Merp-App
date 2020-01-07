@@ -5,7 +5,6 @@
     android:id="@+id/editEntryFragmentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:padding="30dp"
     tools:context=".activities.EditEntryFragment">
 
@@ -55,7 +54,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:spinnerMode="dropdown" />
+                android:spinnerMode="dropdown"
+                android:dropDownWidth="match_parent" />
 
             <View
                 android:id="@+id/verticalDivider"
