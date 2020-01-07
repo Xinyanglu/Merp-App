@@ -1,20 +1,17 @@
 package com.merp.android.activities
 
 import android.content.Intent
+import android.icu.text.SimpleDateFormat
 import android.os.Bundle
+import android.util.Log
 import android.widget.CalendarView
-import android.widget.DatePicker
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import com.merp.android.Date
 import com.merp.android.R
 
 import kotlinx.android.synthetic.main.activity_date_picker.*
 import kotlinx.android.synthetic.main.content_date_picker.*
-import android.widget.Toast
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import java.util.*
 
 
 class DatePickerActivity : AppCompatActivity() {
@@ -24,34 +21,40 @@ class DatePickerActivity : AppCompatActivity() {
         setContentView(R.layout.activity_date_picker)
         setSupportActionBar(toolbar)
 
-        var start = findViewById<CalendarView>(R.id.startDate)
-        var end = findViewById<CalendarView>(R.id.endDate)
+        val start = findViewById<CalendarView>(R.id.startDate)
+        val end = findViewById<CalendarView>(R.id.endDate)
 
-        var startYear = 0
-        var startMonth = 0
-        var startDay = 0
+        //initialize variables with values of current date
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        val currentDate = sdf.format(Date()).split("-")
 
-        var endYear = 0
-        var endMonth = 0
-        var endDay = 0
+        var startYear = currentDate[0].toInt()
+        var startMonth = currentDate[1].toInt()
+        var startDay = currentDate[2].toInt()
 
-        start.setOnDateChangeListener(CalendarView.OnDateChangeListener { view, year, month, dayOfMonth ->
+        var endYear = startYear
+        var endMonth = startMonth
+        var endDay = startDay
+
+        start.setOnDateChangeListener { view, year, month, dayOfMonth ->
             startYear = year
             startMonth = month
             startDay = dayOfMonth
-        })
+        }
 
-        end.setOnDateChangeListener(CalendarView.OnDateChangeListener{
-            view, year, month, dayOfMonth ->
+        end.setOnDateChangeListener{view, year, month, dayOfMonth ->
             endYear = year
             endMonth = month
             endDay = dayOfMonth
-        })
+        }
+
+        Log.d("startDate", "$startYear-$startMonth-$startDay")
+        Log.d("endDate", "$endYear-$endMonth-$endDay")
 
         displayCharts.setOnClickListener {
             if (Date(startYear, startMonth, startDay) <= Date(endYear, endMonth, endDay)) {
 
-                var data = Intent(this, ViewReportsActivity::class.java).apply {
+                val data = Intent(this, ViewReportsActivity::class.java).apply {
                     putExtra("start year", startYear)
                     putExtra("start month", startMonth)
                     putExtra("start day", startDay)
@@ -59,7 +62,6 @@ class DatePickerActivity : AppCompatActivity() {
                     putExtra("end month", endMonth)
                     putExtra("end day", endDay)
                 }
-
                 startActivity(data)
             }
         }
