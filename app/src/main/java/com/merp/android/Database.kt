@@ -112,8 +112,8 @@ object Database {
         if (date.compareTo(list[max].getDate()) == 1){
             return list.size
         }
-        var i = (max+min)/2
-        var d = list[i].getDate()
+        val i = (max+min)/2
+        val d = list[i].getDate()
         if (max-min<=1) {
             return if (date.compareTo(d) == 1) i + 1
             else i
@@ -132,8 +132,8 @@ object Database {
         if (date.compareTo(list[max].getDate()) == 1){
             return list.size
         }
-        var i = (max+min)/2
-        var d = list[i].getDate()
+        val i = (max+min)/2
+        val d = list[i].getDate()
         if (max-min<=1) {
             return if (date.compareTo(d) == 1) i + 1
             else i
@@ -149,35 +149,35 @@ object Database {
     //searches through the expenses sources to put the source in alphabetically to preserve order
     private fun searchExpensesSources(source: String, min: Int, max: Int): Int{
         if(expensesSources.isEmpty()) return 0
-        if(source.compareTo(expensesSources[max]) == 1){
+        if(source.compareTo(expensesSources[max]) >= 1){
             return expensesSources.size
         }
         else{
-            var i: Int = (max+min)/2
-            var s: String = expensesSources[i]
+            val i: Int = (max+min)/2
+            val s: String = expensesSources[i]
 
             if(max-min <= 1){
-                return if(source.compareTo(s) == 1) i+1
+                return if(source.compareTo(s) >= 1) i+1
                 else i
-            }else {
-                return when (source.compareTo(s)) {
-                    1 -> searchExpensesSources(source, i, max)
-                    -1 -> searchExpensesSources(source, min, i)
-                    else -> i
-                }
             }
+
+            return if(source > s){
+                searchExpensesSources(source, i, max)
+            }else if(source < s){
+                searchExpensesSources(source, min, i)
+            }else return i
         }
     }
 
     //searches through earnings sources to put the source in alphabetically to preserve the order.
-    fun searchEarningsSources(source: String, min: Int, max: Int): Int{
+    private fun searchEarningsSources(source: String, min: Int, max: Int): Int{
         if(earningsSources.isEmpty()) return 0
         if(source.compareTo(earningsSources[max]) >= 1){
             return earningsSources.size
         }
         else{
-            var i: Int = (max+min)/2
-            var s: String = earningsSources[i]
+            val i: Int = (max+min)/2
+            val s: String = earningsSources[i]
 
             if(max-min <= 1){
                 return if(source.compareTo(s) >= 1) i+1
@@ -252,11 +252,11 @@ object Database {
         }
     }
 
-    fun getEarningAmountPerCategory(): Array<BigDecimal>{
+    fun getEarningAmountPerCategory(array: MutableList<Earning>): Array<BigDecimal>{
         val amounts = Array(getEarningsSources().size, {BigDecimal(0)})
         for (source in 0 until getEarningsSources().size){
-            for (earning in getEarnings()){
-                if (earning.getSource().equals(getEarningsSources()[source])){
+            for (earning in array){
+                if (earning.getSource() == (getEarningsSources()[source])){
                     amounts[source] += amounts[source]+earning.getAmount()
                 }
             }
@@ -264,11 +264,11 @@ object Database {
         return amounts
     }
 
-    fun getExpenseAmountPerCategory(): Array<BigDecimal>{
+    fun getExpenseAmountPerCategory(array: MutableList<Expense>): Array<BigDecimal>{
         val amounts = Array(getExpensesSources().size, {BigDecimal(0)})
         for (source in 0 until getExpensesSources().size){
-            for (expense in getExpenses()){
-                if (expense.getSource().equals(getExpensesSources()[source])){
+            for (expense in array){
+                if (expense.getSource() == (getExpensesSources()[source])){
                     amounts[source] += amounts[source] + expense.getAmount()
                 }
             }
@@ -285,7 +285,7 @@ object Database {
         return expense.subList(searchExpenses(start,expense,0,expense.size-1), searchExpenses(end,expense,0,expense.size-1)+1)
     }
 
-    fun getEarningDateStrings(array: ArrayList<Earning>): ArrayList<String>{
+    fun getEarningDateStrings(array: MutableList<Earning>): ArrayList<String>{
         var dates = ArrayList<String>()
 
         for (date in getEarningDates(array)){
@@ -294,7 +294,7 @@ object Database {
         return dates
     }
 
-    fun getEarningDates(array: ArrayList<Earning>): ArrayList<Date>{
+    fun getEarningDates(array: MutableList<Earning>): ArrayList<Date>{
         var contains = false
         var dates = ArrayList<Date>()
         for (earning in array){
@@ -312,7 +312,7 @@ object Database {
         return dates
     }
 
-    fun getExpenseDateStrings(array: ArrayList<Expense>): ArrayList<String>{
+    fun getExpenseDateStrings(array: MutableList<Expense>): ArrayList<String>{
         var dates = ArrayList<String>()
 
         for (date in getExpenseDates(array)){
@@ -321,7 +321,7 @@ object Database {
         return dates
     }
 
-    fun getExpenseDates(array: ArrayList<Expense>): ArrayList<Date>{
+    fun getExpenseDates(array: MutableList<Expense>): ArrayList<Date>{
         var contains = false
         var dates = ArrayList<Date>()
         for (expense in array){
@@ -339,7 +339,7 @@ object Database {
         return dates
     }
 
-    fun getAmountEarnedPerDate(array: ArrayList<Earning>): Array<Float>{
+    fun getAmountEarnedPerDate(array: MutableList<Earning>): Array<Float>{
         var dates = getEarningDates(array)
         var amounts = Array<Float>(dates.size,{0.toFloat()})
         for(date in 0 until dates.size){
@@ -352,7 +352,7 @@ object Database {
         return amounts
     }
 
-    fun getAmountSpentPerDate(array: ArrayList<Expense>): Array<Float>{
+    fun getAmountSpentPerDate(array: MutableList<Expense>): Array<Float>{
         var dates = getExpenseDates(array)
         var amounts = Array<Float>(dates.size,{0.toFloat()})
         for(date in 0 until dates.size){
