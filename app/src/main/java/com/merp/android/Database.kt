@@ -252,10 +252,10 @@ object Database {
         }
     }
 
-    fun getEarningAmountPerCategory(): Array<BigDecimal>{
+    fun getEarningAmountPerCategory(array: MutableList<Earning>): Array<BigDecimal>{
         val amounts = Array(getEarningsSources().size, {BigDecimal(0)})
         for (source in 0 until getEarningsSources().size){
-            for (earning in getEarnings()){
+            for (earning in array){
                 if (earning.getSource() == (getEarningsSources()[source])){
                     amounts[source] += amounts[source]+earning.getAmount()
                 }
@@ -264,10 +264,10 @@ object Database {
         return amounts
     }
 
-    fun getExpenseAmountPerCategory(): Array<BigDecimal>{
+    fun getExpenseAmountPerCategory(array: MutableList<Expense>): Array<BigDecimal>{
         val amounts = Array(getExpensesSources().size, {BigDecimal(0)})
         for (source in 0 until getExpensesSources().size){
-            for (expense in getExpenses()){
+            for (expense in array){
                 if (expense.getSource() == (getExpensesSources()[source])){
                     amounts[source] += amounts[source] + expense.getAmount()
                 }
@@ -285,7 +285,7 @@ object Database {
         return expense.subList(searchExpenses(start,expense,0,expense.size-1), searchExpenses(end,expense,0,expense.size-1)+1)
     }
 
-    fun getEarningDateStrings(array: ArrayList<Earning>): ArrayList<String>{
+    fun getEarningDateStrings(array: MutableList<Earning>): ArrayList<String>{
         var dates = ArrayList<String>()
 
         for (date in getEarningDates(array)){
@@ -294,7 +294,7 @@ object Database {
         return dates
     }
 
-    fun getEarningDates(array: ArrayList<Earning>): ArrayList<Date>{
+    fun getEarningDates(array: MutableList<Earning>): ArrayList<Date>{
         var contains = false
         var dates = ArrayList<Date>()
         for (earning in array){
@@ -312,7 +312,7 @@ object Database {
         return dates
     }
 
-    fun getExpenseDateStrings(array: ArrayList<Expense>): ArrayList<String>{
+    fun getExpenseDateStrings(array: MutableList<Expense>): ArrayList<String>{
         var dates = ArrayList<String>()
 
         for (date in getExpenseDates(array)){
@@ -321,7 +321,7 @@ object Database {
         return dates
     }
 
-    fun getExpenseDates(array: ArrayList<Expense>): ArrayList<Date>{
+    fun getExpenseDates(array: MutableList<Expense>): ArrayList<Date>{
         var contains = false
         var dates = ArrayList<Date>()
         for (expense in array){
@@ -339,7 +339,7 @@ object Database {
         return dates
     }
 
-    fun getAmountEarnedPerDate(array: ArrayList<Earning>): Array<Float>{
+    fun getAmountEarnedPerDate(array: MutableList<Earning>): Array<Float>{
         var dates = getEarningDates(array)
         var amounts = Array<Float>(dates.size,{0.toFloat()})
         for(date in 0 until dates.size){
@@ -352,7 +352,7 @@ object Database {
         return amounts
     }
 
-    fun getAmountSpentPerDate(array: ArrayList<Expense>): Array<Float>{
+    fun getAmountSpentPerDate(array: MutableList<Expense>): Array<Float>{
         var dates = getExpenseDates(array)
         var amounts = Array<Float>(dates.size,{0.toFloat()})
         for(date in 0 until dates.size){

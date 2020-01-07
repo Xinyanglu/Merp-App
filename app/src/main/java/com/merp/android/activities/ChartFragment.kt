@@ -21,16 +21,20 @@ import com.merp.android.Database.getEarningDates
 import com.merp.android.Database.getEarnings
 import com.merp.android.Database.getExpenseDates
 import com.merp.android.Database.getExpenses
+import com.merp.android.Database.searchRangeEarnings
+import com.merp.android.Database.searchRangeExpenses
 
 
 /**
  * A simple [Fragment] subclass.
  */
-class ChartFragment(entryType: String, chartType: String) : Fragment() {
+class ChartFragment(entryType: String, chartType: String, start: Date, end: Date) : Fragment() {
     private lateinit var mBarChart:BarChart
     private lateinit var mPieChart:PieChart
-    private var e =entryType
+    private var entry =entryType
     private var m = chartType
+    private var s = start
+    private var e = end
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,12 +45,12 @@ class ChartFragment(entryType: String, chartType: String) : Fragment() {
 
         mBarChart = view.findViewById(R.id.barChart)
         mPieChart = view.findViewById(R.id.pieChart)
-        getChart(e,m)
+        getChart(entry,m, s, e)
         return view
     }
 
     //gets the information required to build the graph. Builds either a line graph or pie chart for expense or earning
-    private fun getChart(entry: String?, method: String?){
+    private fun getChart(entry: String?, method: String?, start: Date, end: Date){
         var yAxis:Array<Float>
         var tempXAxisLabels = ArrayList<Date>()
         if (method.equals("pie")){
@@ -55,7 +59,7 @@ class ChartFragment(entryType: String, chartType: String) : Fragment() {
             var desc = ""
 
             if (entry.equals("earnings")){ //adding y (earning amount) and x (earning category) as a sector in the pie chart
-                val values = Database.getEarningAmountPerCategory()
+                val values = Database.getEarningAmountPerCategory(searchRangeEarnings(start, end))
                 val categories = Database.getEarningsSources()
 
                 for (i in 0 until categories.size){
@@ -66,7 +70,7 @@ class ChartFragment(entryType: String, chartType: String) : Fragment() {
                 desc = "Amount earned per source"
 
             }else if (entry.equals("expenses")){
-                val values = Database.getExpenseAmountPerCategory()
+                val values = Database.getExpenseAmountPerCategory(searchRangeExpenses(start, end))
                 val categories = Database.getExpensesSources()
 
                 for (i in 0 until categories.size){
@@ -97,24 +101,26 @@ class ChartFragment(entryType: String, chartType: String) : Fragment() {
             val barEntries = ArrayList<BarEntry>()
 
             if (entry.equals("earnings")){
-                yAxis = getAmountEarnedPerDate(getEarnings())
+                val arrayInRange = searchRangeEarnings(start, end)
+                yAxis = getAmountEarnedPerDate(arrayInRange)
                 for (earning in 0 until yAxis.size){
                     barEntries.add(BarEntry(earning.toFloat(),
                        yAxis[earning]))
                 }
                 label = "Amount earned"
                 desc = "Amount earned per date"
-                tempXAxisLabels = getEarningDates(getEarnings())
+                tempXAxisLabels = getEarningDates(arrayInRange)
 
             }else if(entry.equals("expenses")){
-                yAxis = getAmountSpentPerDate(getExpenses())
+                val arrayInRange = searchRangeExpenses(start, end)
+                yAxis = getAmountSpentPerDate(arrayInRange)
                 for (expense in 0 until yAxis.size){
                     barEntries.add(BarEntry(expense.toFloat(),
                        yAxis[expense]))
                 }
                 label = "Amount spent"
                 desc = "Amount spent per date"
-                tempXAxisLabels = getExpenseDates(getExpenses())
+                tempXAxisLabels = getExpenseDates(arrayInRange)
             }
 
             mBarChart.visibility = View.VISIBLE

@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnReports.setOnClickListener {
-            startActivity(Intent(this, ViewReportsActivity::class.java))
+            startActivity(Intent(this, DatePickerActivity::class.java))
         }
     }
 

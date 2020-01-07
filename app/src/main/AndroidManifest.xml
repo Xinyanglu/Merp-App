@@ -12,6 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".activities.DatePickerActivity"
+            android:label="@string/title_activity_date_picker"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".activities.ExpensesSourcesActivity"
             android:label="@string/title_activity_expenses_sources"
             android:parentActivityName=".activities.EditExpenseActivity"
