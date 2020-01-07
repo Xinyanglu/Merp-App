@@ -78,7 +78,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.merp.android.activities.MainActivity" />
         </activity>
-        <activity android:name=".activities.MainActivity">
+        <activity
+            android:name=".activities.MainActivity"
+            android:label="@string/title_activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

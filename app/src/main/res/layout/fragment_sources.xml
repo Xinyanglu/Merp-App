@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:focusableInTouchMode="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activities.SourcesFragment">
 
@@ -27,15 +27,13 @@
             android:textAlignment="center"/>
 
         <LinearLayout
-            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btnCancelDeleteSource"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@android:string/cancel"
@@ -43,11 +41,10 @@
 
             <Button
                 android:id="@+id/btnDeleteSource"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="#FF0000"
+                android:backgroundTint="#FF0000"
                 android:text="@string/text_delete"
                 android:textColor="#000000" />
         </LinearLayout>

@@ -13,9 +13,10 @@ import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import com.merp.android.*
-
 import kotlinx.android.synthetic.main.activity_expenses.*
 import kotlinx.android.synthetic.main.fragment_entries.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ExpensesActivity : AppCompatActivity() {
     private lateinit var adapter: CustomAdapter
@@ -38,23 +39,17 @@ class ExpensesActivity : AppCompatActivity() {
         }
 
         searchBarEntries.addTextChangedListener {
-            this.adapter.filter.filter(it)
+            filterList(it.toString())
         }
 
         listEntries.setOnItemClickListener { parent, view, position, id ->
             val item = Database.getExpenses()[position]
-
             val year = item.getDate().getYear()
             val month = item.getDate().getMonth()
             val day = item.getDate().getDay()
             val source = item.getSource()
             val amount = item.getAmount()
-            var addInfo: String
-            try{
-                addInfo = item.getAddInfo()
-            }catch(e: Exception){
-                addInfo = ""
-            }
+            val addInfo = item.getAddInfo()
 
             val data = Intent(this, EditExpenseActivity::class.java).apply {
                 putExtra("EDIT_EXPENSE", "$year@$month@$day@$source@$amount@$addInfo@$position")
@@ -78,13 +73,13 @@ class ExpensesActivity : AppCompatActivity() {
             Database.getExpenses().removeAt(deleteIndex)
             Database.writeExpenses()
             layoutDeleteEntry.visibility = View.INVISIBLE
-            updateList()
+            updateList(createCustomItemsList())
         }
     }
 
     override fun onResume() {
         super.onResume()
-        updateList()
+        updateList(createCustomItemsList())
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -96,38 +91,58 @@ class ExpensesActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if((requestCode == NEW_EXPENSE_CODE || requestCode == EDIT_EXPENSE_CODE) && resultCode == Activity.RESULT_OK && data != null){
-            val text: String
+            var text = ""
             if(requestCode == NEW_EXPENSE_CODE) {
                 val result = data.getStringExtra("NEW_EXPENSE")
-                val split = result.split("@")
-                val source = split[0]
-                val year = split[1]
-                val month = split[2]
-                val day = split[3]
-                val amount = split[4]
-                text = "New expense: \$$amount spent on $source ($year-$month-$day)"
+                if(result != null){
+                    val split = result.split("@")
+                    val source = split[0]
+                    val year = split[1]
+                    val month = split[2]
+                    val day = split[3]
+                    val amount = split[4]
+                    text = "New expense: \$$amount spent on $source ($year-$month-$day)"
+                }
             }else{
                 text = "Expense updated"
             }
-            Snackbar.make(findViewById(R.id.expensesLayout),
-                    text,
-                    Snackbar.LENGTH_INDEFINITE).show()
+            Snackbar.make(
+                findViewById(R.id.expensesLayout),
+                text,
+                Snackbar.LENGTH_INDEFINITE
+            ).show()
         }
     }
 
-    private fun updateList(){
-        val dates = Database.getEveryExpensesDate()
-        val sources = Database.getEveryExpensessSource()
-        val amounts = Database.getEveryExpensesAmount()
-        val addInfo = Database.getEveryExpensesAddInfo()
-
-        val customItems = ArrayList<CustomListItem>()
-        for(i in 0 until dates.size){
-            customItems.add(CustomListItem(dates[i].getFullDate(), sources[i], "\$${amounts[i]}", addInfo[i]))
-        }
-        adapter = CustomAdapter(this, R.layout.fragment_entries_list, customItems)
+    private fun updateList(list: ArrayList<CustomListItem>){
+        adapter = CustomAdapter(this, R.layout.fragment_entries_list, list)
         val listView: ListView = findViewById(R.id.listEntries)
         listView.adapter = adapter
+    }
+
+    private fun filterList(query: String){
+        val filteredItems = createCustomItemsList()
+
+        for(i in (filteredItems.size-1) downTo 0){
+            val item = filteredItems[i]
+            val itemInfo = (item.getTVDate() + item.getTVSource() + item.getTVAmount() + item.getTVAddInfo()).toLowerCase(
+                Locale.US)
+            if(!itemInfo.contains(query.toLowerCase(Locale.US))){
+                filteredItems.removeAt(i)
+            }
+        }
+        updateList(filteredItems)
+    }
+
+    private fun createCustomItemsList(): ArrayList<CustomListItem>{
+        val info = Database.getExpenses()
+        val customItems = ArrayList<CustomListItem>()
+
+        for(i in info){
+            val split = i.toFile().split("@")
+            customItems.add(CustomListItem(split[0], split[1], "$" + split[2], split[3]))
+        }
+        return customItems
     }
 
     fun menuItemClicked(item: MenuItem){
@@ -137,7 +152,7 @@ class ExpensesActivity : AppCompatActivity() {
             R.id.action_delete_expenses -> {
                 Database.getExpenses().clear()
                 Database.writeExpenses()
-                updateList()
+                updateList(createCustomItemsList())
             }
         }
     }

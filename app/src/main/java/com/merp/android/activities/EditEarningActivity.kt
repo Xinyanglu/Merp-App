@@ -42,27 +42,59 @@ class EditEarningActivity : AppCompatActivity() {
         //floating action button (save earning button)
         fab.setOnClickListener {
             var hasErrors = false
+            var numDecimalPlaces = 0
 
             if(spinnerSource.isEmpty()){
-                spinnerError.requestFocus()
-                spinnerError.error = "Source required"
+                textSource.requestFocus()
+                textSource.error = "Source required"
                 hasErrors = true
-            }else textSource.error = null //required as this will not be done automatically
+            }else{
+                textSource.error = null
+            }
 
             if(enterAmount.text.isEmpty()){
                 enterAmount.error = "Amount required"
                 hasErrors = true
+            }else if(enterAmount.text.contains(".")) {
+                val index = enterAmount.text.indexOf(".")+1 //index after the decimal (to find number of decimal places)
+                numDecimalPlaces = enterAmount.text.substring(index).length
+                if(numDecimalPlaces > 2){ //if more than 2 decimal places
+                    enterAmount.error = "Max 2 decimal places"
+                    hasErrors = true
+                }
             }
+
+            /**
+             * TODO: app does not save the very first entry after installation???
+             */
 
             //DatePicker indexes months starting at 0 (January), therefore +1
             if(!hasErrors){
+                //if additional info has unnecessary line breaks at beginning, remove them
+                //if additional info is all line breaks, set additional info to ""
+                if(enterAddInfo.text.contains("\n")){
+                    var temp = enterAddInfo.text.toString()
+                    while(temp.startsWith("\n")){
+                        temp = temp.replaceFirst("\n", "")
+                    }
+                    enterAddInfo.setText(temp)
+                }
+
                 val source = spinnerSource.selectedItem.toString()
                 val year = dp.year
                 val month = dp.month+1
                 val day = dp.dayOfMonth
-                val amount = enterAmount.text.toString()
-                val addInfo: String? = enterAddInfo.text.toString()
 
+                var amount = enterAmount.text.toString()
+                if(!amount.contains(".")){
+                    amount += "."
+                }
+                //for consistency, make all amounts have 2 decimal places
+                for(i in 0 until (2-numDecimalPlaces)){
+                    amount += "0"
+                }
+
+                val addInfo = enterAddInfo.text.toString()
                 val data = Intent()
 
                 if(requestCode == EDIT_EARNING_CODE){
@@ -70,17 +102,15 @@ class EditEarningActivity : AppCompatActivity() {
                     earning.setDate(Date(year, month, day))
                     earning.setSource(source)
                     earning.setAmount(BigDecimal(amount))
-                    if(addInfo != null){
-                        earning.setAddInfo(addInfo)
-                    }
+                    earning.setAddInfo(addInfo)
                     Database.writeEarnings()
                 }else if(requestCode == NEW_EARNING_CODE) {
                     Database.addEarning(
                         Date(year, month, day),
                         source,
                         BigDecimal(amount),
-                        enterAddInfo.text.toString())
-
+                        enterAddInfo.text.toString()
+                    )
                     //pass data to EarningsActivity where it will be used for Snackbar
                     data.putExtra("NEW_EARNING", "$source@$year@$month@$day@$amount")
                 }
@@ -127,21 +157,6 @@ class EditEarningActivity : AppCompatActivity() {
     private fun setSources(){
         //spinner (dropdown menu) for sources
         val dropdownSources: Spinner = findViewById(R.id.spinnerSource)
-        dropdownSources.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                //do nothing
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                spinnerError.error = null
-            }
-        }
-
         val sources: ArrayList<String> = Database.getEarningsSources()
         val adapter: ArrayAdapter<String> = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sources)
         dropdownSources.adapter = adapter
