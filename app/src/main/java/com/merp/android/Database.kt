@@ -17,183 +17,192 @@ object Database {
     private var earnings_sources_file = ""
     private var expenses_sources_file = ""
 
-    fun setDirectories(earningsDir: String, expensesDir: String, earnSourcesDir: String, expSourcesDir: String) {
+    fun setDirectories(
+        earningsDir: String,
+        expensesDir: String,
+        earnSourcesDir: String,
+        expSourcesDir: String
+    ) {
         earnings_file = earningsDir
         expenses_file = expensesDir
         earnings_sources_file = earnSourcesDir
         expenses_sources_file = expSourcesDir
     }
 
-    fun getEarnings(): ArrayList<Earning>{
+    fun getEarnings(): ArrayList<Earning> {
         return earning
     }
 
-    fun getExpenses(): ArrayList<Expense>{
+    fun getExpenses(): ArrayList<Expense> {
         return expense
     }
 
-    fun getEarningsSources(): ArrayList<String>{
+    fun getEarningsSources(): ArrayList<String> {
         return earningsSources
     }
 
-    fun getExpensesSources(): ArrayList<String>{
+    fun getExpensesSources(): ArrayList<String> {
         return expensesSources
     }
 
-    fun writeExpenses(){
+    fun writeExpenses() {
         val w = BufferedWriter(FileWriter(expenses_file, false))
-        w.use{ out->
-            for (i in expense){
+        w.use { out ->
+            for (i in expense) {
                 out.write(i.toFile() + "\n")
             }
         }
         w.close()
     }
 
-    fun writeEarnings(){
+    fun writeEarnings() {
         val w = BufferedWriter(FileWriter(earnings_file, false))
-        w.use{out->
-            for (i in earning){
+        w.use { out ->
+            for (i in earning) {
                 out.write(i.toFile() + "\n")
             }
         }
         w.close()
     }
 
-    fun writeExpensesSources(){
+    fun writeExpensesSources() {
         val w = BufferedWriter(FileWriter(expenses_sources_file, false))
         w.use {
-            for(i in expensesSources){
+            for (i in expensesSources) {
                 it.write(i + "\n")
             }
         }
     }
 
-    fun writeEarningsSources(){
+    fun writeEarningsSources() {
         val w = BufferedWriter(FileWriter(earnings_sources_file, false))
         w.use {
-            for(i in earningsSources){
+            for (i in earningsSources) {
                 it.write(i + "\n")
             }
         }
     }
 
     //adds expense to expenses arraylist
-    fun addExpense(date: Date, category: String, price: BigDecimal, adi: String){
-        expense.add(searchExpenses(date,expense,0,expense.size-1), Expense(date, category, price, adi))
+    fun addExpense(date: Date, category: String, price: BigDecimal, adi: String) {
+        expense.add(
+            searchExpenses(date, expense, 0, expense.size - 1),
+            Expense(date, category, price, adi)
+        )
         writeExpenses()
     }
 
     //adds the earning into the earnings array list and
     //opens the earnings text file and writes everything inside the arraylist into it
-    fun addEarning(date: Date, source: String, amount: BigDecimal, adi: String){
-        earning.add(searchEarnings(date, earning,0, earning.size-1), Earning(date, source, amount, adi))
+    fun addEarning(date: Date, source: String, amount: BigDecimal, adi: String) {
+        earning.add(
+            searchEarnings(date, earning, 0, earning.size - 1),
+            Earning(date, source, amount, adi)
+        )
         writeEarnings()
     }
 
     //adds the expense source to the arraylist and opens
     // expenses source text file and writes everything inside expenses sources file into it
-    fun addExpensesSource(source: String){
-        expensesSources.add(searchExpensesSources(source, 0, expensesSources.size-1), source)
+    fun addExpensesSource(source: String) {
+        expensesSources.add(searchExpensesSources(source, 0, expensesSources.size - 1), source)
         writeExpensesSources()
     }
 
     //opens earnings sources text file and writes
     // everything in the earnings source arraylist into it
-    fun addEarningsSource(source: String){
-        earningsSources.add(searchEarningsSources(source, 0, earningsSources.size-1), source)
+    fun addEarningsSource(source: String) {
+        earningsSources.add(searchEarningsSources(source, 0, earningsSources.size - 1), source)
         writeEarningsSources()
     }
 
     //searches through earnings array list and returns the index of where the date should be inserted in to preserve order
 
-    private fun searchEarnings(date: Date, list: ArrayList<Earning>, min: Int, max: Int): Int{
-        if(earning.isEmpty()) return 0
-        if (date.compareTo(list[max].getDate()) == 1){
+    private fun searchEarnings(date: Date, list: ArrayList<Earning>, min: Int, max: Int): Int {
+        if (earning.isEmpty()) return 0
+        if (date.compareTo(list[max].getDate()) == 1) {
             return list.size
         }
-        val i = (max+min)/2
+        val i = (max + min) / 2
         val d = list[i].getDate()
-        if (max-min<=1) {
+        if (max - min <= 1) {
             return if (date.compareTo(d) == 1) i + 1
             else i
         }
 
         return when (date.compareTo(d)) {
-            1 ->  searchEarnings(date, list, i, max)
-            -1 ->  searchEarnings(date, list, min, i)
+            1 -> searchEarnings(date, list, i, max)
+            -1 -> searchEarnings(date, list, min, i)
             else -> i
         }
     }
 
     //searches through the expenses array list and returns the index of the array of where the date should go to preserve order
-    private fun searchExpenses(date: Date, list: ArrayList<Expense>, min: Int, max: Int): Int{
-        if(expense.isEmpty()) return 0
-        if (date.compareTo(list[max].getDate()) == 1){
+    private fun searchExpenses(date: Date, list: ArrayList<Expense>, min: Int, max: Int): Int {
+        if (expense.isEmpty()) return 0
+        if (date.compareTo(list[max].getDate()) == 1) {
             return list.size
         }
-        val i = (max+min)/2
+        val i = (max + min) / 2
         val d = list[i].getDate()
-        if (max-min<=1) {
+        if (max - min <= 1) {
             return if (date.compareTo(d) == 1) i + 1
             else i
         }
 
         return when (date.compareTo(d)) {
-            1 ->  searchExpenses(date, list, i, max)
-            -1 ->  searchExpenses(date, list, min, i)
+            1 -> searchExpenses(date, list, i, max)
+            -1 -> searchExpenses(date, list, min, i)
             else -> i
         }
     }
 
     //searches through the expenses sources to put the source in alphabetically to preserve order
-    private fun searchExpensesSources(source: String, min: Int, max: Int): Int{
-        if(expensesSources.isEmpty()) return 0
-        if(source.compareTo(expensesSources[max]) >= 1){
+    private fun searchExpensesSources(source: String, min: Int, max: Int): Int {
+        if (expensesSources.isEmpty()) return 0
+        if (source.compareTo(expensesSources[max]) >= 1) {
             return expensesSources.size
-        }
-        else{
-            val i: Int = (max+min)/2
+        } else {
+            val i: Int = (max + min) / 2
             val s: String = expensesSources[i]
 
-            if(max-min <= 1){
-                return if(source.compareTo(s) >= 1) i+1
+            if (max - min <= 1) {
+                return if (source.compareTo(s) >= 1) i + 1
                 else i
             }
 
-            return if(source > s){
+            return if (source > s) {
                 searchExpensesSources(source, i, max)
-            }else if(source < s){
+            } else if (source < s) {
                 searchExpensesSources(source, min, i)
-            }else return i
+            } else return i
         }
     }
 
     //searches through earnings sources to put the source in alphabetically to preserve the order.
-    private fun searchEarningsSources(source: String, min: Int, max: Int): Int{
-        if(earningsSources.isEmpty()) return 0
-        if(source.compareTo(earningsSources[max]) >= 1){
+    private fun searchEarningsSources(source: String, min: Int, max: Int): Int {
+        if (earningsSources.isEmpty()) return 0
+        if (source.compareTo(earningsSources[max]) >= 1) {
             return earningsSources.size
-        }
-        else{
-            val i: Int = (max+min)/2
+        } else {
+            val i: Int = (max + min) / 2
             val s: String = earningsSources[i]
 
-            if(max-min <= 1){
-                return if(source.compareTo(s) >= 1) i+1
+            if (max - min <= 1) {
+                return if (source.compareTo(s) >= 1) i + 1
                 else i
             }
 
             return if (source > s) {
                 searchEarningsSources(source, i, max)
-            }else if(source < s) {
+            } else if (source < s) {
                 searchEarningsSources(source, min, i)
-            }else return i
+            } else return i
         }
     }
 
     //Open expenses text file to read each line and add each line of information to the expense array list
-    fun readExpenses(){
+    fun readExpenses() {
         expense.clear()
         val f = BufferedReader(FileReader(expenses_file))
         f.forEachLine {
@@ -204,9 +213,10 @@ object Database {
                 val source = found[1]
                 val amount = BigDecimal(found[2])
                 var addInfo = ""
-                try{
+                try {
                     addInfo = " " + found[3]
-                }catch(e: Exception){}
+                } catch (e: Exception) {
+                }
                 expense.add(Expense(date, source, amount, addInfo))
             }
         }
@@ -214,7 +224,7 @@ object Database {
     }
 
     //Open earnings text file to read each line and add the information to the earning array list
-    fun readEarnings(){
+    fun readEarnings() {
         earning.clear()
         val r = BufferedReader(FileReader(earnings_file))
         r.forEachLine {
@@ -225,9 +235,10 @@ object Database {
                 val source = found[1]
                 val amount = BigDecimal(found[2])
                 var addInfo = ""
-                try{
+                try {
                     addInfo = found[3]
-                }catch(e: Exception){}
+                } catch (e: Exception) {
+                }
                 earning.add(Earning(date, source, amount, addInfo))
             }
         }
@@ -235,7 +246,7 @@ object Database {
     }
 
     //reads the expenses sources in the file
-    fun readExpensesSources(){
+    fun readExpensesSources() {
         expensesSources.clear()
         val r = BufferedReader(FileReader((expenses_sources_file)))
         r.forEachLine {
@@ -244,7 +255,7 @@ object Database {
     }
 
     //reads the earnings sources in the file
-    fun readEarningsSources(){
+    fun readEarningsSources() {
         earningsSources.clear()
         val r = BufferedReader(FileReader(earnings_sources_file))
         r.forEachLine {
@@ -252,23 +263,23 @@ object Database {
         }
     }
 
-    fun getEarningAmountPerCategory(array: MutableList<Earning>): Array<BigDecimal>{
-        val amounts = Array(getEarningsSources().size, {BigDecimal(0)})
-        for (source in 0 until getEarningsSources().size){
-            for (earning in array){
-                if (earning.getSource() == (getEarningsSources()[source])){
-                    amounts[source] += amounts[source]+earning.getAmount()
+    fun getEarningAmountPerCategory(array: MutableList<Earning>): Array<BigDecimal> {
+        val amounts = Array(getEarningsSources().size, { BigDecimal(0) })
+        for (source in 0 until getEarningsSources().size) {
+            for (earning in array) {
+                if (earning.getSource() == (getEarningsSources()[source])) {
+                    amounts[source] += amounts[source] + earning.getAmount()
                 }
             }
         }
         return amounts
     }
 
-    fun getExpenseAmountPerCategory(array: MutableList<Expense>): Array<BigDecimal>{
-        val amounts = Array(getExpensesSources().size, {BigDecimal(0)})
-        for (source in 0 until getExpensesSources().size){
-            for (expense in array){
-                if (expense.getSource() == (getExpensesSources()[source])){
+    fun getExpenseAmountPerCategory(array: MutableList<Expense>): Array<BigDecimal> {
+        val amounts = Array(getExpensesSources().size, { BigDecimal(0) })
+        for (source in 0 until getExpensesSources().size) {
+            for (expense in array) {
+                if (expense.getSource() == (getExpensesSources()[source])) {
                     amounts[source] += amounts[source] + expense.getAmount()
                 }
             }
@@ -277,34 +288,39 @@ object Database {
     }
 
     //returns a list of all the dates that are between the start and end date
-    fun searchRangeEarnings(start: Date, end: Date): MutableList<Earning>{
-        return earning.subList(searchEarnings(start,earning,0,earning.size-1),searchEarnings(end,earning,0,earning.size-1)+1)
+    fun searchRangeEarnings(start: Date, end: Date): MutableList<Earning> {
+        var startIndex = searchEarnings(start, earning, 0, earning.size - 1)
+        var endIndex = searchEarnings(end, earning, 0, earning.size - 1)
+        return earning.subList(startIndex, endIndex)
     }
 
-    fun searchRangeExpenses(start: Date, end: Date): MutableList<Expense>{
-        return expense.subList(searchExpenses(start,expense,0,expense.size-1), searchExpenses(end,expense,0,expense.size-1)+1)
+    fun searchRangeExpenses(start: Date, end: Date): MutableList<Expense> {
+        return expense.subList(
+            searchExpenses(start, expense, 0, expense.size - 1),
+            searchExpenses(end, expense, 0, expense.size - 1)
+        )
     }
 
-    fun getEarningDateStrings(array: MutableList<Earning>): ArrayList<String>{
+    fun getEarningDateStrings(array: MutableList<Earning>): ArrayList<String> {
         var dates = ArrayList<String>()
 
-        for (date in getEarningDates(array)){
+        for (date in getEarningDates(array)) {
             dates.add(date.getFullDate())
         }
         return dates
     }
 
-    fun getEarningDates(array: MutableList<Earning>): ArrayList<Date>{
+    fun getEarningDates(array: MutableList<Earning>): ArrayList<Date> {
         var contains = false
         var dates = ArrayList<Date>()
-        for (earning in array){
-            for (date in dates){
-                if (date.getFullDate() == earning.getDate().getFullDate()){
+        for (earning in array) {
+            for (date in dates) {
+                if (date.getFullDate() == earning.getDate().getFullDate()) {
                     contains = true
                     break
                 }
             }
-            if(!contains){
+            if (!contains) {
                 dates.add(earning.getDate())
             }
             contains = false
@@ -312,26 +328,26 @@ object Database {
         return dates
     }
 
-    fun getExpenseDateStrings(array: MutableList<Expense>): ArrayList<String>{
+    fun getExpenseDateStrings(array: MutableList<Expense>): ArrayList<String> {
         var dates = ArrayList<String>()
 
-        for (date in getExpenseDates(array)){
+        for (date in getExpenseDates(array)) {
             dates.add(date.getFullDate())
         }
         return dates
     }
 
-    fun getExpenseDates(array: MutableList<Expense>): ArrayList<Date>{
+    fun getExpenseDates(array: MutableList<Expense>): ArrayList<Date> {
         var contains = false
         var dates = ArrayList<Date>()
-        for (expense in array){
-            for (date in dates){
-                if (date.getFullDate() == expense.getDate().getFullDate()){
+        for (expense in array) {
+            for (date in dates) {
+                if (date.getFullDate() == expense.getDate().getFullDate()) {
                     contains = true
                     break
                 }
             }
-            if(!contains){
+            if (!contains) {
                 dates.add(expense.getDate())
             }
             contains = false
@@ -339,12 +355,12 @@ object Database {
         return dates
     }
 
-    fun getAmountEarnedPerDate(array: MutableList<Earning>): Array<Float>{
+    fun getAmountEarnedPerDate(array: MutableList<Earning>): Array<Float> {
         var dates = getEarningDates(array)
-        var amounts = Array<Float>(dates.size,{0.toFloat()})
-        for(date in 0 until dates.size){
-            for(earning in array){
-                if (earning.getDate().getFullDate() == (dates[date].getFullDate())){
+        var amounts = Array<Float>(dates.size, { 0.toFloat() })
+        for (date in 0 until dates.size) {
+            for (earning in array) {
+                if (earning.getDate().getFullDate() == (dates[date].getFullDate())) {
                     amounts[date] += earning.getAmount().toFloat()
                 }
             }
@@ -352,12 +368,12 @@ object Database {
         return amounts
     }
 
-    fun getAmountSpentPerDate(array: MutableList<Expense>): Array<Float>{
+    fun getAmountSpentPerDate(array: MutableList<Expense>): Array<Float> {
         var dates = getExpenseDates(array)
-        var amounts = Array<Float>(dates.size,{0.toFloat()})
-        for(date in 0 until dates.size){
-            for(expense in array){
-                if (expense.getDate().getFullDate() == (dates[date].getFullDate())){
+        var amounts = Array<Float>(dates.size, { 0.toFloat() })
+        for (date in 0 until dates.size) {
+            for (expense in array) {
+                if (expense.getDate().getFullDate() == (dates[date].getFullDate())) {
                     amounts[date] += expense.getAmount().toFloat()
                 }
             }
@@ -365,67 +381,43 @@ object Database {
         return amounts
     }
 
-    fun getEveryEarningsDate(): ArrayList<Date>{
-        val array = ArrayList<Date>()
-        for(i in earning){
-            array.add(i.getDate())
+    //get all the earning sources available within a list
+    fun getEarningSources(array: MutableList<Earning>): ArrayList<String>{
+        var sources = ArrayList<String>(0)
+        var exists = false
+        for (earning in array){
+            for(source in sources) {
+                if (earning.getSource() == source) {
+                    exists = true
+                    break
+                }
+            }
+
+            if (!exists){
+                sources.add(earning.getSource())
+            }
+            exists = false
         }
-        return array
+        return sources
     }
 
-    fun getEveryEarningsSource(): ArrayList<String>{
-        val array = ArrayList<String>()
-        for(i in earning){
-            array.add(i.getSource())
-        }
-        return array
-    }
+    //get all the expense sources available within a list
+    fun getExpenseSources(array: MutableList<Expense>): ArrayList<String>{
+        var sources = ArrayList<String>(0)
+        var exists = false
+        for (expense in array){
+            for (source in sources){
+                if (expense.getSource() == source){
+                    exists = true
+                    break
+                }
+            }
 
-    fun getEveryEarningsAmount(): ArrayList<BigDecimal>{
-        val array = ArrayList<BigDecimal>()
-        for(i in earning){
-            array.add(i.getAmount())
+            if (!exists){
+                sources.add(expense.getSource())
+            }
+            exists = false
         }
-        return array
-    }
-
-    fun getEveryEarningsAddInfo(): ArrayList<String>{
-        val array = ArrayList<String>()
-        for(i in earning){
-            array.add(i.getAddInfo())
-        }
-        return array
-    }
-
-    fun getEveryExpensesDate(): ArrayList<Date>{
-        val array = ArrayList<Date>()
-        for(i in expense){
-            array.add(i.getDate())
-        }
-        return array
-    }
-
-    fun getEveryExpensessSource(): ArrayList<String>{
-        val array = ArrayList<String>()
-        for(i in expense){
-            array.add(i.getSource())
-        }
-        return array
-    }
-
-    fun getEveryExpensesAmount(): ArrayList<BigDecimal>{
-        val array = ArrayList<BigDecimal>()
-        for(i in expense){
-            array.add(i.getAmount())
-        }
-        return array
-    }
-
-    fun getEveryExpensesAddInfo(): ArrayList<String>{
-        val array = ArrayList<String>()
-        for(i in expense){
-            array.add(i.getAddInfo())
-        }
-        return array
+        return sources
     }
 }

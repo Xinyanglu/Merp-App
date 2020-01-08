@@ -59,8 +59,9 @@ class ChartFragment(entryType: String, chartType: String, start: Date, end: Date
             var desc = ""
 
             if (entry.equals("earnings")){ //adding y (earning amount) and x (earning category) as a sector in the pie chart
+                val arrayInRange = searchRangeEarnings(start, end)
                 val values = Database.getEarningAmountPerCategory(searchRangeEarnings(start, end))
-                val categories = Database.getEarningsSources()
+                val categories = Database.getEarningSources(arrayInRange)
 
                 for (i in 0 until categories.size){
                     pieEntries.add(PieEntry(values[i].toFloat(), categories[i]))
@@ -70,8 +71,9 @@ class ChartFragment(entryType: String, chartType: String, start: Date, end: Date
                 desc = "Amount earned per source"
 
             }else if (entry.equals("expenses")){
+                val arrayInRange = searchRangeExpenses(start, end)
                 val values = Database.getExpenseAmountPerCategory(searchRangeExpenses(start, end))
-                val categories = Database.getExpensesSources()
+                val categories = Database.getExpenseSources(arrayInRange)
 
                 for (i in 0 until categories.size){
                     pieEntries.add(PieEntry(values[i].toFloat(), categories[i]))
@@ -88,6 +90,7 @@ class ChartFragment(entryType: String, chartType: String, start: Date, end: Date
             pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS.toMutableList())
             val pieData =  PieData(pieDataSet)
 
+            pieData.setValueTextSize(25f)
             mPieChart.data = pieData
 
             val description = Description()

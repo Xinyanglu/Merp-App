@@ -38,13 +38,13 @@ class DatePickerActivity : AppCompatActivity() {
 
         start.setOnDateChangeListener { view, year, month, dayOfMonth ->
             startYear = year
-            startMonth = month
+            startMonth = month+1
             startDay = dayOfMonth
         }
 
         end.setOnDateChangeListener{view, year, month, dayOfMonth ->
             endYear = year
-            endMonth = month
+            endMonth = month+1
             endDay = dayOfMonth
         }
 
