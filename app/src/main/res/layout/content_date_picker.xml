@@ -67,6 +67,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_marginBottom="50dp"
-        android:text="Display Charts" />
+        android:text="@string/btn_create_report" />
 
 </FrameLayout>

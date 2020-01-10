@@ -11,6 +11,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ListView
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.merp.android.*
 import kotlinx.android.synthetic.main.activity_earnings.*
@@ -26,7 +27,7 @@ class EarningsActivity : AppCompatActivity() {
     //identifier code for intention to edit a selected earning
     private val EDIT_EARNING_CODE =  102
 
-    //called by default every time the activity is created
+    //automatically called when the activity is created
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_earnings)
@@ -95,8 +96,8 @@ class EarningsActivity : AppCompatActivity() {
         }
     }
 
-    //called by default every time the activity is resumed
-    //always called after onCreate in the activity lifecycle
+    //automatically called when the activity is resumed
+    //always called after onCreate() as per the activity lifecycle
     override fun onResume() {
         super.onResume()
         updateListView(createCustomItemsList())
@@ -131,7 +132,7 @@ class EarningsActivity : AppCompatActivity() {
             }
             //creates and shows the Snackbar with the specified text
             Snackbar.make(
-                findViewById(R.id.earningsLayout),
+                findViewById(R.id.earningsLayoutActivity),
                 text,
                 Snackbar.LENGTH_INDEFINITE
             ).show()
@@ -197,6 +198,10 @@ class EarningsActivity : AppCompatActivity() {
         Log.d("Earnings toolbar", "$item clicked")
 
         when(item.itemId){
+            R.id.action_display_help -> {
+                val ft = this.supportFragmentManager.beginTransaction()
+                ft.add(R.id.earningsLayoutContent, HelpFragment(), "HELP_FRAGMENT").commit()
+            }
             R.id.action_delete_earnings -> {
                 Database.getEarnings().clear()
                 Database.writeEarnings()

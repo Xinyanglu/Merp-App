@@ -4,9 +4,16 @@
     tools:context="com.merp.android.activities.EarningsActivity">
 
     <item
-        android:id="@+id/action_delete_earnings"
+        android:id="@+id/action_display_help"
         android:orderInCategory="100"
+        android:title="@string/action_display_help"
+        app:showAsAction="never"
+        android:onClick="menuItemClicked" />
+
+    <item
+        android:id="@+id/action_delete_earnings"
+        android:orderInCategory="200"
         android:title="@string/action_delete_earnings"
         app:showAsAction="never"
-        android:onClick="menuItemClicked"/>
+        android:onClick="menuItemClicked" />
 </menu>
