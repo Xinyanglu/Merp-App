@@ -8,8 +8,9 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 
 /**
- * Constructs an instance of the CustomAdapter class, a modified version of the default ArrayAdapter class.
- * Uses the same properties as an ArrayAdapter class.
+ * A custom [ArrayAdapter] class, modified for adapting the four properties of each [CustomListItem] into one item in a ListView.
+ *
+ * @constructor Constructs an instance of the CustomAdapter class using the same properties as an [ArrayAdapter] object.
  */
 class CustomAdapter(context: Context,
                     resource: Int,
@@ -44,6 +45,13 @@ class CustomAdapter(context: Context,
         var textViewAddInfo: TextView? = null
     }
 
+    /**
+     * TODO called repeatedly for each item in the ListView??
+     *
+     * @param [position] position of the item in the ListView
+     * @param [convertView] TODO
+     * @param [parent] TODO the parent ViewGroup of the View??? wat unused
+     */
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var v = convertView
         val holder: ViewHolder

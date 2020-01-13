@@ -3,7 +3,6 @@ package com.merp.android.activities
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
@@ -16,11 +15,27 @@ import kotlinx.android.synthetic.main.activity_edit_earning.*
 import kotlinx.android.synthetic.main.fragment_edit_entry.*
 import java.math.BigDecimal
 
+/**
+ * An [Activity] for adding/editing earnings to/from [Database.earning].
+ * The user can also navigate to [EarningsSourcesActivity].
+ */
 class EditEarningActivity : AppCompatActivity() {
-    private val NEW_EARNING_CODE = 101
-    private val EDIT_EARNING_CODE = 102
+    /** An identifier code that checks if the user navigated to this activity with the intention to create a new earning */
+    private val newEarningCode = 101
+
+    /** An identifier code that checks if the user navigated to this activity with the intention to edit their selected earning */
+    private val editEarningCode = 102
+
+    /** If the user selected an earning from [EarningsActivity] to edit, this records the index of that earning in [Database.earning] */
     private var index = -999
+
+    /**
+     * Records the request (identifier) code passed from [EarningsActivity]
+     * and is compared against [newEarningCode] and [editEarningCode] to determine the user's intention.
+     */
     private var requestCode = -999
+
+    /** A [DatePicker] object used for selecting the [com.merp.android.Earning.date] */
     private lateinit var dp: DatePicker
 
     //called by default when the activity is created
@@ -99,14 +114,14 @@ class EditEarningActivity : AppCompatActivity() {
                 val addInfo = enterAddInfo.text.toString()
                 val data = Intent()
 
-                if(requestCode == EDIT_EARNING_CODE){
+                if(requestCode == editEarningCode){
                     val earning = Database.getEarnings()[index]
                     earning.setDate(Date(year, month, day))
                     earning.setSource(source)
                     earning.setAmount(BigDecimal(amount))
                     earning.setAddInfo(addInfo)
                     Database.writeEarnings()
-                }else if(requestCode == NEW_EARNING_CODE) {
+                }else if(requestCode == newEarningCode) {
                     Database.addEarning(
                         Date(year, month, day),
                         source,
@@ -122,14 +137,19 @@ class EditEarningActivity : AppCompatActivity() {
         }
     }
 
-    //called by default when the activity is resumed
-    //always called after onCreate() as per the activity lifecycle
+    /**
+     * Calls [setSources].
+     * If the [requestCode] is [editEarningCode], sets all the layout components to display the properties of the selected earning.
+     *
+     * Called by default when the activity is resumed.
+     * Always called after [onCreate] as per the activity lifecycle.
+     */
     override fun onResume() {
         super.onResume()
         setSources()
 
         //if user is editing an existing earning, sets all layout components to display that earning's info
-        if(requestCode == EDIT_EARNING_CODE) {
+        if(requestCode == editEarningCode) {
             val result = intent.getStringExtra("EDIT_EARNING")
             if (result != null) {
                 val split = result.split("@")
@@ -156,10 +176,10 @@ class EditEarningActivity : AppCompatActivity() {
 
 
     /**
-     * When the background is clicked, hide the on-screen keyboard.
+     * When the background is clicked, hides the on-screen keyboard.
      * NOTE: as this is an XML onClick attribute method, a View parameter is required even if unused.
      *
-     * @param v: the View clicked
+     * @param [v] the View clicked
      */
     fun onClick(v: View){
         val imm: InputMethodManager = this.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -167,13 +187,16 @@ class EditEarningActivity : AppCompatActivity() {
     }
 
     /**
-     * Sets the values of the spinner (dropdown menu) of sources
+     * Updates the spinner (dropdown menu) to display and allow the user to select any of the [Database.earningsSources].
      */
     private fun setSources(){
-        //spinner (dropdown menu) for sources
+        //create object for referencing the spinner (dropdown menu) of sources
         val dropdownSources: Spinner = findViewById(R.id.spinnerSource)
+        //create an array of sources
         val sources: ArrayList<String> = Database.getEarningsSources()
+        //use an ArrayAdapter for adapting an array to a spinner
         val adapter: ArrayAdapter<String> = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sources)
+        //set the adapter of the spinner to the ArrayAdapter
         dropdownSources.adapter = adapter
     }
 

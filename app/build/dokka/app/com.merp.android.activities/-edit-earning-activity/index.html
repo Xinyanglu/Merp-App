@@ -1,0 +1,113 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>EditEarningActivity - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.merp.android.activities</a>&nbsp;/&nbsp;<a href="./index.html">EditEarningActivity</a><br/>
+<br/>
+<h1>EditEarningActivity</h1>
+<code><span class="keyword">class </span><span class="identifier">EditEarningActivity</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AppCompatActivity</span></code>
+<p>An <a href="https://developer.android.com/reference/android/app/Activity.html">Activity</a> for adding/editing earnings to/from <a href="../../com.merp.android/-database/earning.html">Database.earning</a>.
+The user can also navigate to <a href="../-earnings-sources-activity/index.html">EarningsSourcesActivity</a>.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>An <a href="https://developer.android.com/reference/android/app/Activity.html">Activity</a> for adding/editing earnings to/from <a href="../../com.merp.android/-database/earning.html">Database.earning</a>.
+The user can also navigate to <a href="../-earnings-sources-activity/index.html">EarningsSourcesActivity</a>.</p>
+<code><span class="identifier">EditEarningActivity</span><span class="symbol">(</span><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="dp.html">dp</a></h4>
+</td>
+<td>
+<p>A <a href="https://developer.android.com/reference/android/widget/DatePicker.html">DatePicker</a> object used for selecting the <a href="../../com.merp.android/-earning/date.html">com.merp.android.Earning.date</a></p>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">dp</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/widget/DatePicker.html"><span class="identifier">DatePicker</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="edit-earning-code.html">editEarningCode</a></h4>
+</td>
+<td>
+<p>An identifier code that checks if the user navigated to this activity with the intention to edit their selected earning</p>
+<code><span class="keyword">val </span><span class="identifier">editEarningCode</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="--index--.html">index</a></h4>
+</td>
+<td>
+<p>If the user selected an earning from <a href="../-earnings-activity/index.html">EarningsActivity</a> to edit, this records the index of that earning in <a href="../../com.merp.android/-database/earning.html">Database.earning</a></p>
+<code><span class="keyword">var </span><span class="identifier">index</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="new-earning-code.html">newEarningCode</a></h4>
+</td>
+<td>
+<p>An identifier code that checks if the user navigated to this activity with the intention to create a new earning</p>
+<code><span class="keyword">val </span><span class="identifier">newEarningCode</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="request-code.html">requestCode</a></h4>
+</td>
+<td>
+<p>Records the request (identifier) code passed from <a href="../-earnings-activity/index.html">EarningsActivity</a>
+and is compared against <a href="new-earning-code.html">newEarningCode</a> and <a href="edit-earning-code.html">editEarningCode</a> to determine the user's intention.</p>
+<code><span class="keyword">var </span><span class="identifier">requestCode</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="on-click.html">onClick</a></h4>
+</td>
+<td>
+<p>When the background is clicked, hides the on-screen keyboard.
+NOTE: as this is an XML onClick attribute method, a View parameter is required even if unused.</p>
+<code><span class="keyword">fun </span><span class="identifier">onClick</span><span class="symbol">(</span><span class="identifier" id="com.merp.android.activities.EditEarningActivity$onClick(android.view.View)/v">v</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-create.html">onCreate</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onCreate</span><span class="symbol">(</span><span class="identifier" id="com.merp.android.activities.EditEarningActivity$onCreate(android.os.Bundle)/savedInstanceState">savedInstanceState</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-resume.html">onResume</a></h4>
+</td>
+<td>
+<p>Calls <a href="set-sources.html">setSources</a>.
+If the <a href="request-code.html">requestCode</a> is <a href="edit-earning-code.html">editEarningCode</a>, sets all the layout components to display the properties of the selected earning.</p>
+<code><span class="keyword">fun </span><span class="identifier">onResume</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="set-sources.html">setSources</a></h4>
+</td>
+<td>
+<p>Updates the spinner (dropdown menu) to display and allow the user to select any of the <a href="../../com.merp.android/-database/earnings-sources.html">Database.earningsSources</a>.</p>
+<code><span class="keyword">fun </span><span class="identifier">setSources</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

@@ -8,7 +8,7 @@
     tools:context=".activities.EarningsSourcesActivity"
     tools:showIn="@layout/activity_earnings_sources"
     android:padding="30dp"
-    android:onClick="onClick">
+    android:onClick="hideKeyboard">
 
     <fragment
         android:id="@+id/fragment"

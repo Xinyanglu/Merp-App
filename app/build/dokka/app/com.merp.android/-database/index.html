@@ -1,0 +1,310 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Database - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.merp.android</a>&nbsp;/&nbsp;<a href="./index.html">Database</a><br/>
+<br/>
+<h1>Database</h1>
+<code><span class="keyword">object </span><span class="identifier">Database</span></code>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="earning.html">earning</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">earning</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-array-list/index.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="../-earning/index.html"><span class="identifier">Earning</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="earnings_file.html">earnings_file</a></h4>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">earnings_file</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="earnings_sources_file.html">earnings_sources_file</a></h4>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">earnings_sources_file</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="earnings-sources.html">earningsSources</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">earningsSources</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-array-list/index.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="expense.html">expense</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">expense</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-array-list/index.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="../-expense/index.html"><span class="identifier">Expense</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="expenses_file.html">expenses_file</a></h4>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">expenses_file</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="expenses_sources_file.html">expenses_sources_file</a></h4>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">expenses_sources_file</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="expenses-sources.html">expensesSources</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">expensesSources</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-array-list/index.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="add-earning.html">addEarning</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">addEarning</span><span class="symbol">(</span><span class="identifier" id="com.merp.android.Database$addEarning(com.merp.android.Date, kotlin.String, java.math.BigDecimal, kotlin.String)/date">date</span><span class="symbol">:</span>&nbsp;<a href="../-date/index.html"><span class="identifier">Date</span></a><span class="symbol">, </span><span class="identifier" id="com.merp.android.Database$addEarning(com.merp.android.Date, kotlin.String, java.math.BigDecimal, kotlin.String)/source">source</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.merp.android.Database$addEarning(com.merp.android.Date, kotlin.String, java.math.BigDecimal, kotlin.String)/amount">amount</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/math/BigDecimal.html"><span class="identifier">BigDecimal</span></a><span class="symbol">, </span><span class="identifier" id="com.merp.android.Database$addEarning(com.merp.android.Date, kotlin.String, java.math.BigDecimal, kotlin.String)/adi">adi</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="add-earnings-source.html">addEarningsSource</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">addEarningsSource</span><span class="symbol">(</span><span class="identifier" id="com.merp.android.Database$addEarningsSource(kotlin.String)/source">source</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="add-expense.html">addExpense</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">addExpense</span><span class="symbol">(</span><span class="identifier" id="com.merp.android.Database$addExpense(com.merp.android.Date, kotlin.String, java.math.BigDecimal, kotlin.String)/date">date</span><span class="symbol">:</span>&nbsp;<a href="../-date/index.html"><span class="identifier">Date</span></a><span class="symbol">, </span><span class="identifier" id="com.merp.android.Database$addExpense(com.merp.android.Date, kotlin.String, java.math.BigDecimal, kotlin.String)/category">category</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.merp.android.Database$addExpense(com.merp.android.Date, kotlin.String, java.math.BigDecimal, kotlin.String)/price">price</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/math/BigDecimal.html"><span class="identifier">BigDecimal</span></a><span class="symbol">, </span><span class="identifier" id="com.merp.android.Database$addExpense(com.merp.android.Date, kotlin.String, java.math.BigDecimal, kotlin.String)/adi">adi</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="add-expenses-source.html">addExpensesSource</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">addExpensesSource</span><span class="symbol">(</span><span class="identifier" id="com.merp.android.Database$addExpensesSource(kotlin.String)/source">source</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-amount-earned-per-date.html">getAmountEarnedPerDate</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getAmountEarnedPerDate</span><span class="symbol">(</span><span class="identifier" id="com.merp.android.Database$getAmountEarnedPerDate(kotlin.collections.MutableList((com.merp.android.Earning)))/array">array</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html"><span class="identifier">MutableList</span></a><span class="symbol">&lt;</span><a href="../-earning/index.html"><span class="identifier">Earning</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-amount-spent-per-date.html">getAmountSpentPerDate</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getAmountSpentPerDate</span><span class="symbol">(</span><span class="identifier" id="com.merp.android.Database$getAmountSpentPerDate(kotlin.collections.MutableList((com.merp.android.Expense)))/array">array</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html"><span class="identifier">MutableList</span></a><span class="symbol">&lt;</span><a href="../-expense/index.html"><span class="identifier">Expense</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-earning-amount-per-category.html">getEarningAmountPerCategory</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getEarningAmountPerCategory</span><span class="symbol">(</span><span class="identifier" id="com.merp.android.Database$getEarningAmountPerCategory(kotlin.collections.MutableList((com.merp.android.Earning)))/array">array</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html"><span class="identifier">MutableList</span></a><span class="symbol">&lt;</span><a href="../-earning/index.html"><span class="identifier">Earning</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><a href="https://docs.oracle.com/javase/6/docs/api/java/math/BigDecimal.html"><span class="identifier">BigDecimal</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-earning-dates.html">getEarningDates</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getEarningDates</span><span class="symbol">(</span><span class="identifier" id="com.merp.android.Database$getEarningDates(kotlin.collections.MutableList((com.merp.android.Earning)))/array">array</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html"><span class="identifier">MutableList</span></a><span class="symbol">&lt;</span><a href="../-earning/index.html"><span class="identifier">Earning</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-array-list/index.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="../-date/index.html"><span class="identifier">Date</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-earning-date-strings.html">getEarningDateStrings</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getEarningDateStrings</span><span class="symbol">(</span><span class="identifier" id="com.merp.android.Database$getEarningDateStrings(kotlin.collections.MutableList((com.merp.android.Earning)))/array">array</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html"><span class="identifier">MutableList</span></a><span class="symbol">&lt;</span><a href="../-earning/index.html"><span class="identifier">Earning</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-array-list/index.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-earnings.html">getEarnings</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getEarnings</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-array-list/index.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="../-earning/index.html"><span class="identifier">Earning</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-earning-sources.html">getEarningSources</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getEarningSources</span><span class="symbol">(</span><span class="identifier" id="com.merp.android.Database$getEarningSources(kotlin.collections.MutableList((com.merp.android.Earning)))/array">array</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html"><span class="identifier">MutableList</span></a><span class="symbol">&lt;</span><a href="../-earning/index.html"><span class="identifier">Earning</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-array-list/index.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-earnings-sources.html">getEarningsSources</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getEarningsSources</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-array-list/index.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-expense-amount-per-category.html">getExpenseAmountPerCategory</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getExpenseAmountPerCategory</span><span class="symbol">(</span><span class="identifier" id="com.merp.android.Database$getExpenseAmountPerCategory(kotlin.collections.MutableList((com.merp.android.Expense)))/array">array</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html"><span class="identifier">MutableList</span></a><span class="symbol">&lt;</span><a href="../-expense/index.html"><span class="identifier">Expense</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><a href="https://docs.oracle.com/javase/6/docs/api/java/math/BigDecimal.html"><span class="identifier">BigDecimal</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-expense-dates.html">getExpenseDates</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getExpenseDates</span><span class="symbol">(</span><span class="identifier" id="com.merp.android.Database$getExpenseDates(kotlin.collections.MutableList((com.merp.android.Expense)))/array">array</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html"><span class="identifier">MutableList</span></a><span class="symbol">&lt;</span><a href="../-expense/index.html"><span class="identifier">Expense</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-array-list/index.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="../-date/index.html"><span class="identifier">Date</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-expense-date-strings.html">getExpenseDateStrings</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getExpenseDateStrings</span><span class="symbol">(</span><span class="identifier" id="com.merp.android.Database$getExpenseDateStrings(kotlin.collections.MutableList((com.merp.android.Expense)))/array">array</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html"><span class="identifier">MutableList</span></a><span class="symbol">&lt;</span><a href="../-expense/index.html"><span class="identifier">Expense</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-array-list/index.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-expenses.html">getExpenses</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getExpenses</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-array-list/index.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="../-expense/index.html"><span class="identifier">Expense</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-expense-sources.html">getExpenseSources</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getExpenseSources</span><span class="symbol">(</span><span class="identifier" id="com.merp.android.Database$getExpenseSources(kotlin.collections.MutableList((com.merp.android.Expense)))/array">array</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html"><span class="identifier">MutableList</span></a><span class="symbol">&lt;</span><a href="../-expense/index.html"><span class="identifier">Expense</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-array-list/index.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-expenses-sources.html">getExpensesSources</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getExpensesSources</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-array-list/index.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="read-earnings.html">readEarnings</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">readEarnings</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="read-earnings-sources.html">readEarningsSources</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">readEarningsSources</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="read-expenses.html">readExpenses</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">readExpenses</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="read-expenses-sources.html">readExpensesSources</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">readExpensesSources</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="search-earnings.html">searchEarnings</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">searchEarnings</span><span class="symbol">(</span><span class="identifier" id="com.merp.android.Database$searchEarnings(com.merp.android.Date, java.util.ArrayList((com.merp.android.Earning)), kotlin.Int, kotlin.Int)/date">date</span><span class="symbol">:</span>&nbsp;<a href="../-date/index.html"><span class="identifier">Date</span></a><span class="symbol">, </span><span class="identifier" id="com.merp.android.Database$searchEarnings(com.merp.android.Date, java.util.ArrayList((com.merp.android.Earning)), kotlin.Int, kotlin.Int)/list">list</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-array-list/index.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="../-earning/index.html"><span class="identifier">Earning</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="com.merp.android.Database$searchEarnings(com.merp.android.Date, java.util.ArrayList((com.merp.android.Earning)), kotlin.Int, kotlin.Int)/min">min</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.merp.android.Database$searchEarnings(com.merp.android.Date, java.util.ArrayList((com.merp.android.Earning)), kotlin.Int, kotlin.Int)/max">max</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="search-earnings-sources.html">searchEarningsSources</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">searchEarningsSources</span><span class="symbol">(</span><span class="identifier" id="com.merp.android.Database$searchEarningsSources(kotlin.String, kotlin.Int, kotlin.Int)/source">source</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.merp.android.Database$searchEarningsSources(kotlin.String, kotlin.Int, kotlin.Int)/min">min</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.merp.android.Database$searchEarningsSources(kotlin.String, kotlin.Int, kotlin.Int)/max">max</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="search-expenses.html">searchExpenses</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">searchExpenses</span><span class="symbol">(</span><span class="identifier" id="com.merp.android.Database$searchExpenses(com.merp.android.Date, java.util.ArrayList((com.merp.android.Expense)), kotlin.Int, kotlin.Int)/date">date</span><span class="symbol">:</span>&nbsp;<a href="../-date/index.html"><span class="identifier">Date</span></a><span class="symbol">, </span><span class="identifier" id="com.merp.android.Database$searchExpenses(com.merp.android.Date, java.util.ArrayList((com.merp.android.Expense)), kotlin.Int, kotlin.Int)/list">list</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-array-list/index.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="../-expense/index.html"><span class="identifier">Expense</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="com.merp.android.Database$searchExpenses(com.merp.android.Date, java.util.ArrayList((com.merp.android.Expense)), kotlin.Int, kotlin.Int)/min">min</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.merp.android.Database$searchExpenses(com.merp.android.Date, java.util.ArrayList((com.merp.android.Expense)), kotlin.Int, kotlin.Int)/max">max</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="search-expenses-sources.html">searchExpensesSources</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">searchExpensesSources</span><span class="symbol">(</span><span class="identifier" id="com.merp.android.Database$searchExpensesSources(kotlin.String, kotlin.Int, kotlin.Int)/source">source</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.merp.android.Database$searchExpensesSources(kotlin.String, kotlin.Int, kotlin.Int)/min">min</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.merp.android.Database$searchExpensesSources(kotlin.String, kotlin.Int, kotlin.Int)/max">max</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="search-range-earnings.html">searchRangeEarnings</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">searchRangeEarnings</span><span class="symbol">(</span><span class="identifier" id="com.merp.android.Database$searchRangeEarnings(com.merp.android.Date, com.merp.android.Date)/start">start</span><span class="symbol">:</span>&nbsp;<a href="../-date/index.html"><span class="identifier">Date</span></a><span class="symbol">, </span><span class="identifier" id="com.merp.android.Database$searchRangeEarnings(com.merp.android.Date, com.merp.android.Date)/end">end</span><span class="symbol">:</span>&nbsp;<a href="../-date/index.html"><span class="identifier">Date</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html"><span class="identifier">MutableList</span></a><span class="symbol">&lt;</span><a href="../-earning/index.html"><span class="identifier">Earning</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="search-range-expenses.html">searchRangeExpenses</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">searchRangeExpenses</span><span class="symbol">(</span><span class="identifier" id="com.merp.android.Database$searchRangeExpenses(com.merp.android.Date, com.merp.android.Date)/start">start</span><span class="symbol">:</span>&nbsp;<a href="../-date/index.html"><span class="identifier">Date</span></a><span class="symbol">, </span><span class="identifier" id="com.merp.android.Database$searchRangeExpenses(com.merp.android.Date, com.merp.android.Date)/end">end</span><span class="symbol">:</span>&nbsp;<a href="../-date/index.html"><span class="identifier">Date</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html"><span class="identifier">MutableList</span></a><span class="symbol">&lt;</span><a href="../-expense/index.html"><span class="identifier">Expense</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="set-directories.html">setDirectories</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setDirectories</span><span class="symbol">(</span><span class="identifier" id="com.merp.android.Database$setDirectories(kotlin.String, kotlin.String, kotlin.String, kotlin.String)/earningsDir">earningsDir</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.merp.android.Database$setDirectories(kotlin.String, kotlin.String, kotlin.String, kotlin.String)/expensesDir">expensesDir</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.merp.android.Database$setDirectories(kotlin.String, kotlin.String, kotlin.String, kotlin.String)/earnSourcesDir">earnSourcesDir</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.merp.android.Database$setDirectories(kotlin.String, kotlin.String, kotlin.String, kotlin.String)/expSourcesDir">expSourcesDir</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="write-earnings.html">writeEarnings</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">writeEarnings</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="write-earnings-sources.html">writeEarningsSources</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">writeEarningsSources</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="write-expenses.html">writeExpenses</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">writeExpenses</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="write-expenses-sources.html">writeExpensesSources</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">writeExpensesSources</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

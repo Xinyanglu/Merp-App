@@ -1,8 +1,9 @@
 package com.merp.android
 
 /**
- * Constructs an instance of the CustomListItem class.
- * CustomListItems are constructed using the properties of an existing Earning/Expense object.
+ * Combines all properties of each [Earning]/[Expense] object into an element in an array for being adapted to a ListView using [CustomAdapter].
+ *
+ * @constructor Constructs an instance of the CustomListItem class using the properties of an existing [Earning]/[Expense] object.
  *
  * @property [tvDate] The String value of either [Earning.date] or [Expense.date]
  * @property [tvSource] The String value of either [Earning.source] or [Expense.source]

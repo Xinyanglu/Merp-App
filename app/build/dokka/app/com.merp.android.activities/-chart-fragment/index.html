@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ChartFragment - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.merp.android.activities</a>&nbsp;/&nbsp;<a href="./index.html">ChartFragment</a><br/>
+<br/>
+<h1>ChartFragment</h1>
+<code><span class="keyword">class </span><span class="identifier">ChartFragment</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Fragment</span></code>
+<p>A simple <a href="#">Fragment</a> subclass.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>A simple <a href="#">Fragment</a> subclass.</p>
+<code><span class="identifier">ChartFragment</span><span class="symbol">(</span><span class="identifier" id="com.merp.android.activities.ChartFragment$<init>(kotlin.String, kotlin.String, com.merp.android.Date, com.merp.android.Date)/entryType">entryType</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.merp.android.activities.ChartFragment$<init>(kotlin.String, kotlin.String, com.merp.android.Date, com.merp.android.Date)/chartType">chartType</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.merp.android.activities.ChartFragment$<init>(kotlin.String, kotlin.String, com.merp.android.Date, com.merp.android.Date)/start">start</span><span class="symbol">:</span>&nbsp;<a href="../../com.merp.android/-date/index.html"><span class="identifier">Date</span></a><span class="symbol">, </span><span class="identifier" id="com.merp.android.activities.ChartFragment$<init>(kotlin.String, kotlin.String, com.merp.android.Date, com.merp.android.Date)/end">end</span><span class="symbol">:</span>&nbsp;<a href="../../com.merp.android/-date/index.html"><span class="identifier">Date</span></a><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="e.html">e</a></h4>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">e</span><span class="symbol">: </span><a href="../../com.merp.android/-date/index.html"><span class="identifier">Date</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="entry.html">entry</a></h4>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">entry</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="m.html">m</a></h4>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">m</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="m-bar-chart.html">mBarChart</a></h4>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">mBarChart</span><span class="symbol">: </span><span class="identifier">BarChart</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="m-pie-chart.html">mPieChart</a></h4>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">mPieChart</span><span class="symbol">: </span><span class="identifier">PieChart</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="s.html">s</a></h4>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">s</span><span class="symbol">: </span><a href="../../com.merp.android/-date/index.html"><span class="identifier">Date</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="get-chart.html">getChart</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getChart</span><span class="symbol">(</span><span class="identifier" id="com.merp.android.activities.ChartFragment$getChart(kotlin.String, kotlin.String, com.merp.android.Date, com.merp.android.Date)/entry">entry</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.merp.android.activities.ChartFragment$getChart(kotlin.String, kotlin.String, com.merp.android.Date, com.merp.android.Date)/method">method</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.merp.android.activities.ChartFragment$getChart(kotlin.String, kotlin.String, com.merp.android.Date, com.merp.android.Date)/start">start</span><span class="symbol">:</span>&nbsp;<a href="../../com.merp.android/-date/index.html"><span class="identifier">Date</span></a><span class="symbol">, </span><span class="identifier" id="com.merp.android.activities.ChartFragment$getChart(kotlin.String, kotlin.String, com.merp.android.Date, com.merp.android.Date)/end">end</span><span class="symbol">:</span>&nbsp;<a href="../../com.merp.android/-date/index.html"><span class="identifier">Date</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-create-view.html">onCreateView</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onCreateView</span><span class="symbol">(</span><span class="identifier" id="com.merp.android.activities.ChartFragment$onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)/inflater">inflater</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/LayoutInflater.html"><span class="identifier">LayoutInflater</span></a><span class="symbol">, </span><span class="identifier" id="com.merp.android.activities.ChartFragment$onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)/container">container</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/ViewGroup.html"><span class="identifier">ViewGroup</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.merp.android.activities.ChartFragment$onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)/savedInstanceState">savedInstanceState</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">?</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
