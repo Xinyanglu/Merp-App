@@ -2,7 +2,6 @@ package com.merp.android
 
 import java.math.*
 
-
 /**
  * Constructs an instance of the Earning class which records the
  * [date] of the earning, [source] of the earning, [amount] earned, and any [addInfo].
@@ -32,22 +31,22 @@ class Earning(private var date: Date,
         return addInfo
     }
 
-    /** Sets the instance's [date] property */
+    /** Sets the instance's [date] property to [d] */
     fun setDate(d: Date){
         date = d
     }
 
-    /** Sets the instance's [source] property */
-    fun setSource(c: String){
-        source = c
+    /** Sets the instance's [source] property [s] */
+    fun setSource(s: String){
+        source = s
     }
 
-    /** Sets the instance's [amount] property */
+    /** Sets the instance's [amount] property to [a] */
     fun setAmount(a: BigDecimal){
         amount = a
     }
 
-    /** Sets the instance's [addInfo] property */
+    /** Sets the instance's [addInfo] property [adi] */
     fun setAddInfo(adi: String){
         addInfo = adi
     }

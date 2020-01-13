@@ -11,7 +11,6 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ListView
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.merp.android.*
 import kotlinx.android.synthetic.main.activity_earnings.*
@@ -19,15 +18,24 @@ import kotlinx.android.synthetic.main.fragment_entries.*
 import java.util.*
 import kotlin.collections.ArrayList
 
+/**
+ * An [Activity] that allows the user to filter and scroll through a list of [Earning]s. and/or delete them.
+ * The user can also navigate to [EditEarningActivity] to add/edit [Earning]s.
+ */
 class EarningsActivity : AppCompatActivity() {
-    //custom ArrayAdapter object that will take an array of Earnings to put onto the ListView
+    /** A [CustomAdapter] object that will take an array of [CustomListItem]s to put into the [ListView] */
     private lateinit var adapter: CustomAdapter
-    //identifier code for intention to create a new earning
-    private val NEW_EARNING_CODE = 101
-    //identifier code for intention to edit a selected earning
-    private val EDIT_EARNING_CODE =  102
 
-    //automatically called when the activity is created
+    /** An identifier code for communicating the user's intention to create a new earning to [EditEarningActivity] */
+    private val newEarningCode = 101
+
+    /** An identifier code for communicating the user's intention to edit their selected earning to [EditEarningActivity] */
+    private val editEarningCode =  102
+
+    /**
+     * Sets up the functionality of the activity (adding listeners to TextViews, floating action buttons, ListViews, etc.).
+     * Automatically called when the activity is created
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_earnings)
@@ -42,11 +50,11 @@ class EarningsActivity : AppCompatActivity() {
             val data = Intent(this, EditEarningActivity::class.java).apply {
                 //add extra: NEW_EARNING_CODE to the Intent with key: "REQUEST_CODE"
                 //extra is passed to the new activity and specifies that the user intends to create a new Earning
-                putExtra("REQUEST_CODE", NEW_EARNING_CODE)
+                putExtra("REQUEST_CODE", newEarningCode)
             }
             //this NEW_EARNING_CODE is used as the requestCode for the startActivityForResult method
             //when the user returns to this activity, onActivityResult will be called, and the requestCode will be NEW_EARNING_CODE
-            startActivityForResult(data, NEW_EARNING_CODE)
+            startActivityForResult(data, newEarningCode)
         }
 
         //keyword search feature for searchBarEntries EditText View
@@ -68,10 +76,10 @@ class EarningsActivity : AppCompatActivity() {
                 //passes the selected Earning's info to the new activity
                 putExtra("EDIT_EARNING", "$year@$month@$day@$source@$amount@$addInfo@$position")
                 //specifies that the user intends to edit their selected Earning
-                putExtra("REQUEST_CODE", EDIT_EARNING_CODE)
+                putExtra("REQUEST_CODE", editEarningCode)
             }
             //when user returns to this activity, onActivityResults will be called with requestCode = EDIT_EARNING_CODE
-            startActivityForResult(data, EDIT_EARNING_CODE)
+            startActivityForResult(data, editEarningCode)
         }
 
         //when user long clicks an Earning in the ListView, deletion prompt pops up
@@ -96,27 +104,35 @@ class EarningsActivity : AppCompatActivity() {
         }
     }
 
-    //automatically called when the activity is resumed
-    //always called after onCreate() as per the activity lifecycle
+    /**
+     * Updates the [ListView] to display all [Earning]s.
+     * Automatically called when the activity is resumed.
+     * Always called after [onCreate] as per the activity lifecycle.
+     */
     override fun onResume() {
         super.onResume()
         updateListView(createCustomItemsList())
     }
 
-    //inflates the options menu (the triple-dot button located at the rightmost of the toolbar) as part of the toolbar
+    /** Automatically inflates the options menu to be a part of the toolbar. */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_earnings, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
-    //called whenever the user returns to this activity if startActivityForResult was used
-    //data passed back from the new activity is used to create a Snackbar message
+    /**
+     * Creates a Snackbar message using data passed back from [EditEarningActivity].
+     * * If the user created a new [Earning], displays its properties.
+     * * If the user edited an [Earning], notifies the user that it updated successfully.
+     *
+     * Automatically called whenever the user returns to this activity if startActivityForResult was used.
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if((requestCode == NEW_EARNING_CODE || requestCode == EDIT_EARNING_CODE) && resultCode == Activity.RESULT_OK && data != null){
+        if((requestCode == newEarningCode || requestCode == editEarningCode) && resultCode == Activity.RESULT_OK && data != null){
             var text = "" //records what the Snackbar message will be
-            if(requestCode == NEW_EARNING_CODE) { //if a new Earning was created, set text varialbe to that Earning's info
+            if(requestCode == newEarningCode) { //if a new Earning was created, set text varialbe to that Earning's info
                 val result = data.getStringExtra("NEW_EARNING")
                 if(result != null) {
                     val split = result.split("@")
@@ -140,10 +156,9 @@ class EarningsActivity : AppCompatActivity() {
     }
 
     /**
-     * Updates the ListView widget to display a new list based on the given list of CustomListItems.
-     * Accomplished by updating the ListView's adapter with the new list.
+     * Updates the [ListView] to display a new list based on the given [list] of [CustomListItem]s.
      *
-     * @param list: ArrayList of CustomListItems that will be passed into the CustomAdapter.
+     * @param [list] An ArrayList of [CustomListItem]s that will be passed into the [CustomAdapter]
      */
     private fun updateListView(list: ArrayList<CustomListItem>){
         adapter = CustomAdapter(this, R.layout.fragment_entries_list, list) //updates the adapter
@@ -152,9 +167,9 @@ class EarningsActivity : AppCompatActivity() {
     }
 
     /**
-     * Filters the ListView of Earnings to display only those that contain a user-specified keyword.
+     * Filters the [ListView] to display only those that contain user-specified keyword(s).
      *
-     * @param query: the keyword(s) that the user types into the search bar.
+     * @param [query] The keyword(s) that the user types into the search bar
      */
     private fun filterListView(query: String){
         val filteredItems = createCustomItemsList()
@@ -173,10 +188,7 @@ class EarningsActivity : AppCompatActivity() {
     }
 
     /**
-     * Gets an ArrayList of all recorded Earnings from the text file.
-     * Converts each element of the array into a CustomListItem which is added to a new ArrayList.
-     *
-     * @return the ArrayList of CustomListItems
+     * Returns an ArrayList of [CustomListItem]s by converting each element of [Database.earning] into a [CustomListItem].
      */
     private fun createCustomItemsList(): ArrayList<CustomListItem>{
         val info = Database.getEarnings()
@@ -191,17 +203,18 @@ class EarningsActivity : AppCompatActivity() {
 
     /**
      * Called whenever the user clicks an options menu item.
+     * Depending on the item clicked, performs a specific task.
      *
-     * @param item: the options menu item that the user clicked
+     * @param [item] The options [MenuItem] that the user clicked
      */
     fun menuItemClicked(item: MenuItem){
         Log.d("Earnings toolbar", "$item clicked")
 
         when(item.itemId){
-            R.id.action_display_help -> {
+            /*R.id.action_display_help -> {
                 val ft = this.supportFragmentManager.beginTransaction()
                 ft.add(R.id.earningsLayoutContent, HelpFragment(), "HELP_FRAGMENT").commit()
-            }
+            } TODO: fix or delete this */
             R.id.action_delete_earnings -> {
                 Database.getEarnings().clear()
                 Database.writeEarnings()
@@ -212,10 +225,10 @@ class EarningsActivity : AppCompatActivity() {
     }
 
     /**
-     * When the background is clicked, hide the on-screen keyboard.
+     * When the background is clicked, hides the on-screen keyboard.
      * NOTE: as this is an XML onClick attribute method, a View parameter is required even if unused.
      *
-     * @param v: the View clicked
+     * @param [v] The [View] clicked
      */
     fun hideKeyboard(v: View){
         val imm: InputMethodManager = this.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager

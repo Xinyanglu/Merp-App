@@ -8,7 +8,7 @@
     tools:context=".activities.ExpensesSourcesActivity"
     tools:showIn="@layout/activity_expenses_sources"
     android:padding="30dp"
-    android:onClick="onClick">
+    android:onClick="hideKeyboard">
 
     <fragment
         android:id="@+id/fragment2"
