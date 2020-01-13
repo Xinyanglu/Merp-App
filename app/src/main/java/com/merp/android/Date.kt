@@ -2,19 +2,13 @@ package com.merp.android
 
 import java.time.*
 
-/**
- * A custom comparable class for recording dates in "yyyy-MM-dd" format.
- * Utilizes the [LocalDate] class.
- */
 class Date : Comparable<Date>{
-    /** A [LocalDate] object */
-    private var date: LocalDate
+    private var m = ""
+    private var y = ""
+    private var d = ""
+    private var date : LocalDate
 
     //Compares the dates and returns 1 which means larger, -1 means less, 0 means equal
-    /**
-     * Compares two [Date] objects chronologically.
-     * Returns 1 if the TODO comes after, -1 if it comes before, and 0 if the two dates are the same.
-     */
     override fun compareTo(other: Date): Int{
         if (this.getYear()>other.getYear()) return 1
         if (this.getYear()<other.getYear()) return -1
@@ -25,64 +19,51 @@ class Date : Comparable<Date>{
         return 0
     }
 
-    /**
-     * Constructs a Date object using year, month, and day integer values.
-     *
-     * @param [y] The year
-     * @param [m] The month
-     * @param [d] The day
-     */
-    constructor(y: Int, m: Int, d: Int){
-        //stores the year as a string
-        val year = y.toString()
-
+    constructor(year: Int, month: Int, day: Int){
         //If month is less than 10, add a 0 in front of the string of it
-        val month = if (m<10){
-            "0${m}"
+        m = if (month<10){
+            "0${month}"
         }else {
-            m.toString()
+            month.toString()
         }
 
         //If day is less than 10, add 0 in front of the string
-        val day = if (d<10){
-            "0${d}"
+        d = if (day<10){
+            "0${day}"
         }else{
-            d.toString()
+            day.toString()
         }
 
-        date = LocalDate.parse("${year}-${month}-${day}")
+        //stores the year as a string
+        y = year.toString()
+
+        date = LocalDate.parse("${y}-${m}-${d}")
     }
 
-    /**
-     * Constructs a Date object using a String in "yyyy-MM-dd" format.
-     *
-     * @param [dateString] A String in "yyyy-MM-dd" format
-     */
     constructor(dateString: String){
         date = LocalDate.parse(dateString)
     }
 
-    /** Returns the integer value of the month (Ex. January returns 1) */
+    //returns the value of the month (Ex. January returns 1)
     fun getMonth(): Int{
         return(date.monthValue)
     }
 
-    /** Returns the integer value of the day */
+    //returns Day of the date
     fun getDay(): Int{
         return(date.dayOfMonth)
     }
 
-    /** Returns the year */
+    //returns year of the date
     fun getYear(): Int{
         return(date.year)
     }
 
-    /** Returns the [date] as a String in "yyyy-MM-dd" format */
+    //returns the entire date string
     fun getFullDate(): String{
         return date.toString()
     }
 
-    /** Returns the [date]'s float value of "yyyyMMdd" */
     fun toFloat(): Float{
         return ("" + getYear() + getMonth() + getDay()).toFloat()
     }

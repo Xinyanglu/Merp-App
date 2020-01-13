@@ -15,19 +15,12 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
-/**
- * The home screen of the app.
- * * Checks if external read/write permissions are granted; requests permissions if not.
- * * If they do not exist, creates a folder and text files for file IO.
- * * Records the folder and file directories and reads the contents of the text files into their corresponding [Database] ArrayLists.
- * * The user can also navigate to [EarningsActivity], [ExpensesActivity], and [DatePickerActivity].
- */
 class MainActivity : AppCompatActivity() {
 
     /**
      * Sets up the layout of the activity.
      * Creates the folder and text files if they do not exist, then sets their directories and reads the files into their corresponding arrays.
-     * Called only if external read/write permissions are granted, otherwise this method is never reached and the app is closed.
+     * Called only if the user grants external read/write permissions, otherwise this method is never reached and the app is closed.
      */
     private fun setup(){
         //set up the folder
@@ -85,30 +78,23 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * If external read/write permissions are granted, calls [setup], else, requests permissions.
-     * Automatically called when the activity is created.
-     */
+    //automatically called when the activity is created
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         //set title of main activity programmatically as setting it via android:label XML attribute
-        //in the manifest will cause errors with the display name of the app (actual name of the app will remain unchanged)
+        // in the manifest will cause errors with the display name of the app (actual name of the app will remain unchanged)
         this.title = resources.getString(R.string.title_activity_main)
 
-        //if external read/write permissions are already granted, call setup()
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             setup()
-        }else{ //else, request permissions
+        }else{
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
         }
     }
 
-    /**
-     * If the user grants external read/write permissions, calls [setup], else, closes the app.
-     * Automatically called whenever the user grants/denies a permission.
-     */
+    //automatically called whenever the user allows/denies a permission
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
@@ -119,18 +105,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * Calls [setDate] every time the user returns to this activity.
-     * Automatically called when the activity is resumed.
-     * Always called after [onCreate] as per the activity lifecycle.
-     */
+    //automatically called when the activity is resumed
+    //always called after onCreate() as per the activity lifecycle
     override fun onResume() {
         super.onResume()
         setDate()
     }
 
     /**
-     * Sets the text of the mainDate TextView to the system date. [mainDate] TODO: can XMLs be linked from the KDoc?
+     * Sets the text of mainDate TextView to the system date.
      */
     private fun setDate(){
         val sdf = SimpleDateFormat("yyyy, MMMM dd", Locale.US)

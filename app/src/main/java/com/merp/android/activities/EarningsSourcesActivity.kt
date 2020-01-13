@@ -14,19 +14,9 @@ import com.merp.android.R
 import kotlinx.android.synthetic.main.activity_earnings_sources.*
 import kotlinx.android.synthetic.main.fragment_sources.*
 
-/**
- * An [Activity] for searching through and adding/deleting [Database.earningsSources].
- * Displays all sources of earnings in a [ListView] which can be filtered for keyword(s) via a search bar.
- */
 class EarningsSourcesActivity : AppCompatActivity() {
-    /** An [ArrayAdapter] object that will take an array of Strings to put into the [ListView] */
     private lateinit var adapter: ArrayAdapter<String>
 
-    /**
-     * Sets up the functionality of the activity (adding listeners to TextViews, ListViews, buttons, etc.).
-     *
-     * Automatically called when the activity is created.
-     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_earnings_sources)
@@ -41,26 +31,22 @@ class EarningsSourcesActivity : AppCompatActivity() {
         }
 
         btnAddSource.setOnClickListener{
-            when{
-                enterNewSource.text.isEmpty() -> {
-                    enterNewSource.error = "Field is empty"
-                }
-                Database.getEarningsSources().contains(enterNewSource.text.toString()) -> {
-                    enterNewSource.error = "This source already exists"
-                }
-                else -> {
-                    if(enterNewSource.text.startsWith(" ")){
-                        var temp = enterNewSource.text.toString()
-                        while(temp.startsWith(" ")){
-                            temp = temp.replaceFirst(" ", "")
-                        }
-                        enterNewSource.setText(temp)
+            if(enterNewSource.text.isEmpty()) {
+                enterNewSource.error = "Field is empty"
+            }else if(Database.getEarningsSources().contains(enterNewSource.text.toString())){
+                enterNewSource.error = "This source already exists"
+            }else{
+                if(enterNewSource.text.startsWith(" ")){
+                    var temp = enterNewSource.text.toString()
+                    while(temp.startsWith(" ")){
+                        temp = temp.replaceFirst(" ", "")
                     }
-                    Database.addEarningsSource(enterNewSource.text.toString())
-                    Snackbar.make(findViewById(R.id.earningsSourcesLayout), "New source: \"${enterNewSource.text}\" added", Snackbar.LENGTH_LONG).show()
-                    enterNewSource.text.clear()
-                    updateListView()
+                    enterNewSource.setText(temp)
                 }
+                Database.addEarningsSource(enterNewSource.text.toString())
+                Snackbar.make(findViewById(R.id.earningsSourcesLayout), "New source: \"${enterNewSource.text}\" added", Snackbar.LENGTH_LONG).show()
+                enterNewSource.text.clear()
+                updateList()
             }
         }
 
@@ -79,35 +65,21 @@ class EarningsSourcesActivity : AppCompatActivity() {
             Database.getEarningsSources().removeAt(deleteIndex) //erase source from array
             Database.writeEarningsSources() //erase source from text file
             layoutDeleteSource.visibility = View.INVISIBLE
-            updateListView()
+            updateList()
         }
     }
 
-    /**
-     * Calls [updateListView].
-     * Automatically called when the activity is resumed.
-     * Always called after onCreate() as per the activity lifecycle.
-     */
     override fun onResume() {
         super.onResume()
-        updateListView()
+        updateList()
     }
 
-    /**
-     * When the background is clicked, hides the on-screen keyboard.
-     * NOTE: as this is an XML onClick attribute method, a View parameter is required even if unused.
-     *
-     * @param [v] the View clicked
-     */
-    fun hideKeyboard(v: View){
+    fun onClick(v: View){
         val imm: InputMethodManager = this.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(this.currentFocus?.windowToken, 0)
     }
 
-    /**
-     * Updates the [ListView] to display all the elements of [Database.earningsSources].
-     */
-    private fun updateListView(){
+    private fun updateList(){
         val array = Database.getEarningsSources()
         val listView: ListView = findViewById(R.id.listSources)
 
