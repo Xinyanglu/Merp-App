@@ -29,6 +29,9 @@
     <string name="btn_add_source">Add</string>
     <string name="title_activity_settings">Settings</string>
 
+    <!--universal (menu)-->
+    <string name="action_display_help">Help</string>
+
     <!--menu_earnings-->
     <string name="action_delete_earnings">Delete all earnings</string>
 
@@ -49,4 +52,28 @@
     <!--content_date_picker-->
     <string name="text_start_date">Start Date</string>
     <string name="text_end_date">End Date</string>
+    <string name="btn_create_report">Create Report</string>
+
+    <!--fragment_help-->
+    <string name="btn_close">Close</string>
+    <string name="help_earnings_activity">
+        Search bar\n               <!--will \n and/or indentation work? what is <n>...</n>?-->
+            Filters the list for all earnings that match the given keyword.\n
+            Separate multiple keywords with ".." (two periods) to search for all earnings that contain all given keywords
+    </string>
+    <string name="help_edit_earnings_activity">         <!--what extraordinarily helpful help text-->
+        Date Picker widget\n
+            Use the widget to select a date.\n
+
+        Source\n
+            Dropdown menu: select the source of the new earning.\n
+            + button: add/search earnings sources.\n
+
+        Amount earned\n
+            Enter the amount earned.\n
+
+        Additional information\n
+            Additional information can be entered here.
+    </string>
+
 </resources>

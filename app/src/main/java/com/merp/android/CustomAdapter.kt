@@ -1,36 +1,64 @@
 package com.merp.android
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 
+/**
+ * A custom [ArrayAdapter] class, modified for adapting the four properties of each [CustomListItem] into one item in a ListView.
+ *
+ * @constructor Constructs an instance of the CustomAdapter class using the same properties as an [ArrayAdapter] object.
+ */
 class CustomAdapter(context: Context,
                     resource: Int,
                     items: List<CustomListItem>)
             : ArrayAdapter<CustomListItem>(context, resource, items){
 
+    /** TODO: ??? */
     private val mContext = context
-    private val resourceLayout = resource
+
+    /** The layout resource of the ListView */
+    private val mResource = resource
+
+    /** The list of [CustomListItem]s to be adapted to a ListView */
     private val mItems = items
 
+    /**
+     * Constructs a ViewHolder object for holding four TextViews:
+     * [textViewDate], [textViewSource], [textViewAmount], [textViewAddInfo].
+     * Each TextView is used to display one of four [CustomListItem] properties.
+     */
     private class ViewHolder {
-        var textView1: TextView? = null
-        var textView2: TextView? = null
-        var textView3: TextView? = null
-        var textView4: TextView? = null
+        /** TextView for displaying [CustomListItem.tvDate] */
+        var textViewDate: TextView? = null
+
+        /** TextView for displaying [CustomListItem.tvSource] */
+        var textViewSource: TextView? = null
+
+        /** TextView for displaying [CustomListItem.tvAmount] */
+        var textViewAmount: TextView? = null
+
+        /** TextView for displaying [CustomListItem.tvAddInfo] */
+        var textViewAddInfo: TextView? = null
     }
 
+    /**
+     * TODO called repeatedly for each item in the ListView??
+     *
+     * @param [position] position of the item in the ListView
+     * @param [convertView] TODO
+     * @param [parent] TODO the parent ViewGroup of the View??? wat unused
+     */
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var v = convertView
         val holder: ViewHolder
 
         if(v == null){
             holder = ViewHolder()
-            v = LayoutInflater.from(mContext).inflate(resourceLayout, null)
+            v = LayoutInflater.from(mContext).inflate(mResource, null)
             v.tag = holder
         }else{
             holder = v.tag as ViewHolder
@@ -39,22 +67,22 @@ class CustomAdapter(context: Context,
         val p = getItem(position)
 
         if(p != null) {
-            holder.textView1 = v?.findViewById(R.id.textDate)
-            holder.textView2 = v?.findViewById(R.id.textSource)
-            holder.textView3 = v?.findViewById(R.id.textAmount)
-            holder.textView4 = v?.findViewById(R.id.textAddInfo)
+            holder.textViewDate = v?.findViewById(R.id.textDate)
+            holder.textViewSource = v?.findViewById(R.id.textSource)
+            holder.textViewAmount = v?.findViewById(R.id.textAmount)
+            holder.textViewAddInfo = v?.findViewById(R.id.textAddInfo)
 
-            if(holder.textView1 != null) {
-                holder.textView1!!.text = mItems[position].getTVDate()
+            if(holder.textViewDate != null) {
+                holder.textViewDate!!.text = mItems[position].getTVDate()
             }
-            if(holder.textView2 != null) {
-                holder.textView2?.text = mItems[position].getTVSource()
+            if(holder.textViewSource != null) {
+                holder.textViewSource?.text = mItems[position].getTVSource()
             }
-            if(holder.textView3 != null) {
-                holder.textView3?.text = mItems[position].getTVAmount()
+            if(holder.textViewAmount != null) {
+                holder.textViewAmount?.text = mItems[position].getTVAmount()
             }
-            if(holder.textView4 != null) {
-                holder.textView4?.text = mItems[position].getTVAddInfo()
+            if(holder.textViewAddInfo != null) {
+                holder.textViewAddInfo?.text = mItems[position].getTVAddInfo()
             }
         }
         return v!!
