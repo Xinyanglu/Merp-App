@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.widget.Toast
 import androidx.viewpager.widget.ViewPager
 import com.merp.android.ChartsPagerAdapter
 import com.merp.android.Date
@@ -26,14 +27,18 @@ class ViewReportsActivity : AppCompatActivity() {
                        intent.getIntExtra("end month", 0),
                        intent.getIntExtra("end day",0))
 
-        val charts = arrayListOf(ChartFragment("earnings", "bar", start, end),
-                                 ChartFragment("earnings", "pie", start, end),
-                                 ChartFragment("expenses","bar",start, end),
-                                 ChartFragment("expenses","pie", start, end)
-        )
+        try{
+            val charts = arrayListOf(ChartFragment("earnings", "bar", start, end),
+                                     ChartFragment("earnings", "pie", start, end),
+                                     ChartFragment("expenses","bar",start, end),
+                                     ChartFragment("expenses","pie", start, end))
+            var viewPager: ViewPager = findViewById(R.id.viewpager)
+            var pagerAdapter = ChartsPagerAdapter(supportFragmentManager, charts)
+            viewPager.adapter = pagerAdapter
 
-        var viewPager: ViewPager = findViewById(R.id.viewpager)
-        var pagerAdapter = ChartsPagerAdapter(supportFragmentManager, charts)
-        viewPager.adapter = pagerAdapter
+        }catch(e: Exception){
+            val t = Toast.makeText(this@ViewReportsActivity, "No earning/expense between these dates", Toast.LENGTH_SHORT)
+            t.show()
+        }
     }
 }

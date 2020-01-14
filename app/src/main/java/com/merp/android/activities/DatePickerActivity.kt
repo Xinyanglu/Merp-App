@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.merp.android.Date
 import com.merp.android.R
 
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_date_picker.*
 import kotlinx.android.synthetic.main.content_date_picker.*
 import java.util.*
@@ -23,6 +24,7 @@ class DatePickerActivity : AppCompatActivity() {
 
         val start = findViewById<CalendarView>(R.id.startDate)
         val end = findViewById<CalendarView>(R.id.endDate)
+
 
         //initialize variables with values of current date
         val sdf = SimpleDateFormat("yyyy-MM-dd")
@@ -52,6 +54,7 @@ class DatePickerActivity : AppCompatActivity() {
         Log.d("endDate", "$endYear-$endMonth-$endDay")
 
         displayCharts.setOnClickListener {
+
             if (Date(startYear, startMonth, startDay) <= Date(endYear, endMonth, endDay)) {
 
                 val data = Intent(this, ViewReportsActivity::class.java).apply {
@@ -62,7 +65,9 @@ class DatePickerActivity : AppCompatActivity() {
                     putExtra("end month", endMonth)
                     putExtra("end day", endDay)
                 }
+
                 startActivity(data)
+
             }
         }
     }

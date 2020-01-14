@@ -29,6 +29,7 @@ object Database {
         expenses_sources_file = expSourcesDir
     }
 
+
     /**
     Returns the earning array list
 
@@ -334,15 +335,34 @@ object Database {
 
     //returns a list of all the dates that are between the start and end date
     fun searchRangeEarnings(start: Date, end: Date): MutableList<Earning> {
+        if (start.compareTo(end) == 0){
+            var a = mutableListOf<Earning>()
+            for (e in earning){
+                if(e.getDate().toString() == start.toString()){
+                    a.add(e)
+                }
+            }
+            return a
+        }
+
         val startIndex = searchEarnings(start, earning, 0, earning.size - 1)
         val endIndex = searchEarnings(end, earning, 0, earning.size - 1)
-        return earning.subList(startIndex, endIndex+1)
+        return earning.subList(startIndex, endIndex)
     }
 
     fun searchRangeExpenses(start: Date, end: Date): MutableList<Expense> {
+        if (start.compareTo(end) == 0){
+            var a = mutableListOf<Expense>()
+            for (e in expense){
+                if(e.getDate().toString() == start.toString()){
+                    a.add(e)
+                }
+            }
+            return a
+        }
         val startIndex = searchExpenses(start,expense,0,earning.size-1)
         val endIndex = searchExpenses(end,expense,0,earning.size-1)
-        return expense.subList(startIndex, endIndex+1)
+        return expense.subList(startIndex, endIndex)
     }
 
     fun getEarningDateStrings(array: MutableList<Earning>): ArrayList<String> {
