@@ -334,19 +334,19 @@ object Database {
 
     //returns a list of all the dates that are between the start and end date
     fun searchRangeEarnings(start: Date, end: Date): MutableList<Earning> {
-        var startIndex = searchEarnings(start, earning, 0, earning.size - 1)
-        var endIndex = searchEarnings(end, earning, 0, earning.size - 1)
-        return earning.subList(startIndex, endIndex)
+        val startIndex = searchEarnings(start, earning, 0, earning.size - 1)
+        val endIndex = searchEarnings(end, earning, 0, earning.size - 1)
+        return earning.subList(startIndex, endIndex+1)
     }
 
     fun searchRangeExpenses(start: Date, end: Date): MutableList<Expense> {
-        var startIndex = searchExpenses(start,expense,0,earning.size-1)
-        var endIndex = searchExpenses(end,expense,0,earning.size-1)
-        return expense.subList(startIndex, endIndex)
+        val startIndex = searchExpenses(start,expense,0,earning.size-1)
+        val endIndex = searchExpenses(end,expense,0,earning.size-1)
+        return expense.subList(startIndex, endIndex+1)
     }
 
     fun getEarningDateStrings(array: MutableList<Earning>): ArrayList<String> {
-        var dates = ArrayList<String>()
+        val dates = ArrayList<String>()
 
         for (date in getEarningDates(array)) {
             dates.add(date.getFullDate())
@@ -356,7 +356,7 @@ object Database {
 
     fun getEarningDates(array: MutableList<Earning>): ArrayList<Date> {
         var contains = false
-        var dates = ArrayList<Date>()
+        val dates = ArrayList<Date>()
         for (earning in array) {
             for (date in dates) {
                 if (date.getFullDate() == earning.getDate().getFullDate()) {
@@ -373,7 +373,7 @@ object Database {
     }
 
     fun getExpenseDateStrings(array: MutableList<Expense>): ArrayList<String> {
-        var dates = ArrayList<String>()
+        val dates = ArrayList<String>()
 
         for (date in getExpenseDates(array)) {
             dates.add(date.getFullDate())
@@ -383,7 +383,7 @@ object Database {
 
     fun getExpenseDates(array: MutableList<Expense>): ArrayList<Date> {
         var contains = false
-        var dates = ArrayList<Date>()
+        val dates = ArrayList<Date>()
         for (expense in array) {
             for (date in dates) {
                 if (date.getFullDate() == expense.getDate().getFullDate()) {
@@ -400,8 +400,8 @@ object Database {
     }
 
     fun getAmountEarnedPerDate(array: MutableList<Earning>): Array<Float> {
-        var dates = getEarningDates(array)
-        var amounts = Array<Float>(dates.size, { 0.toFloat() })
+        val dates = getEarningDates(array)
+        val amounts = Array<Float>(dates.size, { 0.toFloat() })
         for (date in 0 until dates.size) {
             for (earning in array) {
                 if (earning.getDate().getFullDate() == (dates[date].getFullDate())) {
@@ -413,8 +413,8 @@ object Database {
     }
 
     fun getAmountSpentPerDate(array: MutableList<Expense>): Array<Float> {
-        var dates = getExpenseDates(array)
-        var amounts = Array<Float>(dates.size, { 0.toFloat() })
+        val dates = getExpenseDates(array)
+        val amounts = Array<Float>(dates.size, { 0.toFloat() })
         for (date in 0 until dates.size) {
             for (expense in array) {
                 if (expense.getDate().getFullDate() == (dates[date].getFullDate())) {
@@ -427,7 +427,7 @@ object Database {
 
     //get all the earning sources available within a list
     fun getEarningSources(array: MutableList<Earning>): ArrayList<String>{
-        var sources = ArrayList<String>(0)
+        val sources = ArrayList<String>(0)
         var exists = false
         for (earning in array){
             for(source in sources) {
@@ -447,7 +447,7 @@ object Database {
 
     //get all the expense sources available within a list
     fun getExpenseSources(array: MutableList<Expense>): ArrayList<String>{
-        var sources = ArrayList<String>(0)
+        val sources = ArrayList<String>(0)
         var exists = false
         for (expense in array){
             for (source in sources){
