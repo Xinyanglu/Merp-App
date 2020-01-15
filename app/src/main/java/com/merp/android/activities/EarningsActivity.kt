@@ -4,16 +4,22 @@ import android.app.Activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.ListView
 import androidx.core.widget.addTextChangedListener
 import com.google.android.material.snackbar.Snackbar
 import com.merp.android.*
 import kotlinx.android.synthetic.main.activity_earnings.*
+import kotlinx.android.synthetic.main.content_earnings.*
 import kotlinx.android.synthetic.main.fragment_entries.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -42,6 +48,17 @@ class EarningsActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        findViewById<EditText>(R.id.searchBarEntries).setOnEditorActionListener { v, actionId, event ->
+            return@setOnEditorActionListener when(actionId){
+                EditorInfo.IME_ACTION_SEARCH -> {
+                    filterListView(searchBarEntries.text.toString())
+                    hideKeyboard(v) //using an onClick method, thus param is required but (in this case) useless
+                    true
+                }
+                else -> false
+            }
+        }
+
         //records which item the user selects for deletion
         var deleteIndex = 0
 
@@ -56,11 +73,11 @@ class EarningsActivity : AppCompatActivity() {
             //when the user returns to this activity, onActivityResult will be called, and the requestCode will be NEW_EARNING_CODE
             startActivityForResult(data, newEarningCode)
         }
-
+/*
         //keyword search feature for searchBarEntries EditText View
         searchBarEntries.addTextChangedListener{
             filterListView(it.toString())
-        }
+        }*/
 
         //allows user to edit an Earning by short clicking an Earning in the ListView
         listEntries.setOnItemClickListener { parent, view, position, id ->
@@ -121,6 +138,31 @@ class EarningsActivity : AppCompatActivity() {
     }
 
     /**
+     * Depending on the item clicked, performs a specific task.
+     * Automatically called whenever the user clicks an options menu item.
+     *
+     * @param [item] The options [MenuItem] that the user clicked
+     */
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.action_display_help -> {
+                val data = Intent(this, HelpActivity::class.java).apply{
+                    putExtra("source", "EarningsActivity")
+                }
+                startActivity(data)
+                return true
+            }
+            R.id.action_delete_earnings -> {
+                Database.getEarnings().clear()
+                Database.writeEarnings()
+                updateListView(createCustomItemsList())
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
+    /**
      * Creates a Snackbar message using data passed back from [EditEarningActivity].
      * * If the user created a new [Earning], displays its properties.
      * * If the user edited an [Earning], notifies the user that it updated successfully.
@@ -172,14 +214,48 @@ class EarningsActivity : AppCompatActivity() {
      * @param [query] The keyword(s) that the user types into the search bar
      */
     private fun filterListView(query: String){
+        if(query.contains(",")){
+            val queries = query.split(",")
+            filterMulti(queries)
+        }else{
+            filterSingle(query)
+        }
+    }
+
+    /**
+     * TODO: comment this
+     */
+    private fun filterSingle(query: String){
         val filteredItems = createCustomItemsList()
 
         //from the last element of the array to the first, checks if the element contains the keyword
         //if not, removes the element from the array
         for(i in (filteredItems.size-1) downTo 0){
-            val item = filteredItems[i]
-            val itemInfo = (item.getTVDate() + item.getTVSource() + item.getTVAmount() + item.getTVAddInfo()).toLowerCase(Locale.US)
-            if(!itemInfo.contains(query.toLowerCase(Locale.US))){
+            val item = filteredItems[i].toString()
+            if (!item.contains(query, ignoreCase = true)) {
+                filteredItems.removeAt(i)
+            }
+        }
+        //updates the ListView with the filtered array
+        updateListView(filteredItems)
+    }
+
+    /**
+     * TODO: comment this
+     */
+    private fun filterMulti(queries: List<String>){
+        val filteredItems = createCustomItemsList()
+        //from the last element of the array to the first, checks if the element contains the keyword
+        //if not, removes the element from the array
+        for(i in (filteredItems.size-1) downTo 0){
+            var containsAll = true
+            for(j in queries){
+                val item = filteredItems[i].toString()
+                if (!item.contains(j, ignoreCase = true)) {
+                    containsAll = false
+                }
+            }
+            if(!containsAll){
                 filteredItems.removeAt(i)
             }
         }
@@ -199,29 +275,6 @@ class EarningsActivity : AppCompatActivity() {
             customItems.add(CustomListItem(split[0], split[1], "$" + split[2], split[3]))
         }
         return customItems
-    }
-
-    /**
-     * Called whenever the user clicks an options menu item.
-     * Depending on the item clicked, performs a specific task.
-     *
-     * @param [item] The options [MenuItem] that the user clicked
-     */
-    fun menuItemClicked(item: MenuItem){
-        Log.d("Earnings toolbar", "$item clicked")
-
-        when(item.itemId){
-            /*R.id.action_display_help -> {
-                val ft = this.supportFragmentManager.beginTransaction()
-                ft.add(R.id.earningsLayoutContent, HelpFragment(), "HELP_FRAGMENT").commit()
-            } TODO: fix or delete this */
-            R.id.action_delete_earnings -> {
-                Database.getEarnings().clear()
-                Database.writeEarnings()
-                updateListView(createCustomItemsList())
-            }
-            //TODO: anything else? settings? etc.
-        }
     }
 
     /**

@@ -1,7 +1,10 @@
 package com.merp.android.activities
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
@@ -91,6 +94,29 @@ class EarningsSourcesActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         updateListView()
+    }
+
+    /** Automatically inflates the options menu to be a part of the toolbar. */
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_earnings_sources, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    /**
+     * Depending on the item clicked, performs a specific task.
+     * Automatically called whenever the user clicks an options menu item.
+     *
+     * @param [item] The options [MenuItem] that the user clicked
+     */
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.action_display_help){
+            val data = Intent(this, HelpActivity::class.java).apply{
+                putExtra("source", "EarningsSourcesActivity")
+            }
+            startActivity(data)
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     /**

@@ -3,6 +3,8 @@ package com.merp.android.activities
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
@@ -38,7 +40,11 @@ class EditEarningActivity : AppCompatActivity() {
     /** A [DatePicker] object used for selecting the [com.merp.android.Earning.date] */
     private lateinit var dp: DatePicker
 
-    //called by default when the activity is created
+    /**
+     * Sets up the activity (inflating layout, setting text, adding listeners to floating action buttons, etc.).
+     *
+     * Automatically called when the activity is created
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_earning)
@@ -174,6 +180,29 @@ class EditEarningActivity : AppCompatActivity() {
         }
     }
 
+    /** Automatically inflates the options menu to be a part of the toolbar. */
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_edit_earning, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    /**
+     * Depending on the item clicked, performs a specific task.
+     * Automatically called whenever the user clicks an options menu item.
+     *
+     * @param [item] The options [MenuItem] that the user clicked
+     */
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.action_display_help){
+            val data = Intent(this, HelpActivity::class.java).apply{
+                putExtra("source", "EditEarningActivity")
+            }
+            startActivity(data)
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+
+    }
 
     /**
      * When the background is clicked, hides the on-screen keyboard.

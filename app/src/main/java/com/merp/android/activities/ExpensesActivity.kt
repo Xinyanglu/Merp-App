@@ -87,6 +87,25 @@ class ExpensesActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.action_display_help -> {
+                val data = Intent(this, HelpActivity::class.java).apply{
+                    putExtra("source", "ExpensesActivity")
+                }
+                startActivity(data)
+                return true
+            }
+            R.id.action_delete_expenses -> {
+                Database.getExpenses().clear()
+                Database.writeExpenses()
+                updateList(createCustomItemsList())
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -143,18 +162,6 @@ class ExpensesActivity : AppCompatActivity() {
             customItems.add(CustomListItem(split[0], split[1], "$" + split[2], split[3]))
         }
         return customItems
-    }
-
-    fun menuItemClicked(item: MenuItem){
-        Log.d("Expenses toolbar", "$item clicked")
-
-        when(item.itemId){
-            R.id.action_delete_expenses -> {
-                Database.getExpenses().clear()
-                Database.writeExpenses()
-                updateList(createCustomItemsList())
-            }
-        }
     }
 
     fun hideKeyboard(v: View){

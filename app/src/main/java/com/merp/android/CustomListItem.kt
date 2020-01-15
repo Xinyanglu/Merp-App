@@ -34,4 +34,9 @@ class CustomListItem(private val tvDate: String,
     fun getTVAddInfo(): String{
         return tvAddInfo
     }
+
+    /** Returns all of the instance's properties */
+    override fun toString(): String {
+        return tvDate + tvSource + tvAmount + tvAddInfo
+    }
 }

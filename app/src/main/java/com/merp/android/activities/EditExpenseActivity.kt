@@ -3,9 +3,10 @@ package com.merp.android.activities
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import android.widget.Spinner
@@ -19,8 +20,8 @@ import kotlinx.android.synthetic.main.fragment_edit_entry.*
 import java.math.BigDecimal
 
 class EditExpenseActivity : AppCompatActivity() {
-    private val NEW_EXPENSE_CODE = 201
-    private val EDIT_EXPENSE_CODE = 202
+    private val newExpenseCode = 201
+    private val editExpenseCode = 202
     private var index = -999
     private var requestCode = -999
     private lateinit var dp: DatePicker
@@ -95,14 +96,14 @@ class EditExpenseActivity : AppCompatActivity() {
                 val addInfo = enterAddInfo.text.toString()
                 val data = Intent()
 
-                if(requestCode == EDIT_EXPENSE_CODE){
+                if(requestCode == editExpenseCode){
                     val expense = Database.getExpenses()[index]
                     expense.setDate(Date(year, month, day))
                     expense.setSource(source)
                     expense.setAmount(BigDecimal(amount))
                     expense.setAddInfo(addInfo)
                     Database.writeExpenses()
-                }else if(requestCode == NEW_EXPENSE_CODE) {
+                }else if(requestCode == newExpenseCode) {
                     Database.addExpense(
                         Date(year, month, day),
                         source,
@@ -122,7 +123,7 @@ class EditExpenseActivity : AppCompatActivity() {
         super.onResume()
         setSources()
 
-        if(requestCode == EDIT_EXPENSE_CODE){
+        if(requestCode == editExpenseCode){
             val result = intent.getStringExtra("EDIT_EXPENSE")
             val split = result.split("@")
             val year = split[0].toInt()
@@ -143,6 +144,22 @@ class EditExpenseActivity : AppCompatActivity() {
             enterAmount.setText(amount)
             enterAddInfo.setText(addInfo)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_edit_expense, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.action_display_help){
+            val data = Intent(this, HelpActivity::class.java).apply{
+                putExtra("source", "EditExpenseActivity")
+            }
+            startActivity(data)
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     //when the background is clicked, hides keyboard and layoutAddSource

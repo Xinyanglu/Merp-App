@@ -11,6 +11,7 @@
     <string name="title_activity_earnings_sources">Earnings Sources</string>
     <string name="title_activity_expenses_sources">Expenses Sources</string>
     <string name="title_activity_date_picker">Choose start and end date</string>
+    <string name="title_activity_help">Help</string>
 
     <!-- activity_main -->
     <string name="text_edit_earnings">Edit Earnings</string>
@@ -55,25 +56,58 @@
     <string name="btn_create_report">Create Report</string>
 
     <!--fragment_help-->
-    <string name="btn_close">Close</string>
     <string name="help_earnings_activity">
-        Search bar\n               <!--will \n and/or indentation work? what is <n>...</n>?-->
-            Filters the list for all earnings that match the given keyword.\n
-            Separate multiple keywords with ".." (two periods) to search for all earnings that contain all given keywords
+        Search bar\n
+        Filters the list for all earnings that match the given keyword(s).\n
+        Separate multiple keywords with \",\" (without spaces) to search for all earnings that contain all given keywords.
+
+        List of earnings\n
+        Displays all (or filtered) earnings.\n
+        Tap an earning to edit it.\n
     </string>
-    <string name="help_edit_earnings_activity">         <!--what extraordinarily helpful help text-->
+
+    <string name="help_edit_earnings_activity">   <!--what extraordinarily helpful help text-->
         Date Picker widget\n
             Use the widget to select a date.\n
 
         Source\n
-            Dropdown menu: select the source of the new earning.\n
-            + button: add/search earnings sources.\n
+            Dropdown menu: select the source of the earning.\n
+            + button: add/delete sources.\n
 
         Amount earned\n
             Enter the amount earned.\n
 
         Additional information\n
             Additional information can be entered here.
+    </string>
+
+    <string name="help_earnings_sources_activity">
+        TODO
+    </string>
+
+    <string name="help_expenses_activity">
+        Search bar\n
+        Filters the list for all expenses that match the given keyword(s).\n
+        Separate multiple keywords with \",\" (without spaces) to search for all expenses that contain all given keywords.
+    </string>
+
+    <string name="help_edit_expense_activity">
+        Date Picker widget\n
+            Use the widget to select a date.\n
+
+        Source\n
+            Dropdown menu: select the source of the expense.\n
+            + button: add/delete sources.\n
+
+        Amount earned\n
+            Enter the amount spent.\n
+
+        Additional information\n
+            Additional information can be entered here.
+    </string>
+
+    <string name="help_expenses_sources_activity">
+        TODO
     </string>
 
 </resources>

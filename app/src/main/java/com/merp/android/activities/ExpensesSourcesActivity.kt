@@ -1,7 +1,10 @@
 package com.merp.android.activities
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
@@ -72,6 +75,22 @@ class ExpensesSourcesActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         updateList()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_expenses_sources, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.action_display_help){
+            val data = Intent(this, HelpActivity::class.java).apply{
+                putExtra("source", "ExpensesSourcesActivity")
+            }
+            startActivity(data)
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     fun onClick(vi: View){
