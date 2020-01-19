@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_edit_entry.*
 import java.math.BigDecimal
 
 /**
- * An [Activity] for adding/editing earnings to/from [Database.earning].
+ * An [Activity] for adding/editing earnings to/from [Database.earnings].
  * The user can also navigate to [EarningsSourcesActivity].
  */
 class EditEarningActivity : AppCompatActivity() {
@@ -28,7 +28,7 @@ class EditEarningActivity : AppCompatActivity() {
     /** An identifier code that checks if the user navigated to this activity with the intention to edit their selected earning */
     private val editEarningCode = 102
 
-    /** If the user selected an earning from [EarningsActivity] to edit, this records the index of that earning in [Database.earning] */
+    /** If the user selected an earning from [EarningsActivity] to edit, this records the index of that earning in [Database.earnings] */
     private var index = -999
 
     /**

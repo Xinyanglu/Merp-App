@@ -3,8 +3,14 @@ package com.merp.android
 import java.math.*
 
 /**
- * Constructs an instance of the Expense class which records the
- * [date] of the expense, [source] of the expense, [amount] spent, and any [addInfo].
+ * An object for recording expenses.
+ *
+ * @constructor Constructs an [Expense] object.
+ *
+ * @property [date] A [Date] object for recording the date of the expense
+ * @property [source] The source of the expense
+ * @property [amount] The amount spent
+ * @property [addInfo] Additional info
  */
 class Expense(private var date: Date,
               private var source: String,

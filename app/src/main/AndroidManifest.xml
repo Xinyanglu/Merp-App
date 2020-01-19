@@ -14,10 +14,12 @@
         <activity
             android:name=".activities.HelpActivity"
             android:label="@string/title_activity_help"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activities.DatePickerActivity"
             android:label="@string/title_activity_date_picker"
+            android:screenOrientation="portrait"
             android:parentActivityName=".activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -27,6 +29,7 @@
         <activity
             android:name=".activities.ExpensesSourcesActivity"
             android:label="@string/title_activity_expenses_sources"
+            android:screenOrientation="portrait"
             android:parentActivityName=".activities.EditExpenseActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -36,6 +39,7 @@
         <activity
             android:name=".activities.EarningsSourcesActivity"
             android:label="@string/title_activity_earnings_sources"
+            android:screenOrientation="portrait"
             android:parentActivityName=".activities.EditEarningActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -45,6 +49,7 @@
         <activity
             android:name=".activities.ViewReportsActivity"
             android:label="@string/title_activity_view_reports"
+            android:screenOrientation="portrait"
             android:parentActivityName=".activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -54,6 +59,7 @@
         <activity
             android:name=".activities.EditExpenseActivity"
             android:label="@string/title_activity_edit_expense"
+            android:screenOrientation="portrait"
             android:parentActivityName=".activities.ExpensesActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -63,6 +69,7 @@
         <activity
             android:name=".activities.ExpensesActivity"
             android:label="@string/title_activity_expenses"
+            android:screenOrientation="portrait"
             android:parentActivityName=".activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -72,6 +79,7 @@
         <activity
             android:name=".activities.EditEarningActivity"
             android:label="@string/title_activity_edit_earning"
+            android:screenOrientation="portrait"
             android:parentActivityName=".activities.EarningsActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -81,13 +89,16 @@
         <activity
             android:name=".activities.EarningsActivity"
             android:label="@string/title_activity_earnings"
+            android:screenOrientation="portrait"
             android:parentActivityName=".activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.merp.android.activities.MainActivity" />
         </activity>
-        <activity android:name=".activities.MainActivity">
+        <activity
+            android:name=".activities.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
