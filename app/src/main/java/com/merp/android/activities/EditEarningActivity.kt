@@ -210,7 +210,7 @@ class EditEarningActivity : AppCompatActivity() {
      *
      * @param [v] The [View] clicked
      */
-    fun onClick(v: View){
+    fun hideKeyboard(v: View){
         val imm: InputMethodManager = this.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(this.currentFocus?.windowToken, 0)
     }
