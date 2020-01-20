@@ -4,10 +4,6 @@ import android.app.Activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
-import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -15,13 +11,10 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ListView
-import androidx.core.widget.addTextChangedListener
 import com.google.android.material.snackbar.Snackbar
 import com.merp.android.*
 import kotlinx.android.synthetic.main.activity_earnings.*
-import kotlinx.android.synthetic.main.content_earnings.*
 import kotlinx.android.synthetic.main.fragment_entries.*
-import java.util.*
 import kotlin.collections.ArrayList
 
 /**
@@ -223,7 +216,10 @@ class EarningsActivity : AppCompatActivity() {
     }
 
     /**
-     * TODO: comment this
+     * Filters the array of [CustomListItem]s for those that contain the given keyword.
+     * Calls [updateListView] when done.
+     *
+     * @param [query] A single keyword that the user is searching for
      */
     private fun filterSingle(query: String){
         val filteredItems = createCustomItemsList()
@@ -241,7 +237,10 @@ class EarningsActivity : AppCompatActivity() {
     }
 
     /**
-     * TODO: comment this
+     * Filters the array of [CustomListItem]s for those that contain all given keywords.
+     * Calls [updateListView] when done.
+     *
+     * @param [queries] A List of keywords that the user is searching for
      */
     private fun filterMulti(queries: List<String>){
         val filteredItems = createCustomItemsList()
@@ -249,7 +248,11 @@ class EarningsActivity : AppCompatActivity() {
         //if not, removes the element from the array
         for(i in (filteredItems.size-1) downTo 0){
             var containsAll = true
-            for(j in queries){
+            for(j in queries){ //check if the item contains all queries
+                //if the query starts with spaces, remove those spaces
+                while(j.startsWith(" ")){
+                    j.replaceFirst(" ", "")
+                }
                 val item = filteredItems[i].toString()
                 if (!item.contains(j, ignoreCase = true)) {
                     containsAll = false
@@ -264,7 +267,7 @@ class EarningsActivity : AppCompatActivity() {
     }
 
     /**
-     * Returns an ArrayList of [CustomListItem]s by converting each element of [Database.earning] into a [CustomListItem].
+     * Returns an ArrayList of [CustomListItem]s by converting each element of [Database.earnings] into a [CustomListItem].
      */
     private fun createCustomItemsList(): ArrayList<CustomListItem>{
         val info = Database.getEarnings()

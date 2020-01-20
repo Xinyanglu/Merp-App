@@ -112,6 +112,8 @@ class MainActivity : AppCompatActivity() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
+        //although grantResults is an array, only one permission is ever requested (external write permission)
+        //therefore safe to only check grantResults[0]
         if(grantResults[0] == PackageManager.PERMISSION_GRANTED){   //if user grants permissions, set up the app
             setup()
         }else{                                                      //else, close the app
@@ -133,6 +135,8 @@ class MainActivity : AppCompatActivity() {
      * Sets the text of the mainDate TextView to the system date.
      */
     private fun setDate(){
+        //sets the text of mainDate to the current date in "yyyy, MMMM, dd" format
+        //e.g., "2020, January 1"
         val sdf = SimpleDateFormat("yyyy, MMMM dd", Locale.US)
         mainDate.text = sdf.format(Date())
     }

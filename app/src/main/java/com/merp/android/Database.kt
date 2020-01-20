@@ -7,8 +7,8 @@ import com.merp.android.Earning as Earning
 import com.merp.android.Expense as Expense
 
 object Database {
-    private val expense = ArrayList<Expense>()
-    private val earning = ArrayList<Earning>()
+    private val expenses = ArrayList<Expense>()
+    private val earnings = ArrayList<Earning>()
     private val expensesSources = ArrayList<String>()
     private val earningsSources = ArrayList<String>()
 
@@ -38,7 +38,7 @@ object Database {
      **/
 
     fun getEarnings(): ArrayList<Earning> {
-        return earning
+        return earnings
     }
 
     /**
@@ -48,7 +48,7 @@ object Database {
     expense: ArrayList<Expense>
      **/
     fun getExpenses(): ArrayList<Expense> {
-        return expense
+        return expenses
     }
 
     /**
@@ -75,7 +75,7 @@ object Database {
     fun writeExpenses() {
         val w = BufferedWriter(FileWriter(expenses_file, false))
         w.use { out ->
-            for (i in expense) {
+            for (i in expenses) {
                 out.write(i.toFile() + "\n")
             }
         }
@@ -86,7 +86,7 @@ object Database {
     fun writeEarnings() {
         val w = BufferedWriter(FileWriter(earnings_file, false))
         w.use { out ->
-            for (i in earning) {
+            for (i in earnings) {
                 out.write(i.toFile() + "\n")
             }
         }
@@ -115,8 +115,8 @@ object Database {
 
     //Adds expense to expenses arraylist
     fun addExpense(date: Date, category: String, price: BigDecimal, adi: String) {
-        expense.add(
-            searchExpenses(date, expense, 0, expense.size - 1),
+        expenses.add(
+            searchExpenses(date, expenses, 0, expenses.size - 1),
             Expense(date, category, price, adi)
         )
         writeExpenses()
@@ -125,8 +125,8 @@ object Database {
     //Adds the earning into the earnings array list and
     // opens the earnings text file and writes everything inside the arraylist into it.
     fun addEarning(date: Date, source: String, amount: BigDecimal, adi: String) {
-        earning.add(
-            searchEarnings(date, earning, 0, earning.size - 1),
+        earnings.add(
+            searchEarnings(date, earnings, 0, earnings.size - 1),
             Earning(date, source, amount, adi)
         )
         writeEarnings()
@@ -153,7 +153,7 @@ object Database {
      * @param [max] maximum index of list to search for
      */
     private fun searchEarnings(date: Date, list: ArrayList<Earning>, min: Int, max: Int): Int {
-        if (earning.isEmpty()) return 0
+        if (earnings.isEmpty()) return 0
         if (date.compareTo(list[max].getDate()) == 1) {
             return list.size
         }
@@ -176,7 +176,7 @@ object Database {
      * i: Int
      */
     private fun searchExpenses(date: Date, list: ArrayList<Expense>, min: Int, max: Int): Int {
-        if (expense.isEmpty()) return 0
+        if (expenses.isEmpty()) return 0
         if (date.compareTo(list[max].getDate()) == 1) {
             return list.size
         }
@@ -247,7 +247,7 @@ object Database {
 
     //Open expenses text file to read each line and add each line of information to the expense array list.
     fun readExpenses() {
-        expense.clear()
+        expenses.clear()
         val f = BufferedReader(FileReader(expenses_file))
         f.forEachLine {
             val text = it
@@ -261,7 +261,7 @@ object Database {
                     addInfo = " " + found[3]
                 } catch (e: Exception) {
                 }
-                expense.add(Expense(date, source, amount, addInfo))
+                expenses.add(Expense(date, source, amount, addInfo))
             }
         }
         f.close()
@@ -269,7 +269,7 @@ object Database {
 
     //Open earnings text file to read each line and add the information to the earning array list.
     fun readEarnings() {
-        earning.clear()
+        earnings.clear()
         val r = BufferedReader(FileReader(earnings_file))
         r.forEachLine {
             val text = it
@@ -283,7 +283,7 @@ object Database {
                     addInfo = found[3]
                 } catch (e: Exception) {
                 }
-                earning.add(Earning(date, source, amount, addInfo))
+                earnings.add(Earning(date, source, amount, addInfo))
             }
         }
         r.close()
@@ -340,10 +340,10 @@ object Database {
      */
     fun searchRangeEarnings(start: Date, end: Date): MutableList<Earning> {
         var a = mutableListOf<Earning>()
-        val startIndex = searchEarnings(start, earning, 0, earning.size - 1)
-        val endIndex = searchEarnings(end, earning, 0, earning.size - 1)
-        a = earning.subList(startIndex, endIndex)
-        for (e in earning){
+        val startIndex = searchEarnings(start, earnings, 0, earnings.size - 1)
+        val endIndex = searchEarnings(end, earnings, 0, earnings.size - 1)
+        a = earnings.subList(startIndex, endIndex)
+        for (e in earnings){
             if (e.getDate().getFullDate() == end.getFullDate()){
                 a.add(e)
             }
@@ -359,11 +359,12 @@ object Database {
      *
      */
     fun searchRangeExpenses(start: Date, end: Date): MutableList<Expense> {
+
         var a = mutableListOf<Expense>()
-        val startIndex = searchExpenses(start,expense,0, expense.size-1)
-        val endIndex = searchExpenses(end,expense,0,expense.size-1)
-        a = expense.subList(startIndex,endIndex)
-        for(e in expense){
+        val startIndex = searchExpenses(start,expenses,0, expenses.size-1)
+        val endIndex = searchExpenses(end,expenses,0,expenses.size-1)
+        a = expenses.subList(startIndex,endIndex)
+        for(e in expenses){
             if (e.getDate().getFullDate() == end.getFullDate()){
                 a.add(e)
             }

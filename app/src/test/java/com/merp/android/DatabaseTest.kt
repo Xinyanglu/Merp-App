@@ -11,10 +11,10 @@ class DatabaseTest {
         Database.addEarning(Date(2005, 5, 15), "Job", BigDecimal("500.52"), "add info")
         Database.addEarning(Date(3000, 2, 13), "Job", BigDecimal("500.52"), "add info")
 
-        Database.earning.clear()
+        Database.earnings.clear()
 
         Database.initEarning()
-        Assertions.assertEquals("2005-05-15@Job@500.52@add info", Database.earning[0].toString())
+        Assertions.assertEquals("2005-05-15@Job@500.52@add info", Database.earnings[0].toString())
 
     }
 }

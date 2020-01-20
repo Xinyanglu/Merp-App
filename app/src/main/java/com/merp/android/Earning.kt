@@ -3,8 +3,14 @@ package com.merp.android
 import java.math.*
 
 /**
- * Constructs an instance of the Earning class which records the
- * [date] of the earning, [source] of the earning, [amount] earned, and any [addInfo].
+ * An object for recording earnings.
+ *
+ * @constructor Constructs an [Earning] object.
+ *
+ * @property [date] A [Date] object for recording the date of the earning
+ * @property [source] The source of the earning
+ * @property [amount] The amount earned
+ * @property [addInfo] Additional info
  */
 class Earning(private var date: Date,
               private var source: String,

@@ -59,7 +59,7 @@
     <string name="help_earnings_activity">
         Search bar\n
         Filters the list for all earnings that match the given keyword(s).\n
-        Separate multiple keywords with \",\" (without spaces) to search for all earnings that contain all given keywords.
+        Separate multiple keywords with \",\" to search for all earnings that contain all given keywords.
 
         List of earnings\n
         Displays all (or filtered) earnings.\n
@@ -88,7 +88,7 @@
     <string name="help_expenses_activity">
         Search bar\n
         Filters the list for all expenses that match the given keyword(s).\n
-        Separate multiple keywords with \",\" (without spaces) to search for all expenses that contain all given keywords.
+        Separate multiple keywords with \",\" to search for all expenses that contain all given keywords.
     </string>
 
     <string name="help_edit_expense_activity">

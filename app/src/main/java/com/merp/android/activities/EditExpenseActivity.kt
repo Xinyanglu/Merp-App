@@ -19,13 +19,34 @@ import kotlinx.android.synthetic.main.activity_edit_expense.*
 import kotlinx.android.synthetic.main.fragment_edit_entry.*
 import java.math.BigDecimal
 
+/**
+ * An [Activity] for adding/editing expenses to/from [Database.expenses].
+ * The user can also navigate to [ExpensesSourcesActivity].
+ */
 class EditExpenseActivity : AppCompatActivity() {
+    /** An identifier code that checks if the user navigated to this activity with the intention to create a new expense */
     private val newExpenseCode = 201
+
+    /** An identifier code that checks if the user navigated to this activity with the intention to edit their selected expense */
     private val editExpenseCode = 202
+
+    /** If the user selected an expense from [ExpensesActivity] to edit, this records the index of that expense in [Database.expenses] */
     private var index = -999
+
+    /**
+     * Records the request (identifier) code passed from [ExpensesActivity]
+     * and is compared against [newExpenseCode] and [editExpenseCode] to determine the user's intention.
+     */
     private var requestCode = -999
+
+    /** A [DatePicker] object used for selecting the [com.merp.android.Expense.date] */
     private lateinit var dp: DatePicker
 
+    /**
+     * Sets up the activity (inflating layout, setting text, adding listeners to floating action buttons, etc.).
+     *
+     * Automatically called when the activity is created
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_expense)
@@ -119,6 +140,13 @@ class EditExpenseActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Calls [setSources].
+     * If the [requestCode] is [editExpenseCode], sets all the layout components to display the properties of the selected expense.
+     *
+     * Called by default when the activity is resumed.
+     * Always called after [onCreate] as per the activity lifecycle.
+     */
     override fun onResume() {
         super.onResume()
         setSources()
@@ -146,11 +174,18 @@ class EditExpenseActivity : AppCompatActivity() {
         }
     }
 
+    /** Automatically inflates the options menu to be a part of the toolbar. */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_edit_expense, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
+    /**
+     * Depending on the item clicked, performs a specific task.
+     * Automatically called whenever the user clicks an options menu item.
+     *
+     * @param [item] The options [MenuItem] that the user clicked
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.action_display_help){
             val data = Intent(this, HelpActivity::class.java).apply{
@@ -162,13 +197,20 @@ class EditExpenseActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    //when the background is clicked, hides keyboard and layoutAddSource
-    //onClick methods (called from xml file) must have one and only one parameter of View type
-    fun onClick(v: View){
+    /**
+     * When the background is clicked, hides the on-screen keyboard.
+     * NOTE: as this is an XML onClick attribute method, a View parameter is required even if unused.
+     *
+     * @param [v] The [View] clicked
+     */
+    fun hideKeyboard(v: View){
         val imm: InputMethodManager = this.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(this.currentFocus?.windowToken, 0)
     }
 
+    /**
+     * Updates the spinner (dropdown menu) to display and allow the user to select any of the [Database.expensesSources].
+     */
     private fun setSources(){
         //spinner (dropdown menu) for sources
         val dropdownSources: Spinner = findViewById(R.id.spinnerSource)
