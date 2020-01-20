@@ -152,7 +152,6 @@ object Database {
      * @param [min] minimum index of list to search for
      * @param [max] maximum index of list to search for
      */
-
     private fun searchEarnings(date: Date, list: ArrayList<Earning>, min: Int, max: Int): Int {
         if (earning.isEmpty()) return 0
         if (date.compareTo(list[max].getDate()) == 1) {
@@ -176,7 +175,6 @@ object Database {
      * Returns:
      * i: Int
      */
-
     private fun searchExpenses(date: Date, list: ArrayList<Expense>, min: Int, max: Int): Int {
         if (expense.isEmpty()) return 0
         if (date.compareTo(list[max].getDate()) == 1) {
@@ -333,36 +331,44 @@ object Database {
         return amounts
     }
 
-    //returns a list of all the dates that are between the start and end date
+    /**
+     * Return list of all earnings between start and end date specified
+     *
+     * @param [start] start date
+     * @param [end] end date
+     *
+     */
     fun searchRangeEarnings(start: Date, end: Date): MutableList<Earning> {
-        if (start.compareTo(end) == 0){
-            var a = mutableListOf<Earning>()
-            for (e in earning){
-                if(e.getDate().toString() == start.toString()){
-                    a.add(e)
-                }
-            }
-            return a
-        }
-
+        var a = mutableListOf<Earning>()
         val startIndex = searchEarnings(start, earning, 0, earning.size - 1)
         val endIndex = searchEarnings(end, earning, 0, earning.size - 1)
-        return earning.subList(startIndex, endIndex)
+        a = earning.subList(startIndex, endIndex)
+        for (e in earning){
+            if (e.getDate().getFullDate() == end.getFullDate()){
+                a.add(e)
+            }
+        }
+        return a
     }
 
+    /**
+     * Returns list of all expenses between start and end date specified
+     *
+     * @param [start] start date
+     * @param [end] end date
+     *
+     */
     fun searchRangeExpenses(start: Date, end: Date): MutableList<Expense> {
-        if (start.compareTo(end) == 0){
-            var a = mutableListOf<Expense>()
-            for (e in expense){
-                if(e.getDate().toString() == start.toString()){
-                    a.add(e)
-                }
+        var a = mutableListOf<Expense>()
+        val startIndex = searchExpenses(start,expense,0, expense.size-1)
+        val endIndex = searchExpenses(end,expense,0,expense.size-1)
+        a = expense.subList(startIndex,endIndex)
+        for(e in expense){
+            if (e.getDate().getFullDate() == end.getFullDate()){
+                a.add(e)
             }
-            return a
         }
-        val startIndex = searchExpenses(start,expense,0,earning.size-1)
-        val endIndex = searchExpenses(end,expense,0,earning.size-1)
-        return expense.subList(startIndex, endIndex)
+        return a
     }
 
     fun getEarningDateStrings(array: MutableList<Earning>): ArrayList<String> {
