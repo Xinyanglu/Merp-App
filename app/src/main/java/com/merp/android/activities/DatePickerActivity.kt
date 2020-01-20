@@ -42,6 +42,7 @@ class DatePickerActivity : AppCompatActivity() {
             startYear = year
             startMonth = month+1
             startDay = dayOfMonth
+            Log.d("turnOffYourVPN", "$startDay")
         }
 
         end.setOnDateChangeListener{view, year, month, dayOfMonth ->

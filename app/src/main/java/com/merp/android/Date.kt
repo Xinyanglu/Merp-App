@@ -12,7 +12,9 @@ class Date : Comparable<Date>{
 
     /**
      * Compares two [Date] objects chronologically.
-     * Returns 1 if the TODO comes after, -1 if it comes before, and 0 if the two dates are the same.
+     * Returns 1 if this object's date comes after, -1 if it comes before, and 0 if the two dates are the same.
+     *
+     * @param [other] The date to compare to
      */
     override fun compareTo(other: Date): Int{
         if (this.getYear()>other.getYear()) return 1

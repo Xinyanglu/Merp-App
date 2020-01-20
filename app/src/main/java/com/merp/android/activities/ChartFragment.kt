@@ -1,6 +1,7 @@
 package com.merp.android.activities
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,8 +13,6 @@ import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import com.github.mikephil.charting.formatter.ValueFormatter
 import com.merp.android.*
 import com.merp.android.Database.getAmountEarnedPerDate
 import com.merp.android.Database.getAmountSpentPerDate
@@ -52,7 +51,6 @@ class ChartFragment(entryType: String, chartType: String, start: Date, end: Date
     //gets the information required to build the graph. Builds either a line graph or pie chart for expense or earning
     private fun getChart(entry: String?, method: String?, start: Date, end: Date){
         var yAxis:Array<Float>
-        var tempXAxisLabels = ArrayList<Date>()
         if (method.equals("pie")){
             val pieEntries = ArrayList<PieEntry>()
             var label = ""
@@ -60,7 +58,7 @@ class ChartFragment(entryType: String, chartType: String, start: Date, end: Date
 
             if (entry.equals("earnings")){ //adding y (earning amount) and x (earning category) as a sector in the pie chart
                 val arrayInRange = searchRangeEarnings(start, end)
-                val values = Database.getEarningAmountPerCategory(searchRangeEarnings(start, end))
+                val values = Database.getEarningAmountPerCategory(arrayInRange)
                 val categories = Database.getEarningSources(arrayInRange)
 
                 for (i in 0 until categories.size){
@@ -112,7 +110,6 @@ class ChartFragment(entryType: String, chartType: String, start: Date, end: Date
                 }
                 label = "Amount earned"
                 desc = "Amount earned per date"
-                tempXAxisLabels = getEarningDates(arrayInRange)
 
             }else if(entry.equals("expenses")){
                 val arrayInRange = searchRangeExpenses(start, end)
@@ -123,7 +120,6 @@ class ChartFragment(entryType: String, chartType: String, start: Date, end: Date
                 }
                 label = "Amount spent"
                 desc = "Amount spent per date"
-                tempXAxisLabels = getExpenseDates(arrayInRange)
             }
 
             mBarChart.visibility = View.VISIBLE
@@ -131,20 +127,15 @@ class ChartFragment(entryType: String, chartType: String, start: Date, end: Date
             mBarChart.animateXY(1000,1000)
             val barDataSet = BarDataSet(barEntries,label)
             barDataSet.valueTextSize = 20f
-            var xAxisLabels = ArrayList<String>()
-
-            for (label in tempXAxisLabels){
-                xAxisLabels.add(label.getFullDate())
-            }
 
             var xAxis = mBarChart.xAxis
             xAxis.textSize = 12f
             xAxis.position = XAxis.XAxisPosition.BOTTOM
 
             if(entry=="earnings"){
-                xAxis.valueFormatter = EarningsFormatter()
+                xAxis.valueFormatter = EarningsFormatter(start, end)
             }else if(entry=="expenses"){
-                xAxis.valueFormatter = ExpensesFormatter()
+                xAxis.valueFormatter = ExpensesFormatter(start, end)
             }
 
             xAxis.granularity = 1f
