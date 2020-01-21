@@ -15,8 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:padding="5dp"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textSize="20sp" />
 
     <View
         android:layout_width="1dp"
@@ -29,8 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:padding="5dp"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textSize="20sp" />
 
     <View
         android:layout_width="1dp"
@@ -43,8 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:padding="5dp"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textSize="20sp" />
 
     <View
         android:layout_width="1dp"
@@ -57,7 +54,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:padding="5dp"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textSize="20sp" />
 
 </LinearLayout>

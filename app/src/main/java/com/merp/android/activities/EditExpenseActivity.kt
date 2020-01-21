@@ -216,6 +216,7 @@ class EditExpenseActivity : AppCompatActivity() {
         val dropdownSources: Spinner = findViewById(R.id.spinnerSource)
         val sources: ArrayList<String> = Database.getExpensesSources()
         val adapter: ArrayAdapter<String> = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sources)
+        adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice)
         dropdownSources.adapter = adapter
     }
 }

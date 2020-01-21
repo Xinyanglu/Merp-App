@@ -42,7 +42,7 @@ class HelpActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            android.R.id.home -> {
+            android.R.id.home -> { //when user presses the back arrow button
                 finish()
                 return true
             }
