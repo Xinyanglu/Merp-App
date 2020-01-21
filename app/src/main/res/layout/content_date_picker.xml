@@ -60,15 +60,30 @@
 
             </LinearLayout>
 
+            <Button
+                android:id="@+id/btnToday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="100dp"
+                android:text="@string/btn_select_today" />
+
+            <Button
+                android:id="@+id/btnAll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="100dp"
+                android:text="@string/btn_select_all" />
+
         </LinearLayout>
 
-        <Button
-            android:id="@+id/displayCharts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:layout_marginBottom="50dp"
-            android:text="Display Charts" />
+    <Button
+        android:id="@+id/displayCharts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginBottom="30dp"
+        android:text="@string/btn_generate_report" />
 
 
 </FrameLayout>

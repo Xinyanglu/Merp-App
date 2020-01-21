@@ -39,9 +39,12 @@
     <!--menu_expenses-->
     <string name="action_delete_expenses">Delete all expenses</string>
 
-    <!--view_reports-->
-    <string name="show_earnings">Show Earnings</string>
-    <string name="show_expenses">Show Expenses</string>
+    <!--content_view_reports-->
+    <string name="text_analysis">
+        Net income: %1$d\n
+        \tTotal gained: %2$d\n
+        \tTotal lost: %3$d
+    </string>
 
     <!--fragment_entries-->
     <string name="hint_search_for_keyword">Search for keyword</string>
@@ -57,6 +60,9 @@
     <string name="text_start_date">Start Date</string>
     <string name="text_end_date">End Date</string>
     <string name="btn_create_report">Create Report</string>
+    <string name="btn_select_today">Select today</string>
+    <string name="btn_select_all">Select all</string>
+    <string name="btn_generate_report">Generate report</string>
 
     <!--fragment_help-->
     <string name="help_earnings_activity">
