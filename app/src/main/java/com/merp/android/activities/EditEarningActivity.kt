@@ -225,6 +225,8 @@ class EditEarningActivity : AppCompatActivity() {
         val sources: ArrayList<String> = Database.getEarningsSources()
         //use an ArrayAdapter for adapting an array to a spinner
         val adapter: ArrayAdapter<String> = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sources)
+        adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice)
+
         //set the adapter of the spinner to the ArrayAdapter
         dropdownSources.adapter = adapter
     }

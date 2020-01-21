@@ -158,7 +158,7 @@ class ExpensesActivity : AppCompatActivity() {
             Snackbar.make(
                 findViewById(R.id.expensesLayout),
                 text,
-                Snackbar.LENGTH_INDEFINITE
+                Snackbar.LENGTH_LONG
             ).show()
         }
     }

@@ -45,6 +45,9 @@
 
     <!--fragment_entries-->
     <string name="hint_search_for_keyword">Search for keyword</string>
+    <string name="label_date">Date</string>
+    <string name="label_amount">Amount</string>
+    <string name="label_additional_info">Info</string>
 
     <!--fragment_sources-->
     <string name="hint_sources">Add/Search sources</string>

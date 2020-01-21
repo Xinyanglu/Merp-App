@@ -185,7 +185,7 @@ class EarningsActivity : AppCompatActivity() {
             Snackbar.make(
                 findViewById(R.id.earningsLayoutActivity),
                 text,
-                Snackbar.LENGTH_INDEFINITE
+                Snackbar.LENGTH_LONG
             ).show()
         }
     }

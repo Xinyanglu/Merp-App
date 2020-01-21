@@ -2,28 +2,26 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activities.ViewReportsActivity"
-    tools:showIn="@layout/activity_view_reports"
-    android:fillViewport="true">
+    tools:showIn="@layout/activity_view_reports">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:isScrollContainer="true"
         android:orientation="vertical">
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="500dp" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="40dp" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="ggagdfasdf\nga\nusgds\nhgah\ndasd\nhaus\nnhd\nsa\nhdiuasds\n" />
 
     </LinearLayout>
 
