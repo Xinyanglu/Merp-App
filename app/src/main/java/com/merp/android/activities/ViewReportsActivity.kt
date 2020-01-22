@@ -7,9 +7,7 @@ import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
-import com.merp.android.ChartsPagerAdapter
-import com.merp.android.Date
-import com.merp.android.R
+import com.merp.android.*
 import kotlinx.android.synthetic.main.activity_view_reports.*
 import kotlinx.android.synthetic.main.content_view_reports.*
 
@@ -47,7 +45,7 @@ class ViewReportsActivity : AppCompatActivity() {
                                      ChartFragment("earnings", "pie", start, end),
                                      ChartFragment("expenses","bar",start, end),
                                      ChartFragment("expenses","pie", start, end))
-            val viewPager: ViewPager = findViewById(R.id.viewpager)
+            val viewPager: NonswipeableViewPager = findViewById(R.id.viewpager)
             val pagerAdapter = ChartsPagerAdapter(supportFragmentManager, charts)
             viewPager.adapter = pagerAdapter
 

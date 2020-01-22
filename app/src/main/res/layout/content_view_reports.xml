@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <androidx.viewpager.widget.ViewPager
+        <com.merp.android.NonswipeableViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="500dp">
@@ -23,14 +23,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-        </androidx.viewpager.widget.ViewPager>
+        </com.merp.android.NonswipeableViewPager>
 
         <TextView
             android:id="@+id/textAnalysis"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="30dp"
-            android:text="ggagdfasdf\nga\nusgds\nhgah\ndasd\nhaus\nnhd\nsa\nhdiuasds\n" />
+            android:layout_marginHorizontal="30dp" />
 
     </LinearLayout>
 
