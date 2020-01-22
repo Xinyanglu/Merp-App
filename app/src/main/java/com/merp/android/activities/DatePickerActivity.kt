@@ -16,6 +16,12 @@ import java.util.*
 
 
 class DatePickerActivity : AppCompatActivity() {
+    private var startYear = 0
+    private var startMonth = 0
+    private var startDay = 0
+    private var endYear = 0
+    private var endMonth = 0
+    private var endDay = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,18 +31,19 @@ class DatePickerActivity : AppCompatActivity() {
         val start = findViewById<CalendarView>(R.id.startDate)
         val end = findViewById<CalendarView>(R.id.endDate)
 
+        btnToday.setOnClickListener{
+            start.date = Date().time
+            end.date = Date().time
+            setDates(start.date, end.date)
+        }
 
-        //initialize variables with values of current date
-        val sdf = SimpleDateFormat("yyyy-MM-dd")
-        val currentDate = sdf.format(Date()).split("-")
+        btnToday.performClick()
 
-        var startYear = currentDate[0].toInt()
-        var startMonth = currentDate[1].toInt()
-        var startDay = currentDate[2].toInt()
-
-        var endYear = startYear
-        var endMonth = startMonth
-        var endDay = startDay
+        btnAll.setOnClickListener{
+            start.date = start.minDate
+            end.date = end.maxDate
+            setDates(start.date, end.date)
+        }
 
         start.setOnDateChangeListener { view, year, month, dayOfMonth ->
             startYear = year
@@ -71,5 +78,18 @@ class DatePickerActivity : AppCompatActivity() {
 
             }
         }
+    }
+
+    private fun setDates(start: Long, end: Long){
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        val startDate = sdf.format(Date(start)).split("-")
+        startYear = startDate[0].toInt()
+        startMonth = startDate[1].toInt()
+        startDay = startDate[2].toInt()
+
+        val endDate = sdf.format(Date(end)).split("-")
+        endYear = endDate[0].toInt()
+        endMonth = endDate[1].toInt()
+        endDay = endDate[2].toInt()
     }
 }
