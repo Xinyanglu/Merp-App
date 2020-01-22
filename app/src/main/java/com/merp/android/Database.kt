@@ -63,13 +63,13 @@ object Database {
     *
     * @return: [expensesSources] ArrayList<String>
      */
+
     fun getExpensesSources(): ArrayList<String> {
         return expensesSources
     }
 
     /**
      * Writes all expenses from expense array list into expenses_file.
-     *
      */
 
     fun writeExpenses() {
@@ -475,6 +475,7 @@ object Database {
      *
      * @return list of dates in string within specific list of earnings within dates
      */
+
     fun getEarningDateStrings(array: MutableList<Earning>): ArrayList<String> {
         val dates = ArrayList<String>()
 
@@ -492,6 +493,7 @@ object Database {
      * @return list of dates within the list of earnings within specific date
      *
      */
+
     fun getEarningDates(array: MutableList<Earning>): ArrayList<Date> {
         var contains = false
         val dates = ArrayList<Date>()
@@ -517,6 +519,7 @@ object Database {
      *
      * @return date in string within list of expenses with specific range
      */
+
     fun getExpenseDateStrings(array: MutableList<Expense>): ArrayList<String> {
         val dates = ArrayList<String>()
 
@@ -534,6 +537,7 @@ object Database {
      * @return list of date objects within specific range of expense objects
      *
      */
+
     fun getExpenseDates(array: MutableList<Expense>): ArrayList<Date> {
         var contains = false
         val dates = ArrayList<Date>()
@@ -560,6 +564,7 @@ object Database {
      * @return amount earned per day within specific range
      *
      */
+
     fun getAmountEarnedPerDate(array: MutableList<Earning>): Array<Float> {
         val dates = getEarningDates(array)
         val amounts = Array<Float>(dates.size, { 0.toFloat() })
@@ -582,6 +587,7 @@ object Database {
      * @return Amount spent per date within specified range
      *
      */
+
     fun getAmountSpentPerDate(array: MutableList<Expense>): Array<Float> {
         val dates = getExpenseDates(array)
         val amounts = Array<Float>(dates.size, { 0.toFloat() })
@@ -603,6 +609,7 @@ object Database {
      * @return all earning sources in list of specific earnings
      *
      */
+
     fun getEarningSources(array: MutableList<Earning>): ArrayList<String>{
         val sources = ArrayList<String>(0)
         var exists = false
@@ -630,6 +637,7 @@ object Database {
      * @return All expense sources within specific range
      *
      */
+
     fun getExpenseSources(array: MutableList<Expense>): ArrayList<String>{
         val sources = ArrayList<String>(0)
         var exists = false
