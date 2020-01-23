@@ -191,6 +191,7 @@ object Database {
      */
 
     private fun searchEarnings(date: Date, list: ArrayList<Earning>): Int {
+        if(list.isEmpty()) return 0
         if(date > list[list.size-1].getDate()){
             return list.size
         }
@@ -213,6 +214,7 @@ object Database {
      */
 
     private fun searchExpenses(date: Date, list: ArrayList<Expense>): Int {
+        if(list.isEmpty()) return 0
         if(date > list[list.size-1].getDate()){
             return list.size
         }
