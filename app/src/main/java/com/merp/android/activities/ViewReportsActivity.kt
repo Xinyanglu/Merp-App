@@ -30,7 +30,7 @@ class ViewReportsActivity : AppCompatActivity() {
         val netIncome = 500
         val totalGained = 750
         val totalLost = 250
-        textAnalysis.text = getString(R.string.text_analysis, netIncome, totalGained, totalLost)
+        analysis.text = getString(R.string.text_analysis, netIncome, totalGained, totalLost)
 
         val start = Date(intent.getIntExtra("start year", 0),
                          intent.getIntExtra("start month",0),

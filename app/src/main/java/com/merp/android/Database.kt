@@ -132,7 +132,7 @@ object Database {
      */
     fun addExpense(date: Date, category: String, price: BigDecimal, adi: String) {
         expenses.add(
-            searchExpenses(date, expenses, 0, expenses.size - 1),
+            searchExpenses(date, expenses),
             Expense(date, category, price, adi)
         )
         writeExpenses()
@@ -150,7 +150,7 @@ object Database {
 
     fun addEarning(date: Date, source: String, amount: BigDecimal, adi: String) {
         earnings.add(
-            searchEarnings(date, earnings, 0, earnings.size - 1),
+            searchEarnings(date, earnings),
             Earning(date, source, amount, adi)
         )
         writeEarnings()
@@ -185,30 +185,21 @@ object Database {
      *
      * @param [date] date to look for
      * @param [list] list to search in
-     * @param [min] minimum index of list to search for
-     * @param [max] maximum index of list to search for
      *
-     * @return average index of max and min
+     * @return position
      *
      */
 
-    private fun searchEarnings(date: Date, list: ArrayList<Earning>, min: Int, max: Int): Int {
-        if (earnings.isEmpty()) return 0
-        if (date.compareTo(list[max].getDate()) == 1) {
+    private fun searchEarnings(date: Date, list: ArrayList<Earning>): Int {
+        if(date > list[list.size-1].getDate()){
             return list.size
         }
-        val i = (max + min) / 2
-        val d = list[i].getDate()
-        if (max - min <= 1) {
-            return if (date.compareTo(d) == 1) i + 1
-            else i
+        for(pos in 0 until list.size){
+            if(date.compareTo(list[pos].getDate()) <= 0){
+                return pos
+            }
         }
-
-        return when (date.compareTo(d)) {
-            1 -> searchEarnings(date, list, i, max)
-            -1 -> searchEarnings(date, list, min, i)
-            else -> i
-        }
+        return 0
     }
 
     /**
@@ -216,30 +207,21 @@ object Database {
      *
      * @param [date] date to look for
      * @param [list] list to search in
-     * @param [min] minimum index of list to search for
-     * @param [max] maximum index of list to search for
      *
      * @return average index of max and min
      *
      */
 
-    private fun searchExpenses(date: Date, list: ArrayList<Expense>, min: Int, max: Int): Int {
-        if (expenses.isEmpty()) return 0
-        if (date.compareTo(list[max].getDate()) == 1) {
+    private fun searchExpenses(date: Date, list: ArrayList<Expense>): Int {
+        if(date > list[list.size-1].getDate()){
             return list.size
         }
-        val i = (max + min) / 2
-        val d = list[i].getDate()
-        if (max - min <= 1) {
-            return if (date.compareTo(d) == 1) i + 1
-            else i
+        for(pos in 0 until list.size){
+            if(date.compareTo(list[pos].getDate()) <= 0){
+                return pos
+            }
         }
-
-        return when (date.compareTo(d)) {
-            1 -> searchExpenses(date, list, i, max)
-            -1 -> searchExpenses(date, list, min, i)
-            else -> i
-        }
+        return 0
     }
 
     /**
@@ -394,7 +376,7 @@ object Database {
         for (source in 0 until getEarningsSources().size) {
             for (earning in array) {
                 if (earning.getSource() == (getEarningsSources()[source])) {
-                    amounts[source] += amounts[source] + earning.getAmount()
+                    amounts[source] +=  earning.getAmount()
                 }
             }
         }
@@ -414,7 +396,7 @@ object Database {
         for (source in 0 until getExpensesSources().size) {
             for (expense in array) {
                 if (expense.getSource() == (getExpensesSources()[source])) {
-                    amounts[source] += amounts[source] + expense.getAmount()
+                    amounts[source] += expense.getAmount()
                 }
             }
         }
@@ -433,8 +415,8 @@ object Database {
 
     fun searchRangeEarnings(start: Date, end: Date): MutableList<Earning> {
         var a = mutableListOf<Earning>()
-        val startIndex = searchEarnings(start, earnings, 0, earnings.size - 1)
-        val endIndex = searchEarnings(end, earnings, 0, earnings.size - 1)
+        val startIndex = searchEarnings(start, earnings)
+        val endIndex = searchEarnings(end, earnings)
         a = earnings.subList(startIndex, endIndex)
         for (e in earnings){
             if (e.getDate().getFullDate() == end.getFullDate()){
@@ -457,8 +439,8 @@ object Database {
     fun searchRangeExpenses(start: Date, end: Date): MutableList<Expense> {
 
         var a = mutableListOf<Expense>()
-        val startIndex = searchExpenses(start,expenses,0, expenses.size-1)
-        val endIndex = searchExpenses(end,expenses,0,expenses.size-1)
+        val startIndex = searchExpenses(start,expenses)
+        val endIndex = searchExpenses(end,expenses)
         a = expenses.subList(startIndex,endIndex)
         for(e in expenses){
             if (e.getDate().getFullDate() == end.getFullDate()){
@@ -565,13 +547,13 @@ object Database {
      *
      */
 
-    fun getAmountEarnedPerDate(array: MutableList<Earning>): Array<Float> {
+    fun getAmountEarnedPerDate(array: MutableList<Earning>): Array<BigDecimal> {
         val dates = getEarningDates(array)
-        val amounts = Array<Float>(dates.size, { 0.toFloat() })
+        val amounts = Array<BigDecimal>(dates.size, { BigDecimal(0) })
         for (date in 0 until dates.size) {
             for (earning in array) {
-                if (earning.getDate().getFullDate() == (dates[date].getFullDate())) {
-                    amounts[date] += earning.getAmount().toFloat()
+                if (earning.getDate().getFullDate() == dates[date].getFullDate()) {
+                    amounts[date] += earning.getAmount()
                 }
             }
         }
@@ -588,13 +570,13 @@ object Database {
      *
      */
 
-    fun getAmountSpentPerDate(array: MutableList<Expense>): Array<Float> {
+    fun getAmountSpentPerDate(array: MutableList<Expense>): Array<BigDecimal> {
         val dates = getExpenseDates(array)
-        val amounts = Array<Float>(dates.size, { 0.toFloat() })
+        val amounts = Array<BigDecimal>(dates.size, { BigDecimal(0) })
         for (date in 0 until dates.size) {
             for (expense in array) {
-                if (expense.getDate().getFullDate() == (dates[date].getFullDate())) {
-                    amounts[date] += expense.getAmount().toFloat()
+                if (expense.getDate().getFullDate() == dates[date].getFullDate()) {
+                    amounts[date] += expense.getAmount()
                 }
             }
         }
