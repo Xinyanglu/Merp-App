@@ -374,10 +374,10 @@ object Database {
      */
 
     fun getEarningAmountPerCategory(array: MutableList<Earning>): Array<BigDecimal> {
-        val amounts = Array(getEarningsSources().size, { BigDecimal(0) })
-        for (source in 0 until getEarningsSources().size) {
+        val amounts = Array(getEarningSources(array).size, { BigDecimal(0) })
+        for (source in 0 until getEarningSources(array).size) {
             for (earning in array) {
-                if (earning.getSource() == (getEarningsSources()[source])) {
+                if (earning.getSource() == (getEarningSources(array)[source])) {
                     amounts[source] +=  earning.getAmount()
                 }
             }
@@ -394,10 +394,10 @@ object Database {
      *
      */
     fun getExpenseAmountPerCategory(array: MutableList<Expense>): Array<BigDecimal> {
-        val amounts = Array(getExpensesSources().size, { BigDecimal(0) })
-        for (source in 0 until getExpensesSources().size) {
+        val amounts = Array(getExpenseSources(array).size, { BigDecimal(0) })
+        for (source in 0 until getExpenseSources(array).size) {
             for (expense in array) {
-                if (expense.getSource() == (getExpensesSources()[source])) {
+                if (expense.getSource() == (getExpenseSources(array)[source])) {
                     amounts[source] += expense.getAmount()
                 }
             }
