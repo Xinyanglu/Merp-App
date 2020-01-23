@@ -27,10 +27,8 @@ class ViewReportsActivity : AppCompatActivity() {
         //in the resource, there are things like "%1$d"
         //%x where x is an integer represents the order at which the values will be entered in getString(R.string.text_analysis, %1, %2, %3)
         //$d represents that it will be an integer, $s is string (i think), dunno the rest
-        val netIncome = 500
-        val totalGained = 750
-        val totalLost = 250
-        analysis.text = getString(R.string.text_analysis, netIncome, totalGained, totalLost)
+
+
 
         val start = Date(intent.getIntExtra("start year", 0),
                          intent.getIntExtra("start month",0),
@@ -40,18 +38,29 @@ class ViewReportsActivity : AppCompatActivity() {
                        intent.getIntExtra("end month", 0),
                        intent.getIntExtra("end day",0))
 
-        try{
-            val charts = arrayListOf(ChartFragment("earnings", "bar", start, end),
-                                     ChartFragment("earnings", "pie", start, end),
-                                     ChartFragment("expenses","bar",start, end),
-                                     ChartFragment("expenses","pie", start, end))
-            val viewPager: NonswipeableViewPager = findViewById(R.id.viewpager)
-            val pagerAdapter = ChartsPagerAdapter(supportFragmentManager, charts)
-            viewPager.adapter = pagerAdapter
+        val rangeEarnings = Database.searchRangeEarnings(start,end)
+        val rangeExpenses = Database.searchRangeExpenses(start,end)
 
-        }catch(e: Exception){
-            val t = Toast.makeText(this@ViewReportsActivity, "No earning/expense between these dates", Toast.LENGTH_SHORT)
-            t.show()
-        }
+        val totalEarned = Database.totalEarned(rangeEarnings)
+        val totalSpent = Database.totalSpent(rangeExpenses)
+        val daysInBetween = start.daysUntil(end)
+
+        val netIncome = (totalEarned - totalSpent).toString()
+        val totalGained = totalEarned.toString()
+        val totalLost = totalSpent.toString()
+        var averageEarned = (totalEarned.toLong()/daysInBetween).toString()
+
+
+        analysis.text = getString(R.string.text_analysis, netIncome, totalGained, totalLost, averageEarned)
+
+        val charts = arrayListOf(ChartFragment("earnings", "bar", start, end),
+                                 ChartFragment("earnings", "pie", start, end),
+                                 ChartFragment("expenses","bar",start, end),
+                                 ChartFragment("expenses","pie", start, end))
+
+        val viewPager: NonswipeableViewPager = findViewById(R.id.viewpager)
+        val pagerAdapter = ChartsPagerAdapter(supportFragmentManager, charts)
+        viewPager.adapter = pagerAdapter
+
     }
 }

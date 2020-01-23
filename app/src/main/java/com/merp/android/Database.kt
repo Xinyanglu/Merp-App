@@ -638,4 +638,22 @@ object Database {
         }
         return sources
     }
+
+    fun totalEarned(array: MutableList<Earning>): BigDecimal{
+        var total = BigDecimal(0)
+        for(earning in array){
+            total += earning.getAmount()
+        }
+
+        return total
+    }
+
+    fun totalSpent(array: MutableList<Expense>): BigDecimal{
+        var total = BigDecimal(0)
+        for(expense in array){
+            total += expense.getAmount()
+        }
+
+        return total
+    }
 }
