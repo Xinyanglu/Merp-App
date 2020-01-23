@@ -105,7 +105,6 @@ class ChartFragment(entryType: String, chartType: String, start: Date, end: Date
             if (entry.equals("earnings")){
                 val arrayInRange = searchRangeEarnings(start, end)
                 yAxis = getAmountEarnedPerDate(arrayInRange)
-                Log.d("amount", yAxis.toString())
                 for (earning in 0 until yAxis.size){
                     barEntries.add(BarEntry(earning.toFloat(),
                        yAxis[earning].toFloat()))
