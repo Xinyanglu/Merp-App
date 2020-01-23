@@ -22,6 +22,7 @@ import com.merp.android.Database.getExpenseDates
 import com.merp.android.Database.getExpenses
 import com.merp.android.Database.searchRangeEarnings
 import com.merp.android.Database.searchRangeExpenses
+import java.math.BigDecimal
 
 
 /**
@@ -50,7 +51,7 @@ class ChartFragment(entryType: String, chartType: String, start: Date, end: Date
 
     //gets the information required to build the graph. Builds either a line graph or pie chart for expense or earning
     private fun getChart(entry: String?, method: String?, start: Date, end: Date){
-        var yAxis:Array<Float>
+        var yAxis:Array<BigDecimal>
         if (method.equals("pie")){
             val pieEntries = ArrayList<PieEntry>()
             var label = ""
@@ -70,7 +71,7 @@ class ChartFragment(entryType: String, chartType: String, start: Date, end: Date
 
             }else if (entry.equals("expenses")){
                 val arrayInRange = searchRangeExpenses(start, end)
-                val values = Database.getExpenseAmountPerCategory(searchRangeExpenses(start, end))
+                val values = Database.getExpenseAmountPerCategory(arrayInRange)
                 val categories = Database.getExpenseSources(arrayInRange)
 
                 for (i in 0 until categories.size){
@@ -104,9 +105,10 @@ class ChartFragment(entryType: String, chartType: String, start: Date, end: Date
             if (entry.equals("earnings")){
                 val arrayInRange = searchRangeEarnings(start, end)
                 yAxis = getAmountEarnedPerDate(arrayInRange)
+                Log.d("amount", yAxis.toString())
                 for (earning in 0 until yAxis.size){
                     barEntries.add(BarEntry(earning.toFloat(),
-                       yAxis[earning]))
+                       yAxis[earning].toFloat()))
                 }
                 label = "Amount earned"
                 desc = "Amount earned per date"
@@ -116,7 +118,7 @@ class ChartFragment(entryType: String, chartType: String, start: Date, end: Date
                 yAxis = getAmountSpentPerDate(arrayInRange)
                 for (expense in 0 until yAxis.size){
                     barEntries.add(BarEntry(expense.toFloat(),
-                       yAxis[expense]))
+                       yAxis[expense].toFloat()))
                 }
                 label = "Amount spent"
                 desc = "Amount spent per date"

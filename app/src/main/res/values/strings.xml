@@ -41,9 +41,10 @@
 
     <!--content_view_reports-->
     <string name="text_analysis">
-        Net income: %1$d\n
-        \tTotal gained: %2$d\n
-        \tTotal lost: %3$d
+        Net income: %1$s\n
+        \tTotal gained: %2$s\n
+        \tTotal lost: %3$s\n
+        \tAverage earned; %4$s
     </string>
 
     <!--fragment_entries-->

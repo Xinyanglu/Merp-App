@@ -1,6 +1,7 @@
 package com.merp.android
 
 import java.time.*
+import java.time.temporal.ChronoUnit
 
 /**
  * A custom comparable class for recording dates in "yyyy-MM-dd" format.
@@ -8,7 +9,7 @@ import java.time.*
  */
 class Date : Comparable<Date>{
     /** A [LocalDate] object */
-    private var date : LocalDate
+    var date : LocalDate
 
     /**
      * Compares two [Date] objects chronologically.
@@ -24,6 +25,7 @@ class Date : Comparable<Date>{
         if (this.getDay()>other.getDay()) return 1
         if (this.getDay()<other.getDay()) return -1
         return 0
+
     }
 
     /**
@@ -86,5 +88,9 @@ class Date : Comparable<Date>{
     /** Returns the [date]'s float value of "yyyyMMdd" */
     fun toFloat(): Float{
         return ("" + getYear() + getMonth() + getDay()).toFloat()
+    }
+
+    fun daysUntil(other: Date): Long{
+        return ChronoUnit.DAYS.between(date,other.date)+1
     }
 }
