@@ -27,6 +27,7 @@ class DatePickerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_date_picker)
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val start = findViewById<CalendarView>(R.id.startDate)
         val end = findViewById<CalendarView>(R.id.endDate)
