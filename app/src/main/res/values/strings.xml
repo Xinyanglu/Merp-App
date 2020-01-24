@@ -7,7 +7,7 @@
     <string name="title_activity_edit_earning">Edit Earning</string>
     <string name="title_activity_expenses">Expenses</string>
     <string name="title_activity_edit_expense">Edit Expense</string>
-    <string name="title_activity_view_reports">Displaying: %1$s to %2$s</string>
+    <string name="title_activity_view_reports">%1$s to %2$s</string>
     <string name="title_activity_earnings_sources">Earnings Sources</string>
     <string name="title_activity_expenses_sources">Expenses Sources</string>
     <string name="title_activity_date_picker">Choose start and end date</string>
@@ -179,11 +179,42 @@
     </string>
 
     <string name="help_date_picker_activity">
-        TODO
+        <b>DATE SELECTION</b>\n
+        \n
+        <b>Calendar widgets</b>\n
+        Use the corresponding calendar widgets to select the start and end dates for which
+        the report will detail.\n
+        \n
+        <b>\"SELECT TODAY\" button</b>\n
+        Sets both calendar widgets to the current date.\n
+        \n
+        <b>\"SELECT ALL\" button</b>\n
+        Sets the start date calendar to the oldest possible date (1900, Jan. 01).\n
+        Sets the end date calendar to the latest possible date (2100, Dec. 31).\n
+        WARNING: this will often cause the \"Average profit per day\" text to display \$0.00 due
+        to the large date range.\n
+        \n
+        <b>\"GENERATE REPORT\" button</b>\n
+        Generates and displays a report of all entries between the two specified dates.
     </string>
 
     <string name="help_view_reports_activity">
-        TODO
+        <b>VIEW REPORTS</b>\n
+        \n
+        <b>Title</b>\n
+        Displays the start and end dates for the report chosen in the date selection screen.\n
+        \n
+        <b>Graphs and charts</b>\n
+        Bar graphs display the total amount earned/spent for each date with a recorded entry
+        within the chosen date range.\n
+        Pie charts display the total amount earned/spent for each source of earning/expense with a recorded entry
+        within the chosen date range. The size of each section of the chart is proportional to the
+        contribution of that source towards the total amount earned/spent.\n
+        Switch between bar graphs and pie charts for earnings and expenses by tapping the corresponding tab.\n
+        \n
+        <b>Analysis</b>\n
+        Analysis text such as the net income will be displayed.\n
+        Scroll down to view additional analysis text (CURRENTLY NOT ENOUGH ADDITIONAL INFO TO ALLOW SCROLLING).
     </string>
 
 </resources>

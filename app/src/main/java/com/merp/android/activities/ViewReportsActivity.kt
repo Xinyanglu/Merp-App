@@ -1,7 +1,10 @@
 package com.merp.android.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import com.google.android.material.tabs.TabLayout
 import com.merp.android.*
 import kotlinx.android.synthetic.main.activity_view_reports.*
@@ -60,7 +63,7 @@ class ViewReportsActivity : AppCompatActivity() {
             netIncome *= BigDecimal(-1)
             stringNet = "-\$$netIncome"
         }else{
-            stringNet = netIncome.toString()
+            stringNet = "\$$netIncome"
         }
 
         var averagePerDay = ((totalGained - totalLost)/daysInBetween)
@@ -69,9 +72,25 @@ class ViewReportsActivity : AppCompatActivity() {
             averagePerDay *= BigDecimal(-1)
             stringAverage = "-\$$averagePerDay"
         }else{
-            stringAverage = averagePerDay.toString()
+            stringAverage = "\$$averagePerDay"
         }
 
-        analysis.text = getString(R.string.text_analysis, stringNet, "$totalGained", "$totalLost", stringAverage)
+        analysis.text = getString(R.string.text_analysis, stringNet, "\$$totalGained", "\$$totalLost", stringAverage)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_view_reports, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.action_display_help){ //navigate to HelpActivity with instructions for this activity
+            val data = Intent(this, HelpActivity::class.java).apply{
+                putExtra("source", "ViewReportsActivity")
+            }
+            startActivity(data)
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

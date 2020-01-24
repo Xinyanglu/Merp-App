@@ -32,10 +32,12 @@ class HelpActivity : AppCompatActivity() {
         text = when(source){
             "EarningsActivity" -> R.string.help_earnings_activity
             "EditEarningActivity" -> R.string.help_edit_earnings_activity
-            "EarningsSourcesActivity" -> R.string.help_earnings_sources_activity //TODO
+            "EarningsSourcesActivity" -> R.string.help_earnings_sources_activity
             "ExpensesActivity" -> R.string.help_expenses_activity
             "EditExpenseActivity" -> R.string.help_edit_expense_activity
-            "ExpensesSourcesActivity" -> R.string.help_expenses_sources_activity //TODO
+            "ExpensesSourcesActivity" -> R.string.help_expenses_sources_activity
+            "DatePickerActivity" -> R.string.help_date_picker_activity
+            "ViewReportsActivity" -> R.string.help_view_reports_activity
             else -> -999 //required, but should never be reached
         }
         textHelp.setText(text)
