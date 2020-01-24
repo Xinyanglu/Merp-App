@@ -10,8 +10,8 @@ import androidx.viewpager.widget.ViewPager
  *
  * @constructor The default [ViewPager] constructor
  *
- * @param [context] TODO
- * @param attrs TODO
+ * @param [context] Context of the application environment
+ * @param [attrs] A collection of XML attributes
  */
 class NonswipeableViewPager(context: Context, attrs: AttributeSet): ViewPager(context, attrs) {
 
@@ -23,6 +23,4 @@ class NonswipeableViewPager(context: Context, attrs: AttributeSet): ViewPager(co
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
         return false
     }
-
-
 }

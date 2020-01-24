@@ -56,17 +56,22 @@ class EditExpenseActivity : AppCompatActivity() {
         textAmount.text = resources.getString(R.string.text_amount_spent)
         dp = findViewById(R.id.datePicker)
 
+        //get the requestCode passed from ExpensesActivity
+        //will be used for deciding whether to perform new expense functionalities or edit expense ones
         requestCode = intent.getIntExtra("REQUEST_CODE", -999)
 
         //TODO(): change button icon to be a pencil (or something more "edit"-like) in the xml file?
+        //when clicked, starts ExpensesSourcesActivity
         btnEditSources.setOnClickListener{
             startActivity(Intent(this, ExpensesSourcesActivity::class.java))
         }
 
+        //floating action button (save expense button)
         fab.setOnClickListener {
             var hasErrors = false
             var numDecimalPlaces = 0
 
+            //error if no source selected
             if(spinnerSource.isEmpty()){
                 textSource.requestFocus()
                 textSource.error = "Source required"
@@ -76,6 +81,7 @@ class EditExpenseActivity : AppCompatActivity() {
                 textSource.error = null
             }
 
+            //error if text is empty or has more than 2 decimal places
             if(enterAmount.text.isEmpty()){
                 enterAmount.error = "Amount required"
                 hasErrors = true
@@ -88,21 +94,23 @@ class EditExpenseActivity : AppCompatActivity() {
                 }
             }
 
-            //DatePicker indexes months starting at 0 (January), therefore +1
+            //if no errors, get all the values from the layout components (date, source, amount, add. info)
             if(!hasErrors){
                 //if additional info has unnecessary line breaks at beginning, remove them
                 //if additional info is all line breaks, set additional info to ""
-                if(enterAddInfo.text.contains("\n")){
-                    var temp = enterAddInfo.text.toString()
-                    while(temp.startsWith("\n")){
-                        temp = temp.replaceFirst("\n", "")
-                    }
-                    enterAddInfo.setText(temp)
+                var temp = enterAddInfo.text.toString()
+                while(temp.startsWith("\n")){
+                    temp = temp.replaceFirst("\n", "")
                 }
+                enterAddInfo.setText(temp)
+                while(temp.startsWith(" ")){
+                    temp = temp.replaceFirst(" ", "")
+                }
+                enterAddInfo.setText(temp)
 
                 val source = spinnerSource.selectedItem.toString()
                 val year = dp.year
-                val month = dp.month+1
+                val month = dp.month+1 //DatePicker indexes months starting at 0 (Jan), therefore +1
                 val day = dp.dayOfMonth
 
                 var amount = enterAmount.text.toString()
@@ -117,14 +125,14 @@ class EditExpenseActivity : AppCompatActivity() {
                 val addInfo = enterAddInfo.text.toString()
                 val data = Intent()
 
-                if(requestCode == editExpenseCode){
+                if(requestCode == editExpenseCode){ //if user is editing an expense, overwrite that expense's properties
                     val expense = Database.getExpenses()[index]
                     expense.setDate(Date(year, month, day))
                     expense.setSource(source)
                     expense.setAmount(BigDecimal(amount))
                     expense.setAddInfo(addInfo)
                     Database.writeExpenses()
-                }else if(requestCode == newExpenseCode) {
+                }else if(requestCode == newExpenseCode){ //if user is adding a new expense, add it to the ArrayList
                     Database.addExpense(
                         Date(year, month, day),
                         source,
@@ -135,6 +143,7 @@ class EditExpenseActivity : AppCompatActivity() {
                     data.putExtra("NEW_EXPENSE", "$source@$year@$month@$day@$amount")
                 }
                 setResult(Activity.RESULT_OK, data)
+                //finish this activity and return to ExpensesActivity
                 finish()
             }
         }
@@ -151,6 +160,7 @@ class EditExpenseActivity : AppCompatActivity() {
         super.onResume()
         setSources()
 
+        //if user is editing and existing expense, sets all layout components to display that expense's info
         if(requestCode == editExpenseCode){
             val result = intent.getStringExtra("EDIT_EXPENSE")
             val split = result.split("@")
@@ -163,6 +173,8 @@ class EditExpenseActivity : AppCompatActivity() {
             index = split[6].toInt()
 
             dp.updateDate(year, month, day)
+
+            //find the expense's source and set the spinner to display that source
             for(i in 0 until spinnerSource.count){
                 if(spinnerSource.getItemAtPosition(i).toString() == source){
                     spinnerSource.setSelection(i)
@@ -212,11 +224,14 @@ class EditExpenseActivity : AppCompatActivity() {
      * Updates the spinner (dropdown menu) to display and allow the user to select any of the [Database.expensesSources].
      */
     private fun setSources(){
-        //spinner (dropdown menu) for sources
+        //create object for referencing the spinner (dropdown menu) of sources
         val dropdownSources: Spinner = findViewById(R.id.spinnerSource)
+        //create an array of sources
         val sources: ArrayList<String> = Database.getExpensesSources()
+        //use an ArrayAdapter for adapting an array to a spinner
         val adapter: ArrayAdapter<String> = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sources)
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice)
+        //set the adapter of the spinner to the ArrayAdapter
         dropdownSources.adapter = adapter
     }
 }

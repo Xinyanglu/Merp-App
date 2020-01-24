@@ -10,24 +10,19 @@ import android.widget.FrameLayout
 import com.merp.android.R
 import kotlinx.android.synthetic.main.fragment_edit_entry.*
 
+/**
+ * The Kotlin class for the fragment used in [EditEarningActivity] and [EditExpenseActivity].
+ */
 class EditEntryFragment : Fragment() {
+
+    /**
+     * Inflates the layout for this fragment.
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val v = inflater.inflate(R.layout.fragment_edit_entry, container, false)
-        val layout = v.findViewById<FrameLayout>(R.id.editEntryFragmentLayout)
-        //layout.foreground.alpha = 0 TODO(): add foreground back
-        return v
-    }
-
-    fun dimForeground(dim: Boolean) {
-        //I have no idea what I'm doing here c:
-        val viewGroup: ViewGroup? = view?.rootView?.findViewById(android.R.id.content)
-        LayoutInflater.from(context).inflate(R.layout.fragment_edit_entry, viewGroup, false)
-
-        if (dim) editEntryFragmentLayout.foreground.alpha = 200 //dim
-        else editEntryFragmentLayout.foreground.alpha = 0 //un-dim
+        return inflater.inflate(R.layout.fragment_edit_entry, container, false)
     }
 }

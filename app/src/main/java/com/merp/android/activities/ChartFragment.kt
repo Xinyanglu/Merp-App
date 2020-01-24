@@ -26,14 +26,25 @@ import java.math.BigDecimal
 
 
 /**
- * A simple [Fragment] subclass.
+ * The Kotlin class for the fragment used for creating bar graphs and pie charts in [ViewReportsActivity].
  */
 class ChartFragment(entryType: String, chartType: String, start: Date, end: Date) : Fragment() {
+    /** TODO: these need comments too btw */
     private lateinit var mBarChart:BarChart
+
+    /**  */
     private lateinit var mPieChart:PieChart
+
+    /**  */
     private var entry =entryType
+
+    /**  */
     private var m = chartType
+
+    /**  */
     private var s = start
+
+    /**  */
     private var e = end
 
     override fun onCreateView(

@@ -7,16 +7,38 @@ import com.merp.android.Earning as Earning
 import com.merp.android.Expense as Expense
 
 object Database {
+    /** An ArrayList for recording all [Expense] objects */
     private val expenses = ArrayList<Expense>()
+
+    /** An ArrayList for recording all [Earning] objects */
     private val earnings = ArrayList<Earning>()
+
+    /** An ArrayList for recording all sources of [Expense]s */
     private val expensesSources = ArrayList<String>()
+
+    /** An ArrayList for recording all sources of [Earning]s */
     private val earningsSources = ArrayList<String>()
 
+    /** The file directory of the text file for saving [Earning]s */
     private var earnings_file = ""
+
+    /** The file directory of the text file for saving [Expense]s */
     private var expenses_file = ""
+
+    /** The file directory of the text file for saving sources of [Earning]s */
     private var earnings_sources_file = ""
+
+    /** The file directory of the text file for saving sources of [Expense]s */
     private var expenses_sources_file = ""
 
+    /**
+     * Sets the file directories.
+     *
+     * @param [earningsDir] The file directory for [earnings_file]
+     * @param [expensesDir] The file directory for [expenses_file]
+     * @param [earnSourcesDir] The file directory for [earnings_sources_file]
+     * @param [expSourcesDir] The file directory for [expenses_sources_file]
+     */
     fun setDirectories(
         earningsDir: String,
         expensesDir: String,
@@ -31,9 +53,9 @@ object Database {
 
 
     /**
-    * Returns the earning array list
+    * Returns the [earnings] ArrayList
     *
-    * @return [earnings] ArrayList<Earning>
+    * @return [earnings]
      */
 
     fun getEarnings(): ArrayList<Earning> {
@@ -41,27 +63,27 @@ object Database {
     }
 
     /**
-    * Returns the expense array list
+    * Returns the [expenses] ArrayList
     *
-    * @return [expenses] ArrayList<Expense>
+    * @return [expenses]
      */
     fun getExpenses(): ArrayList<Expense> {
         return expenses
     }
 
     /**
-    * Returns the earnings sources array list
+    * Returns the [earningsSources] ArrayList
     *
-    * @return: [earningsSources] ArrayList<String>
+    * @return [earningsSources]
      */
     fun getEarningsSources(): ArrayList<String> {
         return earningsSources
     }
 
     /**
-    *Returns the expense sources array list
-    *
-    * @return: [expensesSources] ArrayList<String>
+     * Returns the [expensesSources] ArrayList
+     *
+     * @return [expensesSources]
      */
 
     fun getExpensesSources(): ArrayList<String> {
@@ -69,7 +91,7 @@ object Database {
     }
 
     /**
-     * Writes all expenses from expense array list into expenses_file.
+     * Writes all [Expense]s from [expenses] ArrayList into [expenses_file].
      */
 
     fun writeExpenses() {
@@ -83,7 +105,7 @@ object Database {
     }
 
     /**
-     *  Writes all earnings from earnings array list into earnings_file.
+     *  Writes all [Earning]s from [earnings] ArrayList into [earnings_file].
      *
      */
 
@@ -98,7 +120,7 @@ object Database {
     }
 
     /**
-     * Writes the expenses sources into expenses sources file.
+     * Writes the [Expense.source]s from [expensesSources] ArrayList into [expenses_sources_file].
      */
     fun writeExpensesSources() {
         val w = BufferedWriter(FileWriter(expenses_sources_file, false))
@@ -110,7 +132,7 @@ object Database {
     }
 
     /**
-     * Writes the earnings sources into earnings sources file.
+     * Writes the [Earning.source]s from [earningsSources] ArrayList into [earnings_sources_file].
      */
     fun writeEarningsSources() {
         val w = BufferedWriter(FileWriter(earnings_sources_file, false))
@@ -122,30 +144,28 @@ object Database {
     }
 
     /**
-     * Adds expense to expenses arraylist
+     * Adds an [Expense] to the [expenses] ArrayList.
      *
-     * @param [date] date of the expense
-     * @param [category] category of the expense
-     * @param [price] price of the expense
-     * @param [adi] additional information
-     *
+     * @param [date] The [Date] of the [Expense]
+     * @param [source] The source of the [Expense]
+     * @param [amount] The amount spent
+     * @param [adi] Additional information
      */
-    fun addExpense(date: Date, category: String, price: BigDecimal, adi: String) {
+    fun addExpense(date: Date, source: String, amount: BigDecimal, adi: String) {
         expenses.add(
             searchExpenses(date, expenses),
-            Expense(date, category, price, adi)
+            Expense(date, source, amount, adi)
         )
         writeExpenses()
     }
 
     /**
-     * Adds earning to earnings arraylist
+     * Adds an [Earning] to the [expenses] ArrayList.
      *
-     * @param [date] date of the earning
-     * @param [source] source of the earning
-     * @param [amount] amount of the earning
-     * @param [adi] additional information
-     *
+     * @param [date] The [Date] of the [Earning]
+     * @param [source] The source of the [Earning]
+     * @param [amount] The amount earned
+     * @param [adi] Additional information
      */
 
     fun addEarning(date: Date, source: String, amount: BigDecimal, adi: String) {
@@ -157,10 +177,9 @@ object Database {
     }
 
     /**
-     * Adds expense source to expense sources arraylist
+     * Adds a source of [Expense] to the [expensesSources] ArrayList.
      *
-     * @param [source] source of the expense
-     *
+     * @param [source] The new source of expense
      */
 
     fun addExpensesSource(source: String) {
@@ -169,9 +188,9 @@ object Database {
     }
 
     /**
-     * Adds earning source to earning sources arraylist
+     * Adds a source of [Earning] to the [earningsSources] ArrayList.
      *
-     * @param [source] source of the earning
+     * @param [source] The new source of earning
      *
      */
 
@@ -181,12 +200,13 @@ object Database {
     }
 
     /**
-     * Searches through earnings array list and returns the index of where the date should be inserted in to preserve order
+     * Searches through the [earnings] ArrayList and returns the index of where the new [Earning]
+     * should be added to keep the [earnings] ArrayList sorted by date.
      *
-     * @param [date] date to look for
-     * @param [list] list to search in
+     * @param [date] The date of the earning that will be added
+     * @param [list] The ArrayList to search in
      *
-     * @return position
+     * @return Where the new [Earning] should be added
      *
      */
 
@@ -204,12 +224,13 @@ object Database {
     }
 
     /**
-     * Searches through the expenses array list and returns the index of the array of where the date should go to preserve order
+     * Searches through the [expenses] ArrayList and returns the index of the where the new [Expense]
+     * should be added to keep the [expenses] ArrayList sorted by date.
      *
-     * @param [date] date to look for
-     * @param [list] list to search in
+     * @param [date] The date of the expense that will be added
+     * @param [list] The ArrayList to search in
      *
-     * @return average index of max and min
+     * @return Where the new [Expense] should be added
      *
      */
 
@@ -227,13 +248,14 @@ object Database {
     }
 
     /**
-     * Searches through the expenses sources to put the source in alphabetically to preserve order
+     * Searches through the [expensesSources] ArrayList and returns the index of where the new
+     * source should be added to keep the [expensesSources] ArrayList sorted alphabetically.
      *
-     * @param [source] source to search for in list
-     * @param [min] minimum index to search in
-     * @param [max] maximum index to search in
+     * @param [source] The name of the source that will be added
+     * @param [min] The minimum index of the [expensesSources] ArrayList to search in
+     * @param [max] The maximum index of the [expensesSources] ArrayList to search in
      *
-     * @return average index of max and min
+     * @return Where the new source of expense should be added
      *
      */
 
@@ -259,13 +281,14 @@ object Database {
     }
 
     /**
-     * Searches through earnings sources to put the source in alphabetically to preserve the order.
+     * Searches through the [earningsSources] ArrayList and returns the index of where the new
+     * source should be added to keep the [earningsSources] ArrayList sorted alphabetically.
      *
-     * @param [source] source to search for
-     * @param [min] minimum index to search in
-     * @param [max] maximum index to search in
+     * @param [source] The name of the source that will be added
+     * @param [min] The minimum index of the [earningsSources] ArrayList to search in
+     * @param [max] The maximum index of the [earningsSources] ArrayList to search in
      *
-     * @return Average index of max and min.
+     * @return Where the new source of earning should be added
      *
      */
 
@@ -291,7 +314,7 @@ object Database {
     }
 
     /**
-     * Initializes expenses arraylist
+     * Reads the text file of [Expense]s into the [expenses] ArrayList.
      */
 
     fun readExpenses() {
@@ -316,7 +339,7 @@ object Database {
     }
 
     /**
-     * Initializes earnings ayyalist
+     * Reads the text file of [Earning]s into the [earnings] ArrayList.
      */
 
     fun readEarnings() {
@@ -341,7 +364,7 @@ object Database {
     }
 
     /**
-     * Initializes expenses sources arraylist
+     * Reads the text file of sources of expenses into the [expensesSources] ArrayList.
      */
 
     fun readExpensesSources() {
@@ -353,7 +376,7 @@ object Database {
     }
 
     /**
-     * Initializes earnings sources arraylist.
+     * Reads the text file of sources of earnings into the [earningsSources] ArrayList.
      */
 
     fun readEarningsSources() {
@@ -416,10 +439,9 @@ object Database {
      */
 
     fun searchRangeEarnings(start: Date, end: Date): MutableList<Earning> {
-        var a = mutableListOf<Earning>()
         val startIndex = searchEarnings(start, earnings)
         val endIndex = searchEarnings(end, earnings)
-        a = earnings.subList(startIndex, endIndex)
+        val a = earnings.subList(startIndex, endIndex)
         for (e in earnings){
             if (e.getDate().getFullDate() == end.getFullDate()){
                 a.add(e)
@@ -439,11 +461,9 @@ object Database {
      */
 
     fun searchRangeExpenses(start: Date, end: Date): MutableList<Expense> {
-
-        var a = mutableListOf<Expense>()
         val startIndex = searchExpenses(start,expenses)
         val endIndex = searchExpenses(end,expenses)
-        a = expenses.subList(startIndex,endIndex)
+        val a = expenses.subList(startIndex,endIndex)
         for(e in expenses){
             if (e.getDate().getFullDate() == end.getFullDate()){
                 a.add(e)
@@ -641,6 +661,11 @@ object Database {
         return sources
     }
 
+    /**
+     * Returns the total amount earned within a previously specified date range.
+     *
+     * @param [array] A list of [Earning]s within a specific date range
+     */
     fun totalEarned(array: MutableList<Earning>): BigDecimal{
         var total = BigDecimal(0)
         for(earning in array){
@@ -650,6 +675,11 @@ object Database {
         return total
     }
 
+    /**
+     * Returns the total amount spent within a previously specified date range.
+     *
+     * @param [array] A list of [Expense]s within a specific date range
+     */
     fun totalSpent(array: MutableList<Expense>): BigDecimal{
         var total = BigDecimal(0)
         for(expense in array){

@@ -10,6 +10,9 @@ import android.widget.ListView
 
 import com.merp.android.R
 
+/**
+ * The Kotlin class for the fragment used in [EarningsActivity] and [ExpensesActivity].
+ */
 class EntriesFragment : Fragment() {
 
     override fun onCreateView(
@@ -17,12 +20,12 @@ class EntriesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val v = inflater.inflate(R.layout.fragment_entries, container, false)
-        val metrics = context!!.resources.displayMetrics
+        return inflater.inflate(R.layout.fragment_entries, container, false)
+        /*val metrics = context!!.resources.displayMetrics
         val width = metrics.widthPixels
         val list = v.findViewById<ListView>(R.id.listEntries)
         Log.d("DEVICEWIDTH", width.toString())
         list.minimumWidth = width
-        return v
+        return v*/
     }
 }

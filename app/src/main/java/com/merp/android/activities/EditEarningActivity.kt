@@ -54,9 +54,12 @@ class EditEarningActivity : AppCompatActivity() {
         textAmount.text = resources.getString(R.string.text_amount_earned)
         dp = findViewById(R.id.datePicker)
 
+        //get the requestCode passed from EarningsActivity
+        //will be used for deciding whether to perform new earning functionalities or edit earning ones
         requestCode = intent.getIntExtra("REQUEST_CODE", -999)
 
         //TODO(): change button icon to be a pencil (or something more "edit"-like) in the xml file?
+        //when clicked, starts EarningsSourcesActivity
         btnEditSources.setOnClickListener{
             startActivity(Intent(this, EarningsSourcesActivity::class.java))
         }
@@ -66,14 +69,17 @@ class EditEarningActivity : AppCompatActivity() {
             var hasErrors = false
             var numDecimalPlaces = 0
 
+            //error if no source selected
             if(spinnerSource.isEmpty()){
                 textSource.requestFocus()
                 textSource.error = "Source required"
                 hasErrors = true
             }else{
+                //requires as this will not be done automatically
                 textSource.error = null
             }
 
+            //error if text is empty or has more than 2 decimal places
             if(enterAmount.text.isEmpty()){
                 enterAmount.error = "Amount required"
                 hasErrors = true
@@ -86,7 +92,7 @@ class EditEarningActivity : AppCompatActivity() {
                 }
             }
 
-            //DatePicker indexes months starting at 0 (January), therefore +1
+            //if no errors, get all the values from the layout components (date, source, amount, add. info)
             if(!hasErrors){
                 //if additional info has unnecessary line breaks  and/or spaces at beginning, remove them
                 //if additional info is all line breaks and/or spaces, set additional info to ""
@@ -101,7 +107,7 @@ class EditEarningActivity : AppCompatActivity() {
 
                 val source = spinnerSource.selectedItem.toString()
                 val year = dp.year
-                val month = dp.month+1
+                val month = dp.month+1 //DatePicker indexes months starting at 0 (Jan), therefore +1
                 val day = dp.dayOfMonth
 
                 var amount = enterAmount.text.toString()
@@ -116,14 +122,14 @@ class EditEarningActivity : AppCompatActivity() {
                 val addInfo = enterAddInfo.text.toString()
                 val data = Intent()
 
-                if(requestCode == editEarningCode){
+                if(requestCode == editEarningCode){ //if user is editing an earning, overwrite that earning's properties
                     val earning = Database.getEarnings()[index]
                     earning.setDate(Date(year, month, day))
                     earning.setSource(source)
                     earning.setAmount(BigDecimal(amount))
                     earning.setAddInfo(addInfo)
                     Database.writeEarnings()
-                }else if(requestCode == newEarningCode) {
+                }else if(requestCode == newEarningCode){ //if user is adding a new earning, add it to the ArrayList
                     Database.addEarning(
                         Date(year, month, day),
                         source,
@@ -134,6 +140,7 @@ class EditEarningActivity : AppCompatActivity() {
                     data.putExtra("NEW_EARNING", "$source@$year@$month@$day@$amount")
                 }
                 setResult(Activity.RESULT_OK, data)
+                //finish this activity and return to EarningsActivity
                 finish()
             }
         }
@@ -164,6 +171,8 @@ class EditEarningActivity : AppCompatActivity() {
                 index = split[6].toInt()
 
                 dp.updateDate(year, month, day)
+
+                //find the earning's source and set the spinner to display that source
                 for (i in 0 until spinnerSource.count) {
                     if (spinnerSource.getItemAtPosition(i).toString() == source) {
                         spinnerSource.setSelection(i)
@@ -222,14 +231,7 @@ class EditEarningActivity : AppCompatActivity() {
         //use an ArrayAdapter for adapting an array to a spinner
         val adapter: ArrayAdapter<String> = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sources)
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice)
-
         //set the adapter of the spinner to the ArrayAdapter
         dropdownSources.adapter = adapter
     }
-
-    /*TODO(): figure out how to get this to work then implement it for EditExpenseActivity
-    private fun dimForeground(dim: Boolean){
-        val fragment = supportFragmentManager.findFragmentById(R.id.editEntryFragment) as EditEntryFragment
-        fragment.dimForeground(dim)
-    }*/
 }

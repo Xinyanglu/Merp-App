@@ -9,8 +9,14 @@ import android.view.ViewGroup
 
 import com.merp.android.R
 
+/**
+ * The Kotlin class for the fragment used in [EarningsSourcesActivity] and [ExpensesSourcesActivity].
+ */
 class SourcesFragment : Fragment() {
 
+    /**
+     * Inflates the layout for this fragment.
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
