@@ -30,6 +30,9 @@ class ExpensesActivity : AppCompatActivity() {
     /** An identifier code for communicating the user's intention to edit their selected expense to [EditExpenseActivity] */
     private val editExpenseCode = 202
 
+    /** Records the index in the array of the item the user selects for deletion */
+    private var deleteIndex = 0
+
     /**
      * Sets up the functionality of the activity (adding listeners to TextViews, floating action buttons, ListViews, etc.).
      * Automatically called when the activity is created
@@ -39,8 +42,6 @@ class ExpensesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_expenses)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        var deleteIndex = 0
 
         fab.setOnClickListener {
             val data = Intent(this, EditExpenseActivity::class.java).apply {
@@ -71,6 +72,7 @@ class ExpensesActivity : AppCompatActivity() {
 
         listEntries.setOnItemLongClickListener { parent, view, position, id ->
             deleteIndex = position
+            val text = Database.getExpenses()[position].toString().replace(", ", "\n")
             textEntryInfo.text = Database.getExpenses()[position].toString()
             layoutDeleteEntry.visibility = View.VISIBLE
             true
@@ -81,7 +83,11 @@ class ExpensesActivity : AppCompatActivity() {
         }
 
         btnDeleteEntry.setOnClickListener {
-            Database.getExpenses().removeAt(deleteIndex)
+            if(deleteIndex == -999){
+                Database.getExpenses().clear()
+            }else{
+                Database.getExpenses().removeAt(deleteIndex)
+            }
             Database.writeExpenses()
             layoutDeleteEntry.visibility = View.INVISIBLE
             updateListView(createCustomItemsList())
@@ -120,7 +126,9 @@ class ExpensesActivity : AppCompatActivity() {
                 return true
             }
             R.id.action_delete_expenses -> {
-                Database.getExpenses().clear()
+                textEntryInfo.text = resources.getString(R.string.text_delete_all_expenses) //shows the info of the selected Earning
+                deleteIndex = -999
+                layoutDeleteEntry.visibility = View.VISIBLE
                 Database.writeExpenses()
                 updateListView(createCustomItemsList())
                 return true

@@ -7,7 +7,7 @@
     <string name="title_activity_edit_earning">Edit Earning</string>
     <string name="title_activity_expenses">Expenses</string>
     <string name="title_activity_edit_expense">Edit Expense</string>
-    <string name="title_activity_view_reports">View Reports</string>
+    <string name="title_activity_view_reports">Displaying: %1$s to %2$s</string>
     <string name="title_activity_earnings_sources">Earnings Sources</string>
     <string name="title_activity_expenses_sources">Expenses Sources</string>
     <string name="title_activity_date_picker">Choose start and end date</string>
@@ -17,6 +17,12 @@
     <string name="text_edit_earnings">Edit Earnings</string>
     <string name="text_edit_expenses">Edit Expenses</string>
     <string name="text_view_reports">View Reports</string>
+
+    <!--EarningsActivity-->
+    <string name="text_delete_all_earnings">Delete all earnings?</string>
+
+    <!--ExpensesActivity-->
+    <string name="text_delete_all_expenses">Delete all expenses?</string>
 
     <!-- fragment_edit_entry -->
     <string name="text_source">Source</string>
@@ -44,7 +50,7 @@
         Net income: %1$s\n
         \tTotal gained: %2$s\n
         \tTotal lost: %3$s\n
-        \tAverage earned: %4$s
+        \tAverage profit per day: %4$s
     </string>
 
     <!--fragment_entries-->
@@ -67,56 +73,116 @@
 
     <!--fragment_help-->
     <string name="help_earnings_activity">
-        Search bar\n
-        Filters the list for all earnings that match the given keyword(s).\n
-        Separate multiple keywords with \",\" to search for all earnings that contain all given keywords.
-
-        List of earnings\n
+        <b>EARNINGS</b>\n
+        \n
+        <b>Search bar</b>\n
+        Filters the list for all earnings that contain the given keyword(s).\n
+        \n
+        Separate multiple keywords with \",\" to search for all earnings that contain all given keywords.\n
+        \n
+        <b>List of earnings</b>\n
         Displays all (or filtered) earnings.\n
+        \n
         Tap an earning to edit it.\n
+        Tap and hold an earning to delete it.\n
+        \n
+        <b>\"+\" button</b>\n
+        Tap this button to add a new earning.
     </string>
 
-    <string name="help_edit_earnings_activity">   <!--what extraordinarily helpful help text-->
-        Date Picker widget\n
-            Use the widget to select a date.\n
-
-        Source\n
-            Dropdown menu: select the source of the earning.\n
-            + button: add/delete sources.\n
-
-        Amount earned\n
-            Enter the amount earned.\n
-
-        Additional information\n
-            Additional information can be entered here.
+    <string name="help_edit_earnings_activity">
+        <b>EDIT EARNING</b>\n
+        \n
+        <b>Date Picker widget</b>\n
+        Use the widget to select a date.\n
+        You can tap the day/month/year to manually enter a value.\n
+        \n
+        <b>Source</b>\n
+        Dropdown menu: select the source of the earning.\n
+        \"+\" button: add/delete sources.\n
+        \n
+        <b>Amount earned</b>\n
+        Enter the amount earned (maximum 2 decimal places).\n
+        \n
+        <b>Additional information</b>\n
+        Additional information can be entered here (not required).\n
+        \n
+        <b>Save button</b>\n
+        Tap this button to save.
     </string>
 
     <string name="help_earnings_sources_activity">
-        TODO
+        <b>EARNINGS SOURCES</b>\n
+        \n
+        <b>Search bar</b>\n
+        Filters the list for all sources of earnings that contain the given text.\n
+        Doubles as the field for entering the name of a new source.\n
+        \n
+        <b>\"ADD\" button</b>\n
+        Adds the contents of the search bar as a new source.\n
+        \n
+        <b>List of sources</b>\n
+        Displays all (or filtered) sources of earnings.
     </string>
 
     <string name="help_expenses_activity">
-        Search bar\n
-        Filters the list for all expenses that match the given keyword(s).\n
-        Separate multiple keywords with \",\" to search for all expenses that contain all given keywords.
+        <b>EXPENSES</b>\n
+        \n
+        <b>Search bar</b>\n
+        Filters the list for all expenses that contain the given keyword(s).\n
+        \n
+        Separate multiple keywords with \",\" to search for all expenses that contain all given keywords.\n
+        \n
+        <b>List of expenses</b>\n
+        Displays all (or filtered) expenses.\n
+        \n
+        Tap an expense to edit it.\n
+        Tap and hold an expense to delete it.\n
+        \n
+        <b>\"+\" button</b>\n
+        Tap this button to add a new expense.
     </string>
 
     <string name="help_edit_expense_activity">
-        Date Picker widget\n
-            Use the widget to select a date.\n
-
-        Source\n
-            Dropdown menu: select the source of the expense.\n
-            + button: add/delete sources.\n
-
-        Amount earned\n
-            Enter the amount spent.\n
-
-        Additional information\n
-            Additional information can be entered here.
+        <b>EDIT EXPENSE</b>\n
+        \n
+        <b>Date Picker widget</b>\n
+        Use the widget to select a date.\n
+        You can tap the day/month/year to manually enter a value.\n
+        \n
+        <b>Source</b>\n
+        Dropdown menu: select the source of the expense.\n
+        \"+\" button: add/delete sources.\n
+        \n
+        <b>Amount earned</b>\n
+        Enter the amount spent (maximum 2 decimal places).\n
+        \n
+        <b>Additional information</b>\n
+        Additional information can be entered here (not required).\n
+        \n
+        <b>Save button</b>\n
+        Tap this button to save.
     </string>
 
     <string name="help_expenses_sources_activity">
+        <b>EXPENSES SOURCES</b>\n
+        \n
+        <b>Search bar</b>\n
+        Filters the list for all sources of expenses that contain the given text.\n
+        Doubles as the field for entering the name of a new source.\n
+        \n
+        <b>\"ADD\" button</b>\n
+        Adds the contents of the search bar as a new source.\n
+        \n
+        <b>List of sources</b>\n
+        Displays all (or filtered) sources of expenses.
+    </string>
+
+    <string name="help_date_picker_activity">
+        TODO
+    </string>
+
+    <string name="help_view_reports_activity">
         TODO
     </string>
 

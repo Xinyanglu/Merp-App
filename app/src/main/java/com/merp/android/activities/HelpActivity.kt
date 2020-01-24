@@ -20,14 +20,6 @@ class HelpActivity : AppCompatActivity() {
         val source = intent.getStringExtra("source")
         val text: Int
 
-        /*
-        TODO: improve text formatting in xml file using tags like
-         <font size="VALUE"></font>
-         <b></b>        bold?
-         <u></u>        underline?
-         <i></i>        italicize?
-         use &#8226; to create a "bullet point" (syntactic sugar, does not actually make a list itself, so need to utilize \n)
-         */
         text = when(source){
             "EarningsActivity" -> R.string.help_earnings_activity
             "EditEarningActivity" -> R.string.help_edit_earnings_activity

@@ -31,6 +31,9 @@ class EarningsActivity : AppCompatActivity() {
     /** An identifier code for communicating the user's intention to edit their selected earning to [EditEarningActivity] */
     private val editEarningCode =  102
 
+    /** Records the index in the array of the item the user selects for deletion */
+    private var deleteIndex = 0
+
     /**
      * Sets up the functionality of the activity (adding listeners to TextViews, floating action buttons, ListViews, etc.).
      * Automatically called when the activity is created
@@ -51,9 +54,6 @@ class EarningsActivity : AppCompatActivity() {
                 else -> false
             }
         }
-
-        //records which item the user selects for deletion
-        var deleteIndex = 0
 
         //onClickListener for create new Earning button (floating action button)
         fab.setOnClickListener {
@@ -95,7 +95,8 @@ class EarningsActivity : AppCompatActivity() {
         //when user long clicks an Earning in the ListView, deletion prompt pops up
         listEntries.setOnItemLongClickListener { parent, view, position, id ->
             deleteIndex = position
-            textEntryInfo.text = Database.getEarnings()[position].toString() //shows the info of the selected Earning
+            val text = Database.getEarnings()[position].toString().replace(", ", "\n")
+            textEntryInfo.text = text //shows the info of the selected Earning
             layoutDeleteEntry.visibility = View.VISIBLE
             true //required for some reason
         }
@@ -107,7 +108,11 @@ class EarningsActivity : AppCompatActivity() {
 
         //user clicks this button to delete
         btnDeleteEntry.setOnClickListener {
-            Database.getEarnings().removeAt(deleteIndex)
+            if(deleteIndex == -999){
+                Database.getEarnings().clear()
+            }else{
+                Database.getEarnings().removeAt(deleteIndex)
+            }
             Database.writeEarnings()
             layoutDeleteEntry.visibility = View.INVISIBLE
             updateListView(createCustomItemsList())
@@ -146,7 +151,9 @@ class EarningsActivity : AppCompatActivity() {
                 return true
             }
             R.id.action_delete_earnings -> {
-                Database.getEarnings().clear()
+                textEntryInfo.text = resources.getString(R.string.text_delete_all_earnings) //shows the info of the selected Earning
+                deleteIndex = -999
+                layoutDeleteEntry.visibility = View.VISIBLE
                 Database.writeEarnings()
                 updateListView(createCustomItemsList())
                 return true
@@ -297,7 +304,7 @@ class EarningsActivity : AppCompatActivity() {
     Earning deleted         UNDO
     after an earning is deleted
     give UNDO an onClickListener and program it to undo the delete?
-    would this require the "deleted" earning to be stored temporarily?
+    would require the "deleted" earning to be stored temporarily
     */
 }
 

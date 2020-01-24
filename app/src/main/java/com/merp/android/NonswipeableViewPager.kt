@@ -23,4 +23,6 @@ class NonswipeableViewPager(context: Context, attrs: AttributeSet): ViewPager(co
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
         return false
     }
+
+
 }

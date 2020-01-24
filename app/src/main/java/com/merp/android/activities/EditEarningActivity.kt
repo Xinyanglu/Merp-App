@@ -86,22 +86,18 @@ class EditEarningActivity : AppCompatActivity() {
                 }
             }
 
-            /** -------------------------------------------------------------------------
-             * TODO: app does not save the very first entry after installation???
-             * --------------------------------------------------------------------------
-             */
-
             //DatePicker indexes months starting at 0 (January), therefore +1
             if(!hasErrors){
-                //if additional info has unnecessary line breaks at beginning, remove them
-                //if additional info is all line breaks, set additional info to ""
-                if(enterAddInfo.text.contains("\n")){
-                    var temp = enterAddInfo.text.toString()
-                    while(temp.startsWith("\n")){
-                        temp = temp.replaceFirst("\n", "")
-                    }
-                    enterAddInfo.setText(temp)
+                //if additional info has unnecessary line breaks  and/or spaces at beginning, remove them
+                //if additional info is all line breaks and/or spaces, set additional info to ""
+                var temp = enterAddInfo.text.toString()
+                while(temp.startsWith("\n")){
+                    temp = temp.replaceFirst("\n", "")
                 }
+                while(temp.startsWith(" ")){
+                    temp = temp.replaceFirst(" ", "")
+                }
+                enterAddInfo.setText(temp)
 
                 val source = spinnerSource.selectedItem.toString()
                 val year = dp.year

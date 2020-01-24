@@ -73,7 +73,14 @@ class CustomAdapter(context: Context,
             holder.textViewAddInfo = v?.findViewById(R.id.textAddInfo)
 
             if(holder.textViewDate != null) {
-                holder.textViewDate!!.text = mItems[position].getTVDate()
+                /*
+                ensure that the date visually appears as left as opposed to right
+
+                            2020-                   2020-0
+                            01-01                   1-01
+                 */
+                val date = mItems[position].getTVDate().replaceFirst("-", "-\n")
+                holder.textViewDate!!.text = date
             }
             if(holder.textViewSource != null) {
                 holder.textViewSource?.text = mItems[position].getTVSource()
