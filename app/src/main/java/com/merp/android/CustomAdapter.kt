@@ -56,6 +56,7 @@ class CustomAdapter(context: Context,
         var v = convertView
         val holder: ViewHolder
 
+        //set up the ViewHolder which will hold the four TextViews
         if(v == null){
             holder = ViewHolder()
             v = LayoutInflater.from(mContext).inflate(mResource, null)
@@ -66,23 +67,44 @@ class CustomAdapter(context: Context,
 
         val p = getItem(position)
 
+        //if an item in the list exists at the position, set up the four TextViews for that item
         if(p != null) {
             holder.textViewDate = v?.findViewById(R.id.textDate)
             holder.textViewSource = v?.findViewById(R.id.textSource)
             holder.textViewAmount = v?.findViewById(R.id.textAmount)
             holder.textViewAddInfo = v?.findViewById(R.id.textAddInfo)
 
+            //set the text for textViewDate
             if(holder.textViewDate != null) {
-                holder.textViewDate!!.text = mItems[position].getTVDate()
+                /*
+                ensure that the date visually appears as the left as opposed to the right
+
+                            2020-                   2020-0
+                            01-01                   1-01
+                 */
+                val date = mItems[position].getTVDate().replaceFirst("-", "-\n")
+                holder.textViewDate!!.text = date
             }
+
+            //set the text for textViewSource
             if(holder.textViewSource != null) {
                 holder.textViewSource?.text = mItems[position].getTVSource()
             }
+
+            //set the text for textViewAmount
             if(holder.textViewAmount != null) {
                 holder.textViewAmount?.text = mItems[position].getTVAmount()
             }
+
+            //set the text for textViewAddInfo
             if(holder.textViewAddInfo != null) {
-                holder.textViewAddInfo?.text = mItems[position].getTVAddInfo()
+                //if the additional information exceeds 10 characters, display only the first
+                //10 characters followed by "..." to save space
+                var addInfo = mItems[position].getTVAddInfo()
+                if(addInfo.length > 10){
+                    addInfo = addInfo.substring(0, 10) + "..."
+                }
+                holder.textViewAddInfo?.text = addInfo
             }
         }
         return v!!

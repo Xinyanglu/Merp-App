@@ -36,13 +36,15 @@ class EarningsSourcesActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        var deleteIndex = 0 //records which item to delete
+        //records which item to delete
+        var deleteIndex = 0
 
-        //filters list for sources that match the contents of the EditText view
+        //every time the text changes, filters list for sources that match the contents of the EditText view
         enterNewSource.addTextChangedListener{
             this.adapter.filter.filter(it)
         }
 
+        //if there are no errors, adds the contents of the EditText as a new source
         btnAddSource.setOnClickListener{
             when{
                 enterNewSource.text.isEmpty() -> {
@@ -51,7 +53,7 @@ class EarningsSourcesActivity : AppCompatActivity() {
                 Database.getEarningsSources().contains(enterNewSource.text.toString()) -> {
                     enterNewSource.error = "This source already exists"
                 }
-                else -> {
+                else -> { //if no errors, add source
                     if(enterNewSource.text.startsWith(" ")){
                         var temp = enterNewSource.text.toString()
                         while(temp.startsWith(" ")){
@@ -59,14 +61,18 @@ class EarningsSourcesActivity : AppCompatActivity() {
                         }
                         enterNewSource.setText(temp)
                     }
+                    //add the source to the ArrayList
                     Database.addEarningsSource(enterNewSource.text.toString())
+                    //use a Snackbar message to inform the user that the source was added
                     Snackbar.make(findViewById(R.id.earningsSourcesLayout), "New source: \"${enterNewSource.text}\" added", Snackbar.LENGTH_LONG).show()
                     enterNewSource.text.clear()
+                    //update the ListView to display the newly-added source
                     updateListView()
                 }
             }
         }
 
+        //when an item in the ListView is long clicked, prompt the user to confirm deletion of that item
         listSources.setOnItemLongClickListener { parent, view, position, id ->
             deleteIndex = position //record which item was long clicked (its index in the array)
             textSourceInfo.text = Database.getEarningsSources()[position]
@@ -74,10 +80,12 @@ class EarningsSourcesActivity : AppCompatActivity() {
             true // -> Boolean required for some reason
         }
 
+        //cancel delete
         btnCancelDeleteSource.setOnClickListener {
             layoutDeleteSource.visibility = View.INVISIBLE
         }
 
+        //confirm delete and update ListView
         btnDeleteSource.setOnClickListener {
             Database.getEarningsSources().removeAt(deleteIndex) //erase source from array
             Database.writeEarningsSources() //erase source from text file
@@ -139,6 +147,7 @@ class EarningsSourcesActivity : AppCompatActivity() {
 
         //creates adapter that takes items from array and puts them into a ListView
         adapter = ArrayAdapter(this, R.layout.fragment_sources_list, array)
+        //sets the ListView's adapter to the ArrayAdapter
         listView.adapter = adapter
     }
 }

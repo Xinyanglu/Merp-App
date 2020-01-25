@@ -31,6 +31,9 @@ class EarningsActivity : AppCompatActivity() {
     /** An identifier code for communicating the user's intention to edit their selected earning to [EditEarningActivity] */
     private val editEarningCode =  102
 
+    /** Records the index in the array of the item the user selects for deletion */
+    private var deleteIndex = 0
+
     /**
      * Sets up the functionality of the activity (adding listeners to TextViews, floating action buttons, ListViews, etc.).
      * Automatically called when the activity is created
@@ -41,6 +44,9 @@ class EarningsActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        //changes the functionality of the enter button on the keyboard when the user is focused on this EditView
+        //when pressed, the ListView will be filtered to display only the earnings that contain the
+        //keyword(s) in the EditText and hide the keyboard
         findViewById<EditText>(R.id.searchBarEntries).setOnEditorActionListener { v, actionId, event ->
             return@setOnEditorActionListener when(actionId){
                 EditorInfo.IME_ACTION_SEARCH -> {
@@ -52,25 +58,17 @@ class EarningsActivity : AppCompatActivity() {
             }
         }
 
-        //records which item the user selects for deletion
-        var deleteIndex = 0
-
         //onClickListener for create new Earning button (floating action button)
         fab.setOnClickListener {
             val data = Intent(this, EditEarningActivity::class.java).apply {
-                //add extra: NEW_EARNING_CODE to the Intent with key: "REQUEST_CODE"
+                //add extra: newEarningCode to the Intent with key: "REQUEST_CODE"
                 //extra is passed to the new activity and specifies that the user intends to create a new Earning
                 putExtra("REQUEST_CODE", newEarningCode)
             }
-            //this NEW_EARNING_CODE is used as the requestCode for the startActivityForResult method
-            //when the user returns to this activity, onActivityResult will be called, and the requestCode will be NEW_EARNING_CODE
+            //this newEarningCode is used as the requestCode for the startActivityForResult method
+            //when the user returns to this activity, onActivityResult will be called, and the requestCode will be newEarningCode
             startActivityForResult(data, newEarningCode)
         }
-/*
-        //keyword search feature for searchBarEntries EditText View
-        searchBarEntries.addTextChangedListener{
-            filterListView(it.toString())
-        }*/
 
         //allows user to edit an Earning by short clicking an Earning in the ListView
         listEntries.setOnItemClickListener { parent, view, position, id ->
@@ -95,7 +93,8 @@ class EarningsActivity : AppCompatActivity() {
         //when user long clicks an Earning in the ListView, deletion prompt pops up
         listEntries.setOnItemLongClickListener { parent, view, position, id ->
             deleteIndex = position
-            textEntryInfo.text = Database.getEarnings()[position].toString() //shows the info of the selected Earning
+            val text = Database.getEarnings()[position].toString().replace(", ", "\n")
+            textEntryInfo.text = text //shows the info of the selected Earning
             layoutDeleteEntry.visibility = View.VISIBLE
             true //required for some reason
         }
@@ -107,7 +106,11 @@ class EarningsActivity : AppCompatActivity() {
 
         //user clicks this button to delete
         btnDeleteEntry.setOnClickListener {
-            Database.getEarnings().removeAt(deleteIndex)
+            if(deleteIndex == -999){ //if user chose to delete all earnings
+                Database.getEarnings().clear()
+            }else{ //else delete the selected earning
+                Database.getEarnings().removeAt(deleteIndex)
+            }
             Database.writeEarnings()
             layoutDeleteEntry.visibility = View.INVISIBLE
             updateListView(createCustomItemsList())
@@ -138,15 +141,17 @@ class EarningsActivity : AppCompatActivity() {
      */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            R.id.action_display_help -> {
+            R.id.action_display_help -> { //navigate to HelpActivity with instructions for this activity
                 val data = Intent(this, HelpActivity::class.java).apply{
                     putExtra("source", "EarningsActivity")
                 }
                 startActivity(data)
                 return true
             }
-            R.id.action_delete_earnings -> {
-                Database.getEarnings().clear()
+            R.id.action_delete_earnings -> { //prompts the user if they'd like to delete all earnings
+                textEntryInfo.text = resources.getString(R.string.text_delete_all_earnings)
+                deleteIndex = -999
+                layoutDeleteEntry.visibility = View.VISIBLE
                 Database.writeEarnings()
                 updateListView(createCustomItemsList())
                 return true
@@ -167,7 +172,7 @@ class EarningsActivity : AppCompatActivity() {
 
         if((requestCode == newEarningCode || requestCode == editEarningCode) && resultCode == Activity.RESULT_OK && data != null){
             var text = "" //records what the Snackbar message will be
-            if(requestCode == newEarningCode) { //if a new Earning was created, set text varialbe to that Earning's info
+            if(requestCode == newEarningCode) { //if a new Earning was created, set text variable to that Earning's info
                 val result = data.getStringExtra("NEW_EARNING")
                 if(result != null) {
                     val split = result.split("@")
@@ -196,9 +201,12 @@ class EarningsActivity : AppCompatActivity() {
      * @param [list] An ArrayList of [CustomListItem]s that will be passed into the [CustomAdapter]
      */
     private fun updateListView(list: ArrayList<CustomListItem>){
-        adapter = CustomAdapter(this, R.layout.fragment_entries_list, list) //updates the adapter
-        val listView: ListView = findViewById(R.id.listEntries) //creates an object for referencing the ListView
-        listView.adapter = adapter //sets the ListView's adapter to the new adapter
+        //updates the adapter
+        adapter = CustomAdapter(this, R.layout.fragment_entries_list, list)
+        //creates an object for referencing the ListView
+        val listView: ListView = findViewById(R.id.listEntries)
+        //sets the ListView's adapter to the new adapter
+        listView.adapter = adapter
     }
 
     /**
@@ -273,6 +281,7 @@ class EarningsActivity : AppCompatActivity() {
         val info = Database.getEarnings()
         val customItems = ArrayList<CustomListItem>()
 
+        //convert every Earning to a CustomListItem
         for(i in info){
             val split = i.toFile().split("@")
             customItems.add(CustomListItem(split[0], split[1], "$" + split[2], split[3]))
@@ -297,7 +306,7 @@ class EarningsActivity : AppCompatActivity() {
     Earning deleted         UNDO
     after an earning is deleted
     give UNDO an onClickListener and program it to undo the delete?
-    would this require the "deleted" earning to be stored temporarily?
+    would require the "deleted" earning to be stored temporarily
     */
 }
 

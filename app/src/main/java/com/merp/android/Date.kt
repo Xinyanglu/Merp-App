@@ -85,11 +85,13 @@ class Date : Comparable<Date>{
         return date.toString()
     }
 
-    /** Returns the [date]'s float value of "yyyyMMdd" */
-    fun toFloat(): Float{
-        return ("" + getYear() + getMonth() + getDay()).toFloat()
-    }
-
+    /**
+     * Returns the number of days between this object's date and another date.
+     * The returned number of days between the two days is increased by one to prevent division by 0
+     * (e.g., comparing two identical [Date]s will return 1 instead of 0).
+     *
+     * @param [other] The [Date] that this object is being compared to
+     */
     fun daysUntil(other: Date): Long{
         return ChronoUnit.DAYS.between(date,other.date)+1
     }

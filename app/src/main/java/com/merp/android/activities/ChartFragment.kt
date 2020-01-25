@@ -26,14 +26,25 @@ import java.math.BigDecimal
 
 
 /**
- * A simple [Fragment] subclass.
+ * The Kotlin class for the fragment used for creating bar graphs and pie charts in [ViewReportsActivity].
  */
 class ChartFragment(entryType: String, chartType: String, start: Date, end: Date) : Fragment() {
+    /** TODO: these need comments too btw */
     private lateinit var mBarChart:BarChart
+
+    /**  */
     private lateinit var mPieChart:PieChart
+
+    /**  */
     private var entry =entryType
+
+    /**  */
     private var m = chartType
+
+    /**  */
     private var s = start
+
+    /**  */
     private var e = end
 
     override fun onCreateView(
@@ -66,7 +77,7 @@ class ChartFragment(entryType: String, chartType: String, start: Date, end: Date
                     pieEntries.add(PieEntry(values[i].toFloat(), categories[i]))
                 }
 
-                label = "Amount earned"
+                label = "Source"
                 desc = "Amount earned per source"
 
             }else if (entry.equals("expenses")){
@@ -78,8 +89,8 @@ class ChartFragment(entryType: String, chartType: String, start: Date, end: Date
                     pieEntries.add(PieEntry(values[i].toFloat(), categories[i]))
                 }
 
-                label = "Amount spent"
-                desc = "Amount spent per category"
+                label = "Source"
+                desc = "Amount spent per source"
             }
 
             mPieChart.visibility = View.VISIBLE
@@ -109,7 +120,7 @@ class ChartFragment(entryType: String, chartType: String, start: Date, end: Date
                     barEntries.add(BarEntry(earning.toFloat(),
                        yAxis[earning].toFloat()))
                 }
-                label = "Amount earned"
+                label = "Date"
                 desc = "Amount earned per date"
 
             }else if(entry.equals("expenses")){
@@ -119,7 +130,7 @@ class ChartFragment(entryType: String, chartType: String, start: Date, end: Date
                     barEntries.add(BarEntry(expense.toFloat(),
                        yAxis[expense].toFloat()))
                 }
-                label = "Amount spent"
+                label = "Date"
                 desc = "Amount spent per date"
             }
 

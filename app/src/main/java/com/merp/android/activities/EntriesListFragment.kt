@@ -9,8 +9,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.merp.android.R
 
+/**
+ * The Kotlin class for the fragment used for the ListView in [EarningsActivity] and [ExpensesActivity].
+ */
 class EntriesListFragment : Fragment() {
 
+    /**
+     * Inflates the layout for this fragment.
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

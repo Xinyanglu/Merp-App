@@ -37,18 +37,21 @@ class ExpensesSourcesActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        //records which item to delete
         var deleteIndex = 0
 
+        //every time the text changes, filters list for sources that match the contents of the EditText view
         enterNewSource.addTextChangedListener{
             this.adapter.filter.filter(it)
         }
 
+        //if there are no errors, adds teh contents of the EditText as a new source
         btnAddSource.setOnClickListener{
             if(enterNewSource.text.isEmpty()){
                 enterNewSource.error = "Field is empty"
             }else if(Database.getExpensesSources().contains(enterNewSource.text.toString())){
                 enterNewSource.error = "This source already exists"
-            }else{
+            }else{ //if no errors, add source
                 if(enterNewSource.text.startsWith(" ")){
                     var temp = enterNewSource.text.toString()
                     while(temp.startsWith(" ")){
@@ -56,13 +59,17 @@ class ExpensesSourcesActivity : AppCompatActivity() {
                     }
                     enterNewSource.setText(temp)
                 }
+                //add the source to the ArrayList
                 Database.addExpensesSource(enterNewSource.text.toString())
+                //use a Snackbar message to inform the user that the source was added
                 Snackbar.make(findViewById(R.id.expensesSourcesLayout), "New source: \"${enterNewSource.text}\" added", Snackbar.LENGTH_LONG).show()
                 enterNewSource.text.clear()
+                //update the ListView to display the newly-added source
                 updateListView()
             }
         }
 
+        //when an item in the ListView is long clicked, prompt the user to confirm deletion of that item
         listSources.setOnItemLongClickListener { parent, view, position, id ->
             deleteIndex = position //record which item was long clicked (its index in the array)
             textSourceInfo.text = Database.getExpensesSources()[position]
@@ -70,10 +77,12 @@ class ExpensesSourcesActivity : AppCompatActivity() {
             true // -> Boolean required for some reason
         }
 
+        //cancel delete
         btnCancelDeleteSource.setOnClickListener {
             layoutDeleteSource.visibility = View.INVISIBLE
         }
 
+        //confirm delete and update ListView
         btnDeleteSource.setOnClickListener {
             Database.getExpensesSources().removeAt(deleteIndex) //erase source from array
             Database.writeExpensesSources() //erase source from text file
@@ -135,6 +144,7 @@ class ExpensesSourcesActivity : AppCompatActivity() {
 
         //creates adapter that takes items from array and puts them into a ListView
         adapter = ArrayAdapter(this, R.layout.fragment_sources_list, array)
+        //sets the ListView's adapter to the ArrayAdapter
         listView.adapter = adapter
     }
 }

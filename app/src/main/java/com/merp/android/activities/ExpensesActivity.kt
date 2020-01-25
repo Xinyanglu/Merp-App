@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.ListView
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
@@ -30,6 +32,9 @@ class ExpensesActivity : AppCompatActivity() {
     /** An identifier code for communicating the user's intention to edit their selected expense to [EditExpenseActivity] */
     private val editExpenseCode = 202
 
+    /** Records the index in the array of the item the user selects for deletion */
+    private var deleteIndex = 0
+
     /**
      * Sets up the functionality of the activity (adding listeners to TextViews, floating action buttons, ListViews, etc.).
      * Automatically called when the activity is created
@@ -40,19 +45,33 @@ class ExpensesActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        var deleteIndex = 0
+        //changes the functionality of the enter button on the keyboard when the user is focused on this EditView
+        //when pressed, the ListView will be filtered to display only the earnings that contain the
+        //keyword(s) in the EditText and hide the keyboard
+        findViewById<EditText>(R.id.searchBarEntries).setOnEditorActionListener { v, actionId, event ->
+            return@setOnEditorActionListener when(actionId){
+                EditorInfo.IME_ACTION_SEARCH -> {
+                    filterListView(searchBarEntries.text.toString())
+                    hideKeyboard(v) //using an onClick method, thus param is required but (in this case) useless
+                    true
+                }
+                else -> false
+            }
+        }
 
+        //onClickListener for create new Expense button (floating action button)
         fab.setOnClickListener {
             val data = Intent(this, EditExpenseActivity::class.java).apply {
+                //add extra: newExpenseCode to the Intent with key: "REQUEST_CODE"
+                //extra is passed to the new activity and specifies that the user intends to create a new expense
                 putExtra("REQUEST_CODE", newExpenseCode)
             }
+            //this newExpenseCode is used as the requestCode for the startActivityForResult method
+            //when the user returns to this activity, onActivityResult will be called, and the requestCode will be newExpenseCode
             startActivityForResult(data, newExpenseCode)
         }
 
-        searchBarEntries.addTextChangedListener {
-            filterListView(it.toString())
-        }
-
+        //allows user to edit an Expense by short clicking an Expense in the ListView
         listEntries.setOnItemClickListener { parent, view, position, id ->
             val item = Database.getExpenses()[position]
             val year = item.getDate().getYear()
@@ -63,25 +82,36 @@ class ExpensesActivity : AppCompatActivity() {
             val addInfo = item.getAddInfo()
 
             val data = Intent(this, EditExpenseActivity::class.java).apply {
+                //passes the selected Expense's info to the new activity
                 putExtra("EDIT_EXPENSE", "$year@$month@$day@$source@$amount@$addInfo@$position")
+                //specifies that the user intends to edit their selected Expense
                 putExtra("REQUEST_CODE", editExpenseCode)
             }
+            //when the user returns to this activity, onActivityResults will be be called with requestCode == editExpenseCode
             startActivityForResult(data, editExpenseCode)
         }
 
+        //when user long clicks an Expense in the ListView, deletion prompt pops up
         listEntries.setOnItemLongClickListener { parent, view, position, id ->
             deleteIndex = position
-            textEntryInfo.text = Database.getExpenses()[position].toString()
+            val text = Database.getExpenses()[position].toString().replace(", ", "\n")
+            textEntryInfo.text = text
             layoutDeleteEntry.visibility = View.VISIBLE
             true
         }
 
+        //user clicks this button to cancel delete
         btnCancelDeleteEntry.setOnClickListener {
             layoutDeleteEntry.visibility = View.INVISIBLE
         }
 
+        //user clicks this button to delete
         btnDeleteEntry.setOnClickListener {
-            Database.getExpenses().removeAt(deleteIndex)
+            if(deleteIndex == -999){ //if user chose to delete all expenses
+                Database.getExpenses().clear()
+            }else{ //else delete the selected expense
+                Database.getExpenses().removeAt(deleteIndex)
+            }
             Database.writeExpenses()
             layoutDeleteEntry.visibility = View.INVISIBLE
             updateListView(createCustomItemsList())
@@ -112,15 +142,17 @@ class ExpensesActivity : AppCompatActivity() {
      */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            R.id.action_display_help -> {
+            R.id.action_display_help -> { //navigate to HelpActivity with instructions for this activity
                 val data = Intent(this, HelpActivity::class.java).apply{
                     putExtra("source", "ExpensesActivity")
                 }
                 startActivity(data)
                 return true
             }
-            R.id.action_delete_expenses -> {
-                Database.getExpenses().clear()
+            R.id.action_delete_expenses -> { //prompts the user if they'd like to delete all expenses
+                textEntryInfo.text = resources.getString(R.string.text_delete_all_expenses) //shows the info of the selected Expense
+                deleteIndex = -999
+                layoutDeleteEntry.visibility = View.VISIBLE
                 Database.writeExpenses()
                 updateListView(createCustomItemsList())
                 return true
@@ -140,8 +172,8 @@ class ExpensesActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if((requestCode == newExpenseCode || requestCode == editExpenseCode) && resultCode == Activity.RESULT_OK && data != null){
-            var text = ""
-            if(requestCode == newExpenseCode) {
+            var text = "" //records what the Snackbar message will be
+            if(requestCode == newExpenseCode){ //if a new Expense was created, set text varialbe to that Expense's info
                 val result = data.getStringExtra("NEW_EXPENSE")
                 if(result != null){
                     val split = result.split("@")
@@ -152,9 +184,10 @@ class ExpensesActivity : AppCompatActivity() {
                     val amount = split[4]
                     text = "New expense: \$$amount spent on $source ($year-$month-$day)"
                 }
-            }else{
+            }else{ //if an existing Expense was updated, sets text variable to the following message
                 text = "Expense updated"
             }
+            //creates and shows the Snackbar message with the specified text
             Snackbar.make(
                 findViewById(R.id.expensesLayout),
                 text,
@@ -169,8 +202,11 @@ class ExpensesActivity : AppCompatActivity() {
      * @param [list] An ArrayList of [CustomListItem]s that will be passed into the [CustomAdapter]
      */
     private fun updateListView(list: ArrayList<CustomListItem>){
+        //updates the adapter
         adapter = CustomAdapter(this, R.layout.fragment_entries_list, list)
+        //creates an object for referencing the ListView
         val listView: ListView = findViewById(R.id.listEntries)
+        //sets the ListView's adapter to the new adapter
         listView.adapter = adapter
     }
 
@@ -246,6 +282,7 @@ class ExpensesActivity : AppCompatActivity() {
         val info = Database.getExpenses()
         val customItems = ArrayList<CustomListItem>()
 
+        //convert every Expense to a CustomListItem
         for(i in info){
             val split = i.toFile().split("@")
             customItems.add(CustomListItem(split[0], split[1], "$" + split[2], split[3]))

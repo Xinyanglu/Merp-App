@@ -4,6 +4,8 @@ import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.CalendarView
 import androidx.appcompat.app.AppCompatActivity
 import com.merp.android.Date
@@ -79,6 +81,22 @@ class DatePickerActivity : AppCompatActivity() {
 
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_date_picker, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.action_display_help){ //navigate to HelpActivity with instructions for this activity
+            val data = Intent(this, HelpActivity::class.java).apply{
+                putExtra("source", "DatePickerActivity")
+            }
+            startActivity(data)
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun setDates(start: Long, end: Long){
