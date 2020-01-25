@@ -31,9 +31,11 @@ class DatePickerActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        //sets up calendar views, one for start date and one for end date
         val start = findViewById<CalendarView>(R.id.startDate)
         val end = findViewById<CalendarView>(R.id.endDate)
 
+        //sets up the button to select today's date
         btnToday.setOnClickListener{
             start.date = Date().time
             end.date = Date().time
@@ -42,12 +44,14 @@ class DatePickerActivity : AppCompatActivity() {
 
         btnToday.performClick()
 
+        //sets up the button to select all the dates
         btnAll.setOnClickListener{
             start.date = start.minDate
             end.date = end.maxDate
             setDates(start.date, end.date)
         }
 
+        //gives the start and end date calendar view a listener to track date selection
         start.setOnDateChangeListener { view, year, month, dayOfMonth ->
             startYear = year
             startMonth = month+1
@@ -61,9 +65,7 @@ class DatePickerActivity : AppCompatActivity() {
             endDay = dayOfMonth
         }
 
-        Log.d("startDate", "$startYear-$startMonth-$startDay")
-        Log.d("endDate", "$endYear-$endMonth-$endDay")
-
+        //sets up display chart listener to go to activity to display the charts
         displayCharts.setOnClickListener {
 
             if (Date(startYear, startMonth, startDay) <= Date(endYear, endMonth, endDay)) {
@@ -99,6 +101,7 @@ class DatePickerActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    //function to set up the dates for the 'select All' button
     private fun setDates(start: Long, end: Long){
         val sdf = SimpleDateFormat("yyyy-MM-dd")
         val startDate = sdf.format(Date(start)).split("-")

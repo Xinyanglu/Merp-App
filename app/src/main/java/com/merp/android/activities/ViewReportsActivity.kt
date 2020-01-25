@@ -20,24 +20,25 @@ class ViewReportsActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        //TODO: calculate the true value of these variables. See the text_analysis string.xml resource for adding more info to the TextView.
-        //in the resource, there are things like "%1$d"
-        //%x where x is an integer represents the order at which the values will be entered in getString(R.string.text_analysis, %1, %2, %3)
-        //$d represents that it will be an integer, $s is string (i think), dunno the rest
 
+
+        //Sets the start date variables
         val startYear = intent.getIntExtra("start year", 0)
         val startMonth = intent.getIntExtra("start month", 0)
         val startDay = intent.getIntExtra("start day", 0)
 
+        //sets the end date variables
         val endYear = intent.getIntExtra("end year", 0)
         val endMonth = intent.getIntExtra("end month", 0)
         val endDay = intent.getIntExtra("end day", 0)
 
         this.title = resources.getString(R.string.title_activity_view_reports, "$startYear-$startMonth-$startDay", "$endYear-$endMonth-$endDay")
 
+        //initializes start date and end date objects
         val start = Date(startYear, startMonth, startDay)
         val end = Date(endYear, endMonth, endDay)
 
+        //sets the viewpager with the 4 graphs and charts needed
         val charts = arrayListOf(ChartFragment("earnings", "bar", start, end),
             ChartFragment("earnings", "pie", start, end),
             ChartFragment("expenses","bar",start, end),
@@ -47,9 +48,11 @@ class ViewReportsActivity : AppCompatActivity() {
         val pagerAdapter = ChartsPagerAdapter(supportFragmentManager, charts)
         viewPager.adapter = pagerAdapter
 
+        //sets up tabs for the view pager
         val tabs = findViewById<TabLayout>(R.id.tabLayout)
         tabs.setupWithViewPager(viewPager)
 
+        //analysis for total earned/lost and net gain, and average gained per day
         val rangeEarnings = Database.searchRangeEarnings(start,end)
         val rangeExpenses = Database.searchRangeExpenses(start,end)
 
