@@ -102,8 +102,8 @@ class CustomAdapter(context: Context,
                 //if the additional information exceeds 10 characters, display only the first
                 //10 characters followed by "..." to save space
                 var addInfo = mItems[position].getTVAddInfo()
-                if(addInfo.length > 10){
-                    addInfo = addInfo.substring(0, 10) + "..."
+                if(addInfo.length > 15){
+                    addInfo = addInfo.substring(0, 15) + "..."
                 }
                 holder.textViewAddInfo?.text = addInfo
             }
