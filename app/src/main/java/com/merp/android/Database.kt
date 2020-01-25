@@ -440,14 +440,15 @@ object Database {
 
     fun searchRangeEarnings(start: Date, end: Date): MutableList<Earning> {
         val startIndex = searchEarnings(start, earnings)
-        val endIndex = searchEarnings(end, earnings)
-        val a = earnings.subList(startIndex, endIndex)
-        for (e in earnings){
-            if (e.getDate().getFullDate() == end.getFullDate()){
-                a.add(e)
+        var endIndex = earnings.size
+
+        for(e in 0 until earnings.size-1){
+            if(earnings[e].getDate() > end){
+                endIndex = e
+                break
             }
         }
-        return a
+        return earnings.subList(startIndex, endIndex)
     }
 
     /**
@@ -462,14 +463,16 @@ object Database {
 
     fun searchRangeExpenses(start: Date, end: Date): MutableList<Expense> {
         val startIndex = searchExpenses(start,expenses)
-        val endIndex = searchExpenses(end,expenses)
-        val a = expenses.subList(startIndex,endIndex)
-        for(e in expenses){
-            if (e.getDate().getFullDate() == end.getFullDate()){
-                a.add(e)
+        var endIndex = expenses.size
+
+        for(e in 0 until expenses.size-1){
+            if(expenses[e].getDate() > end){
+                endIndex = e
+                break
             }
         }
-        return a
+
+        return expenses.subList(startIndex,endIndex)
     }
 
     /**
