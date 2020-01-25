@@ -17,7 +17,7 @@ class CustomAdapter(context: Context,
                     items: List<CustomListItem>)
             : ArrayAdapter<CustomListItem>(context, resource, items){
 
-    /** TODO: ??? */
+    /** The context of the application environment */
     private val mContext = context
 
     /** The layout resource of the ListView */
@@ -46,11 +46,12 @@ class CustomAdapter(context: Context,
     }
 
     /**
-     * TODO called repeatedly for each item in the ListView??
+     * Called for each item in the ListView.
+     * Sets up the item (sets the text of each of the four TextViews per item).
      *
-     * @param [position] position of the item in the ListView
-     * @param [convertView] TODO
-     * @param [parent] TODO the parent ViewGroup of the View??? wat unused
+     * @param [position] The position of the item in the ListView
+     * @param [convertView] The old view to reuse, if possible
+     * @param [parent] The [ViewGroup] that contains the Views in an item of the ListView
      */
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var v = convertView

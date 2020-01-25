@@ -21,11 +21,5 @@ class EntriesFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_entries, container, false)
-        /*val metrics = context!!.resources.displayMetrics
-        val width = metrics.widthPixels
-        val list = v.findViewById<ListView>(R.id.listEntries)
-        Log.d("DEVICEWIDTH", width.toString())
-        list.minimumWidth = width
-        return v*/
     }
 }
