@@ -29,24 +29,27 @@ import java.math.BigDecimal
  * The Kotlin class for the fragment used for creating bar graphs and pie charts in [ViewReportsActivity].
  */
 class ChartFragment(entryType: String, chartType: String, start: Date, end: Date) : Fragment() {
-    /** TODO: these need comments too btw */
-    private lateinit var mBarChart:BarChart
+    /** A bar graph */
+    private lateinit var mBarChart: BarChart
 
-    /**  */
-    private lateinit var mPieChart:PieChart
+    /** A pie chart */
+    private lateinit var mPieChart: PieChart
 
-    /**  */
-    private var entry =entryType
+    /** Records whether the chart displays [Earning]s or [Expense]s */
+    private var entry = entryType
 
-    /**  */
+    /** Records which chart will be displayed (bar or pie) */
     private var m = chartType
 
-    /**  */
+    /** Records the selected start date */
     private var s = start
 
-    /**  */
+    /** Records the selected end date */
     private var e = end
 
+    /**
+     * Inflates the layout for this fragment and initializes [mBarChart] and [mPieChart].
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -60,10 +63,12 @@ class ChartFragment(entryType: String, chartType: String, start: Date, end: Date
         return view
     }
 
-    //gets the information required to build the graph. Builds either a line graph or pie chart for expense or earning
+    /**
+     * Gets the information required for the graph, then creates the specified graph.
+     */
     private fun getChart(entry: String?, method: String?, start: Date, end: Date){
-        var yAxis:Array<BigDecimal>
-        if (method.equals("pie")){
+        val yAxis:Array<BigDecimal>
+        if (method.equals("pie")){ //if creating a pie chart
             val pieEntries = ArrayList<PieEntry>()
             var label = ""
             var desc = ""
@@ -108,7 +113,7 @@ class ChartFragment(entryType: String, chartType: String, start: Date, end: Date
             mPieChart.description = description
             mPieChart.invalidate()
 
-        }else if(method.equals("bar")){
+        }else if(method.equals("bar")){ //if creating a bar graph
             var label = ""
             var desc = ""
             val barEntries = ArrayList<BarEntry>()
@@ -140,7 +145,7 @@ class ChartFragment(entryType: String, chartType: String, start: Date, end: Date
             val barDataSet = BarDataSet(barEntries,label)
             barDataSet.valueTextSize = 20f
 
-            var xAxis = mBarChart.xAxis
+            val xAxis = mBarChart.xAxis
             xAxis.textSize = 12f
             xAxis.position = XAxis.XAxisPosition.BOTTOM
 

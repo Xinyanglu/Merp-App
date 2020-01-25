@@ -16,15 +16,35 @@ import kotlinx.android.synthetic.main.activity_date_picker.*
 import kotlinx.android.synthetic.main.content_date_picker.*
 import java.util.*
 
-
+/**
+ * An activity for specifying the date range for which the report will display.
+ * The user can use two [CalendarView]s to pick the start and end dates.
+ * They can then navigate to [ViewReportsActivity] to view the generated report.
+ */
 class DatePickerActivity : AppCompatActivity() {
+    /** Records the year selected on the start [CalendarView] */
     private var startYear = 0
+
+    /** Records the month selected on the start [CalendarView] */
     private var startMonth = 0
+
+    /** Records the day selected on the start [CalendarView] */
     private var startDay = 0
+
+    /** Records the year selected on the end [CalendarView] */
     private var endYear = 0
+
+    /** Records the month selected on the end [CalendarView] */
     private var endMonth = 0
+
+    /** Records the day selected on the end [CalendarView] */
     private var endDay = 0
 
+    /**
+     * Sets up the layout and onClickListeners for all the components.
+     *
+     * Automatically called when the activity is created.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_date_picker)
@@ -85,11 +105,18 @@ class DatePickerActivity : AppCompatActivity() {
         }
     }
 
+    /** Automatically inflates the options menu to be a part of the toolbar. */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_date_picker, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
+    /**
+     * Depending on the item clicked, performs a specific task.
+     * Automatically called whenever the user clicks an options menu item.
+     *
+     * @param [item] The options [MenuItem] that the user clicked
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.action_display_help){ //navigate to HelpActivity with instructions for this activity
             val data = Intent(this, HelpActivity::class.java).apply{
@@ -101,7 +128,12 @@ class DatePickerActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    //function to set up the dates for the 'select All' button
+    /**
+     * Sets the date variables.
+     *
+     * @param [start] The date selected on the [CalendarView] for the start date
+     * @param [end] The date selected on the [CalendarView] for the end date
+     */
     private fun setDates(start: Long, end: Long){
         val sdf = SimpleDateFormat("yyyy-MM-dd")
         val startDate = sdf.format(Date(start)).split("-")

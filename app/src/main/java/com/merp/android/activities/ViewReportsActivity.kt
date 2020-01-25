@@ -11,16 +11,23 @@ import kotlinx.android.synthetic.main.activity_view_reports.*
 import kotlinx.android.synthetic.main.content_view_reports.*
 import java.math.BigDecimal
 
-
+/**
+ * An activity that displays a report for all [Earning]s and [Expense]s
+ * recorded within a user-specified range of dates.
+ */
 class ViewReportsActivity : AppCompatActivity() {
 
+    /**
+     * Sets up the layout of the activity.
+     * Creates the graphs and analysis text.
+     *
+     * Automatically called when the activity is created.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_reports)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-
 
         //Sets the start date variables
         val startYear = intent.getIntExtra("start year", 0)
@@ -81,11 +88,18 @@ class ViewReportsActivity : AppCompatActivity() {
         analysis.text = getString(R.string.text_analysis, stringNet, "\$$totalGained", "\$$totalLost", stringAverage)
     }
 
+    /** Automatically inflates the options menu to be a part of the toolbar. */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_view_reports, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
+    /**
+     * Depending on the item clicked, performs a specific task.
+     * Automatically called whenever the user clicks an options menu item.
+     *
+     * @param [item] The options [MenuItem] that the user clicked
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.action_display_help){ //navigate to HelpActivity with instructions for this activity
             val data = Intent(this, HelpActivity::class.java).apply{

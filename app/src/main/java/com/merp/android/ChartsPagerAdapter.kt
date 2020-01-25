@@ -20,19 +20,24 @@ class ChartsPagerAdapter(fragmentManager: FragmentManager, private val charts: A
      */
     private val tabTitles = arrayOf("Earnings Bar", "Earnings Pie", "Expenses Bar", "Expenses Pie")
 
-    //returns the chart the the position, this is used for viewpager when swiping or using tabs
+    /**
+     * Returns the item (chart) at the given position.
+     * Used in the default [FragmentPagerAdapter] class to set the item of each tab.
+     */
     override fun getItem(position: Int): Fragment {
         return charts[position]
     }
 
-    //returns how many items are in the view pager
+    /**
+     * Returns the number of items in the [NonswipeableViewPager].
+     */
     override fun getCount(): Int {
         return charts.size
     }
 
     /**
      * Returns the title of the tab at a given position.
-     * Used in the default [FragmentPagerAdapter] class to set the title of that tab.
+     * Used in the default [FragmentPagerAdapter] class to set the title of each tab.
      *
      * @param [position] The position of the tab (starting from the leftmost tab at position 0)
      */
