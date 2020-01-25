@@ -6,6 +6,14 @@ import com.merp.android.Date as Date
 import com.merp.android.Earning as Earning
 import com.merp.android.Expense as Expense
 
+/**
+ * An object that acts as database for the app.
+ * Interacts with the text files and key ArrayLists and contains various functions for
+ * retrieving information from the ArrayLists.
+ *
+ * As a Kotlin object (as opposed to an actual class), this does not need to and cannot be
+ * instantiated. It itself is the one and only instance of the Database object.
+ */
 object Database {
     /** An ArrayList for recording all [Expense] objects */
     private val expenses = ArrayList<Expense>()
