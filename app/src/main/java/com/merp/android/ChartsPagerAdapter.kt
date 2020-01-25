@@ -20,10 +20,12 @@ class ChartsPagerAdapter(fragmentManager: FragmentManager, private val charts: A
      */
     private val tabTitles = arrayOf("Earnings Bar", "Earnings Pie", "Expenses Bar", "Expenses Pie")
 
+    //returns the chart the the position, this is used for viewpager when swiping or using tabs
     override fun getItem(position: Int): Fragment {
         return charts[position]
     }
 
+    //returns how many items are in the view pager
     override fun getCount(): Int {
         return charts.size
     }
